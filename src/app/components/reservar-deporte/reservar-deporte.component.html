@@ -1,0 +1,44 @@
+<div class="reservasComponent">
+  <button mat-button class="atras-button" (click)="handleClickAtras($event)">
+    Atrás
+  </button>
+  <!-- Botón "Atrás" fuera del header -->
+
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <span class="deporte-text">Deporte: Tenis</span>
+    </mat-expansion-panel-header>
+
+    <div class="cosas">
+      <mat-card>
+        <mat-card-content>
+          <mat-grid-list cols="7" rowHeight="100px">
+            <mat-grid-tile></mat-grid-tile>
+            <mat-grid-tile *ngFor="let recinto of recintos">
+              <div class="header">{{ recinto }}</div>
+            </mat-grid-tile>
+            <ng-container *ngFor="let time of times">
+              <mat-grid-tile>
+                <div class="header">{{ time }}</div>
+              </mat-grid-tile>
+              <mat-grid-tile *ngFor="let recinto of recintos" class="caja">
+                <ng-container>
+                  <div
+                    [ngClass]="{
+                      reservado: getReserva(time, recinto),
+                      libre: !getReserva(time, recinto)
+                    }"
+                    (click)="reserva(time,recinto,getReserva(time,recinto))">
+                    
+                    {{ getReserva(time, recinto) ? "Ocupado" : "Libre" }}
+                  </div>
+                </ng-container>
+              </mat-grid-tile>
+              <mat-divider></mat-divider>
+            </ng-container>
+          </mat-grid-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-expansion-panel>
+</div>

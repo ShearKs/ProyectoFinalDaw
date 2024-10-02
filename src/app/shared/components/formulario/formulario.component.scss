@@ -1,0 +1,20 @@
+.formGenerico {
+  margin: 5em;
+  display: flex;
+  flex-direction: column;
+
+
+  width: 350px;
+  mat-form-field{
+    width: 100%;
+  }
+
+  app-boton-generico{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+}
+

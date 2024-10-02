@@ -1,0 +1,32 @@
+.carta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+
+  mat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+    margin: 0.5rem;
+    padding: 1.5rem;
+
+
+    form {
+      margin: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      mat-form-field {
+        width: 350px;
+      }
+    }
+  }
+}

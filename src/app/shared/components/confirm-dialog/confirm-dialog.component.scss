@@ -1,0 +1,17 @@
+.dialogo {
+    margin:0.25rem;
+    padding: 0.75rem;
+  .titulo{
+    font-size: 25px !important;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .acciones{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}

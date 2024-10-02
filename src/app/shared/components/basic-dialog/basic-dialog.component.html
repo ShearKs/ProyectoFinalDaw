@@ -1,0 +1,14 @@
+<div class="dialogoBasico">
+  <div [ngClass]="{ correcto: data.correcto, error: !data.correcto }">
+    <h2 mat-dialog-title>
+      {{ this.data.correcto ? "Éxito" : "Ha ocurrido un error" }}
+    </h2>
+    <mat-dialog-content>
+      <p>{{ this.data.mensaje }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="cerrarDialogo()">OK</button>
+    </mat-dialog-actions>
+  </div>
+</div>
+

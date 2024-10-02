@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+$app-header-height: 60px;
 
 /** Colores generales para mantener un orden en la aplicación  **/
 $color-correcto: #33ff33;
@@ -14,13 +14,3 @@ $color-aquamarine-7: #003429;
 
 
 $tipografia-general: Verdana, Geneva, Tahoma, sans-serif;
-
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}

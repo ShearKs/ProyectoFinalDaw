@@ -1,0 +1,39 @@
+<nav class="navbar">
+  <ul class="navbar-list">
+    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/') }">
+      <button
+        mat-button
+        [routerLink]="['/']">
+        <mat-icon>home</mat-icon>
+        Inicio
+      </button>
+    </li>
+
+    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/ejemplos') }">
+      <button mat-button [matMenuTriggerFor]="examplesMenu">Ejemplos</button>
+      <mat-menu #examplesMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/ejemplos/tabla-api']">
+          Ejemplo Tabla API
+        </button>
+        <button mat-menu-item [routerLink]="['/ejemplos/login']">
+          Ejemplo Login
+        </button>
+        <button mat-menu-item [routerLink]="['/ejemplos/formulario']">
+          Ejemplo Formulario
+        </button>
+      </mat-menu>
+    </li>
+
+    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/contactos') }">
+      <button mat-button [routerLink]="['/contactos']">Contactos</button>
+    </li>
+    <li
+      class="navbar-item"
+      [ngClass]="{ active: isActiveRoute('/elegir-deporte') }">
+
+      <button mat-button [routerLink]="['/elegir-deporte']">
+        Seleccionar Deporte
+      </button>
+    </li>
+  </ul>
+</nav>
