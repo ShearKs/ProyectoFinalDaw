@@ -48,6 +48,8 @@ export class PerfilComponent implements OnInit {
 
           });
 
+          // comentario
+
           // Asignamos las propiedades individuales
           this.nombre = this.usuarioLogged.nombre;
           this.apellidos = this.usuarioLogged.apellidos;
