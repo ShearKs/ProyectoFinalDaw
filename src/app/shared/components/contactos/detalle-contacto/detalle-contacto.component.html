@@ -1,0 +1,36 @@
+<div class="detalleComponent">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Formulario de Contacto</mat-card-title>
+      <mat-card-content *ngIf="!this.editable">
+        <button mat-raised-button (click)= "this.editable = true">
+            Editar
+        </button>
+      </mat-card-content>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="formularioComponent">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName = "nombre" [readonly]= !this.editable />
+          <mat-error *ngIf="formulario.get('nombre')?.hasError('required')">El nombre es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Peso</mat-label>
+          <input matInput  formControlName="peso" [readonly]= !this.editable />
+          <mat-error *ngIf="formulario.get('peso')?.hasError('required')">El peso es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Simbolo</mat-label>
+          <input matInput  formControlName="simbolo" [readonly]= !this.editable />
+          <mat-error *ngIf="formulario.get('simbolo')?.hasError('required')">El simbolo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <button *ngIf="this.editable" mat-raised-button type="submit">Editar contacto</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,40 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 8%;
+
+    mat-card {
+     
+      .header-image {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(122, 222, 255);
+        margin: 0.35rem;
+      }
+  
+      mat-card-content {
+        margin: 1.2rem;
+  
+        .campo-formulario {
+          width: 100%;
+          display: flex; /* Asegura que el contenedor use flexbox */
+          flex-wrap: wrap; /* Permite que los elementos se envuelvan si es necesario */
+          gap: 1.5px;
+  
+          mat-form-field {
+            flex: 1; /* Permite que los mat-form-field ocupen el mismo espacio */
+            margin: 0.25rem;
+  
+            input {
+              width: 100%; /* Asegura que el input ocupe todo el ancho del mat-form-field */
+            }
+          }
+        }
+      }
+    }
+  }
+  

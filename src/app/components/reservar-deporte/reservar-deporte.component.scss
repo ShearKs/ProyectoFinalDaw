@@ -1,0 +1,72 @@
+.reservasComponent {
+  display: flex;
+  flex-direction: column; 
+  margin: 5%;
+  
+  .atras-button {
+    margin-bottom: 10px; 
+  }
+
+  mat-expansion-panel {
+    padding: 1rem;
+    box-shadow: 5px 5px 2px rgb(59, 59, 59);
+    border: 1px solid rgb(59, 59, 59);
+
+    mat-expansion-panel-header {
+      display: flex; 
+      justify-content: flex-start; 
+
+      .deporte-text {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+    }
+
+    .cosas {
+      mat-card {
+        background-color: #f5f5f5; 
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        mat-card-content {
+          padding: 16px;
+          font-size: 1rem;
+
+          .header {
+            font-weight: bold;
+            text-align: center;
+            line-height: 100px;
+          }
+
+          .reservado,
+          .libre {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            cursor: pointer;
+            border: 1px solid #ddd;
+          }
+
+          .reservado {
+            background-color: rgb(231, 15, 15);
+          }
+
+          .libre {
+            background-color: rgb(92, 224, 69);
+          }
+
+          mat-divider {
+            margin: 0;
+            border: 3px solid rgb(53, 53, 53);
+          }
+
+          mat-grid-tile {
+            border: 1px solid rgb(98, 98, 98);
+          }
+        }
+      }
+    }
+  }
+}

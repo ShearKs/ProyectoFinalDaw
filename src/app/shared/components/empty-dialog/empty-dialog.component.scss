@@ -1,0 +1,14 @@
+.dialogoSimple {
+  margin: 0;
+
+  .componente {
+    padding: 0.75rem;
+    margin: 0;
+  }
+
+  .acciones {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

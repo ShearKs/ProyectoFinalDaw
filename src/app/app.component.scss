@@ -1,0 +1,20 @@
+@import 'variables';
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .header {
+    width: 100%;
+    height: $app-header-height; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  .main-content {
+    margin-top: calc(#{$app-header-height} + 20px); 
+  }
+}

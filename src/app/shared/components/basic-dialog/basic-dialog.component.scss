@@ -1,0 +1,25 @@
+
+.dialogoBasico {
+  border-radius: 1.5rem !important;
+
+  .correcto {
+    border: 6px solid rgb(13, 156, 13);
+  }
+
+  .error {
+    border: 4px solid red;
+  }
+
+  .correcto,
+  .error {
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end; // Alinea los botones a la derecha
+  }
+}

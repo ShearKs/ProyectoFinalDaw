@@ -1,0 +1,90 @@
+.tabla-component {
+  margin: 10px;
+  padding: 3%;
+  border: 5px solid black;
+  background-color: aliceblue;
+
+  .seccion-acciones {
+    display: flex;
+    justify-content:flex-end;
+    height: 75px;
+
+    padding: 5px;
+    margin: 5%;
+
+    .add-contacto {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      margin: 10px;
+      cursor: pointer;
+      background-color: #292929;
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+    }
+  }
+
+  .contenedorTablaContactos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    margin: 5%;
+
+    .tabla-crud {
+      border: 2px solid #292929;
+      box-shadow: 3px 10px 5px rgb(69, 69, 69);
+      width: 100%;
+
+      .tablaContactos{
+       
+        th {
+          padding: 0.5rem;
+          color: white;
+          font-family: Arial, Helvetica, sans-serif;
+          background-color: #292929;
+        }
+
+        tr.mat-mdc-row:nth-child(odd) {
+          background-color: rgb(245, 245, 245);
+        }
+
+        tr.mat-mdc-row:nth-child(even) {
+          background-color: #ffffff;
+        }
+
+        .tdAcciones {
+          text-align: center;
+          vertical-align: middle;
+        }
+
+        .botones-accion {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+    }
+  }
+  .icon-delete {
+    background-color: rgb(177, 58, 58);
+  }
+
+  .icon-edit {
+    background-color: rgb(89, 194, 89);
+  }
+
+  .icon-read {
+    background-color: rgb(136, 218, 191);
+  }
+
+  button {
+    cursor: pointer;
+    border-radius: 0.5rem;
+    gap: 0.5rem;
+    padding: 8px;
+    margin: 0.35rem;
+  }
+}

@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+
+/** Colores generales para mantener un orden en la aplicación  **/
+$color-correcto: #33ff33;
+$color-error: #ff0000;
+
+$color-aquamarine: #66ffcc;
+$color-aquamarine-2: #14f3b0;
+$color-aquamarine-3: #00db9a;
+$color-aquamarine-4: #00b37f;
+$color-aquamarine-5: #008f6a;
+$color-aquamarine-6: #005c48;
+$color-aquamarine-7: #003429;
+
+
+$tipografia-general: Verdana, Geneva, Tahoma, sans-serif;
+
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

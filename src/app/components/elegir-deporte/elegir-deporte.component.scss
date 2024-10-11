@@ -1,0 +1,69 @@
+.seleccion-deporte {
+
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+  mat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    margin: 4%;
+    border: 3px solid black;
+    box-shadow: 10px 5px 5px black;
+    background-color: #e6f0f3;
+
+    mat-card-title {
+      text-align: center;
+      margin: 1rem;
+      font-size: 35px;
+    }
+
+    mat-card-content {
+      margin: 1.5rem;
+      padding: 1rem;
+
+      mat-grid-list{
+        --gutter-size: 50px !important;
+      }
+
+      .grid-tile {
+        cursor: pointer;
+        background: lightblue;
+        border-radius: 15px;
+        box-shadow: 5px 5px 2px rgb(54, 53, 53);
+        transition: transform 0.5s ease-in-out; 
+      
+   
+        .contenido {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap:5px;
+  
+          mat-icon {
+            font-size: 100px;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+          }
+        }
+
+        &:hover {
+          animation: slideOutLeftUp 0.5s forwards;
+        }
+      }
+
+      @keyframes slideOutLeftUp {
+        from {
+          transform: translate(0, 0) scale(1);
+        }
+        to {
+          transform: translate(-5%, -5%) scale(1.07);
+        }
+      }
+    }
+  }
+}

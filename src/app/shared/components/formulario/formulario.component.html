@@ -1,0 +1,49 @@
+<div class="formGenerico">
+  <h2>Formulario de entrada</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" placeholder="Introduce tu nombre" />
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Apellidos</mat-label>
+        <input matInput formControlName="apellidos" placeholder="Introduce tus apellidos" />
+      </mat-form-field>
+    </div>
+    <div>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Dirreción</mat-label>
+        <input matInput placeholder="Introduce tu dirección" formControlName="direccion"/>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Selecciona una fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" placeholder="Selecciona tu fecha de Nacimiento">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Número de Teléfono</mat-label>
+        <input
+          matInput
+          type = "tel"
+          formControlName="telefono"
+          placeholder="Introduce el número de teléfono"/>
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <!-- <button class="button" type="submit">Enviar</button> -->
+    <app-boton-generico label="Enviar" color="primary"></app-boton-generico>
+  </form>
+</div>

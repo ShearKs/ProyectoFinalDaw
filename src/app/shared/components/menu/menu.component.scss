@@ -1,0 +1,49 @@
+.navbar {
+  width: 100%;
+  background-color: #333;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+
+  .navbar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+  }
+
+  .navbar-item {
+    padding: 0 10px;
+
+    button[mat-button] {
+      color: white;
+
+      // &.active-link {
+      //   background-color: #575757;
+      //   color: #ffcc00;
+      // }
+    }
+
+    &.active {
+      button[mat-button] {
+        background-color: #575757;
+        color: white;
+      }
+    }
+
+    mat-menu {
+      .mat-menu-item {
+        background-color: #444;
+        color: white;
+
+        &:hover,
+        &.active-link {
+          background-color: #575757;
+        }
+      }
+    }
+  }
+}
