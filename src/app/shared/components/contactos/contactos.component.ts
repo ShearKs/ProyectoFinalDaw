@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,50 +12,66 @@ import { DetalleContactoComponent } from './detalle-contacto/detalle-contacto.co
 import { AddContactoComponent } from './add-contacto/add-contacto.component';
 import { BasicDialogComponent } from '../basic-dialog/basic-dialog.component';
 import { sameObject } from '../../../functions';
+import { GestorDatosService } from './gestor-datos.service';
+import { tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
+
+export interface entidad {
+
+  id: number,
+  //propiedades dinámicas
+  [key: string]: any
 }
 
-export interface modelo {
-
-  posicion: number,
-  nombre: string,
-  peso: number,
-  simbolo: string
-}
-const personas: modelo[] = [
-  { posicion: 1, nombre: 'Luis', peso: 85, simbolo: 'L' },
-  { posicion: 2, nombre: 'Jose Antonio', peso: 98, simbolo: 'JA' },
-  { posicion: 3, nombre: 'María Luisa', peso: 60, simbolo: 'MA' },
-  { posicion: 4, nombre: 'Carmen', peso: 60, simbolo: 'C' },
-  { posicion: 5, nombre: 'Maria del Mar', peso: 77, simbolo: 'MM' },
-  { posicion: 6, nombre: 'Jose Carlos', peso: 101, simbolo: 'JC' },
-  { posicion: 7, nombre: 'Carlos', peso: 55, simbolo: 'CA' },
-  { posicion: 8, nombre: 'Emiliano', peso: 80, simbolo: 'E' },
-  { posicion: 9, nombre: 'Antonia', peso: 72, simbolo: 'AN' },
-  { posicion: 10, nombre: 'Paco', peso: 73, simbolo: 'PA' },
-];
 
 @Component({
   selector: 'app-contactos',
   standalone: true,
-  imports: [ReactiveFormsModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatIconModule, MatDialogModule],
+  imports: [ReactiveFormsModule, CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatIconModule, MatDialogModule],
   templateUrl: './contactos.component.html',
   styleUrl: './contactos.component.scss'
 })
-export class ContactosComponent implements AfterViewInit {
 
-  public columnas: string[] = ['posicion', 'nombre', 'peso', 'simbolo', 'acciones'];
-  public datasource = new MatTableDataSource(personas);
+export class ContactosComponent implements OnInit, AfterViewInit {
+
+
+  //Informació que le pasaremos al componente mediante inputs
+  //@Input() public columnas : string[] = [];
+  @Input() public servicioDatos: any;
+  @Input() public entidad !: string;
+
+
+
+
+  public entidadDatos: entidad[] = [];
+
+
+  //public columnas: string[] = ['id', 'nombre', 'usuario', 'apellidos', 'edad', 'correo', 'acciones'];
+  public columnas: string[] = ['id'];
+
+  public datasource = new MatTableDataSource(this.entidadDatos);
+
+  //public datasource = new MatTableDataSource<T>();
+  //public entidades: T[] = [];
 
   //Cogemos referencia del paginador
   @ViewChild(MatPaginator) paginator !: MatPaginator;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private readonly _gestorDatos: GestorDatosService) { }
+
+  ngOnInit(): void {
+
+    this.entidad = this.route.snapshot.data['entidad'];
+
+    console.log('Entidad seleccionada: ', this.entidad)
+    this.cargarDatos();
+
+  }
 
   ngAfterViewInit(): void {
 
@@ -64,9 +80,29 @@ export class ContactosComponent implements AfterViewInit {
     this.datasource.paginator = this.paginator;
   }
 
+  private cargarDatos(): void {
+
+    this._gestorDatos.getEntidad(this.entidad).pipe(
+
+      tap((data: entidad[]) => {
+        this.entidadDatos = data;
+
+        if (data.length > 0) {
+          //establacemos las columnas
+          this.columnas = ['id', ...Object.keys(data[0]).filter(key => key !== 'id')];
+
+        }
+
+        console.log('Columnas definidas: ', this.columnas); // Aquí deberías ver 'acciones'
+        this.datasource.data = this.entidadDatos;
+      })
+
+    ).subscribe();
+  }
+
   public nuevoContacto(): void {
 
-    const nuevoContactoEmitter = new EventEmitter<modelo>();
+    const nuevoContactoEmitter = new EventEmitter<entidad>();
 
     const dialogRef = this.dialog.open(EmptyDialogComponent, {
       data: {
@@ -76,7 +112,7 @@ export class ContactosComponent implements AfterViewInit {
       }
     });
 
-    nuevoContactoEmitter.subscribe((nuevoContacto: modelo) => {
+    nuevoContactoEmitter.subscribe((nuevoContacto: entidad) => {
 
       //Añadimos el contacto a la tabla.
       this._addContacto(nuevoContacto)
@@ -86,6 +122,8 @@ export class ContactosComponent implements AfterViewInit {
       console.log('El diálogo fue cerrado')
     })
   }
+
+
 
   public eliminarContacto(contacto: any): void {
 
@@ -102,7 +140,7 @@ export class ContactosComponent implements AfterViewInit {
 
       if (result) {
         //Encontramos el indice del elemento en el array
-        const index = this.datasource.data.findIndex(e => e.posicion === contacto.posicion)
+        const index = this.datasource.data.findIndex(e => e.id === contacto.id)
 
         const longitudTab = this.datasource.data.length
 
@@ -123,9 +161,9 @@ export class ContactosComponent implements AfterViewInit {
   }
 
   //Detalle contacto sirve tanto para ver como para editar, es la misma vista....
-  public detalleContacto(contacto: modelo, esEditable: boolean): void {
+  public detalleContacto(contacto: entidad, esEditable: boolean): void {
 
-    const contactoEditado = new EventEmitter<modelo>();
+    const contactoEditado = new EventEmitter<entidad>();
     //Clonado del objeto...
     const contactoAnterior = JSON.parse(JSON.stringify(contacto))
 
@@ -141,13 +179,13 @@ export class ContactosComponent implements AfterViewInit {
     });
 
     //Para editar el contacto....
-    contactoEditado.subscribe((contactoActualizado: modelo) => {
+    contactoEditado.subscribe((contactoActualizado: entidad) => {
 
       //Optenemos el id del contacto actualizado...
-      const index = this.datasource.data.findIndex(e => e.posicion === contactoActualizado.posicion)
+      const index = this.datasource.data.findIndex(e => e.id === contactoActualizado.id)
 
-      console.log('Contacto anterior: ',contactoAnterior)
-      console.log('Contacto Actualizado: ',contactoActualizado)
+      console.log('Contacto anterior: ', contactoAnterior)
+      console.log('Contacto Actualizado: ', contactoActualizado)
 
       if (index > -1) {
 
@@ -157,7 +195,7 @@ export class ContactosComponent implements AfterViewInit {
           //Actualizamos el contacto en cuestión
           this.datasource.data[index] = contactoActualizado;
 
-          console.log('Tabla actualizada ',this.datasource.data)
+          console.log('Tabla actualizada ', this.datasource.data)
 
           //Actualizamos la tabla
           this.datasource.data = [...this.datasource.data]
@@ -188,7 +226,7 @@ export class ContactosComponent implements AfterViewInit {
     this.datasource.filter = valorFiltro.trim().toLowerCase();
   }
 
-  private _addContacto(nuevoContacto: modelo): void {
+  private _addContacto(nuevoContacto: entidad): void {
 
     const data = this.datasource.data
     data.push(nuevoContacto)

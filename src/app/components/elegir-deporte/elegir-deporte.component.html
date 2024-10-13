@@ -1,34 +1,32 @@
 <!-- Grid para mostrar los slots disponibles (deportes) -->
+<div class="seleccion-deporte">
+  <mat-card>
+    <mat-card-title>Deportes Disponibles</mat-card-title>
+    <mat-card-content>
+      <mat-grid-list cols="3" rowHeight="200px" gutterSize="10px">
+        <mat-grid-tile
+          *ngFor="let deporte of deportes"
+          (click)="accesoReserva(deporte)"
+          [colspan]="1"
+          [rowspan]="1"
+          class="grid-tile">
+          <div class="contenido">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="{{ deporte.icon }}"></mat-icon>
+            <span>{{ deporte.nombre }}</span>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
 
-<mat-card>
-  <mat-card-title>Deportes Disponibles</mat-card-title>
-  <mat-card-content>
-    <mat-grid-list cols="3" rowHeight="200px" gutterSize="10px">
-      <mat-grid-tile
-        *ngFor="let deporte of deportes"
-        (click)="accesoReserva(deporte)"
-        [colspan]="1"
-        [rowspan]="1"
-        class="grid-tile">
-        <div class="contenido">
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Example home icon"
-            fontIcon="{{ deporte.icon }}"></mat-icon>
-          <span>{{ deporte.nombre }}</span>
-        </div>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </mat-card-content>
-
-  <mat-card-footer>
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons
-      aria-label="Select page of periodic elements">
-    </mat-paginator>
-  </mat-card-footer>
-</mat-card>
-
-
-<router-outlet></router-outlet>
+    <mat-card-footer>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </mat-card-footer>
+  </mat-card>
+</div>

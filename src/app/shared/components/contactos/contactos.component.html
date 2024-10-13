@@ -1,80 +1,75 @@
-<div class="seccion-acciones">
-  <ng-container>
-    <button
-      mat-raised-button
-      color="primary"
-      class="add-contacto"
-      (click)="nuevoContacto()">
-      <mat-icon>add</mat-icon>
-      Anadir nuevo contacto
-    </button>
-  </ng-container>
-</div>
-
-<mat-form-field>
-  <mat-label>Filtro</mat-label>
-  <input
-    matInput
-    (keyup)="aplicarFiltro($event)"
-    placeholder="Introduce para buscar algo en la tabla...."
-    #input/>
-</mat-form-field>
-
-<div class="contenedorTablaContactos">
-  <table mat-table [dataSource]="datasource" class="tablaContactos">
-    <ng-container matColumnDef="posicion">
-      <th mat-header-cell *matHeaderCellDef>No.</th>
-      <td mat-cell *matCellDef="let element">{{ element.posicion }}</td>
+<div class="tabla-component">
+  <div class="seccion-acciones">
+    <ng-container>
+      <button
+        mat-raised-button
+        color="primary"
+        class="add-contacto"
+        (click)="nuevoContacto()">
+        <mat-icon>add</mat-icon>
+        Añadir nuevo contacto
+      </button>
     </ng-container>
+  </div>
 
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
-    </ng-container>
+  <div class="contenedorTablaContactos">
+    <mat-form-field class="filtro-tabla">
+      <mat-label>Filtro</mat-label>
+      <input
+        matInput
+        (keyup)="aplicarFiltro($event)"
+        placeholder="Introduce para buscar algo en la tabla...."
+        #input
+      />
+    </mat-form-field>
 
-    <ng-container matColumnDef="peso">
-      <th mat-header-cell *matHeaderCellDef>Peso</th>
-      <td mat-cell *matCellDef="let element">{{ element.peso }}</td>
-    </ng-container>
+    <div class="tabla-crud">
+      <table mat-table [dataSource]="datasource" class="tablaContactos">
+        <!-- Columnas dinámicas (sin la columna de acciones) -->
+        <ng-container *ngFor="let columna of columnas" [matColumnDef]="columna">
+          <th mat-header-cell *matHeaderCellDef>{{ columna }}</th>
+          <td mat-cell *matCellDef="let element">{{ element[columna] }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="simbolo">
-      <th mat-header-cell *matHeaderCellDef>Simbolo</th>
-      <td mat-cell *matCellDef="let element">{{ element.simbolo }}</td>
-    </ng-container>
+        <!-- Columna de acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef class="tdAcciones">Acciones</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="botones-accion">
+              <button
+                mat-icon-button
+                class="icon-delete"
+                (click)="eliminarContacto(element)">
+                <mat-icon>delete</mat-icon>
+              </button>
 
-    <div matColumnDef="acciones" class="botonesAccion">
-      <th mat-header-cell *matHeaderCellDef class="tdAcciones">Acciones</th>
-      <td mat-cell *matCellDef="let element">
-        <button
-          mat-icon-button
-          class="icon-delete"
-          (click)="eliminarContacto(element)">
-          <mat-icon>delete</mat-icon>
-        </button>
+              <button
+                mat-icon-button
+                class="icon-read"
+                (click)="detalleContacto(element, false)">
+                <mat-icon class="mat-19">visibility</mat-icon>
+              </button>
 
-        <button
-          mat-icon-button
-          class="icon-read"
-          (click)="detalleContacto(element, false)">
-          <mat-icon class="mat-19">visibility</mat-icon>
-        </button>
+              <button
+                mat-icon-button
+                class="icon-edit"
+                (click)="detalleContacto(element, true)">
+                <mat-icon class="mat-19">edit</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnas.concat('acciones')"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas.concat('acciones')"></tr>
 
-        <button
-          mat-icon-button
-          class="icon-edit"
-          (click)="detalleContacto(element, true)">
-          <mat-icon class="mat-19">edit</mat-icon>
-        </button>
-      </td>
+
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements">
+      </mat-paginator>
     </div>
-
-    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-    <tr mat-row class="filaContacto" *matRowDef="let row; columns: columnas"></tr>
-  </table>
-
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements">
-  </mat-paginator>
+  </div>
 </div>

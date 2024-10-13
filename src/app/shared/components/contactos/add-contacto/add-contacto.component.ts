@@ -4,8 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { modelo } from '../contactos.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { entidad } from '../contactos.component';
+//import { usuario } from '../contactos.component';
 
 @Component({
   selector: 'app-add-contacto',
@@ -43,11 +44,14 @@ export class AddContactoComponent implements OnInit {
     //Verificamos si el formulario es valido
     if (this.form.valid) {
       //objeto con los campos obtenidos del formulario
-      const nuevoContacto: modelo = {
-        posicion: 99,
+      const nuevoContacto: entidad = {
+        id: 99,
         nombre: this.form.get('nombre')?.value,
-        peso: this.form.get('peso')?.value,
-        simbolo: this.form.get('simbolo')?.value,
+        apellidos: this.form.get('apellidos')?.value,
+        usuario: this.form.get('usuario')?.value,
+        edad: this.form.get('edad')?.value,
+        correo: this.form.get('correo')?.value,
+  
       }
 
       //Emitimos el nuevo contacto al EventEmitter

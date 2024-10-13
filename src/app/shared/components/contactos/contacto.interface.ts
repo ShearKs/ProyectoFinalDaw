@@ -1,7 +1,9 @@
-export interface modelo {
+export interface usuario {
 
-    posicion: number,
+    id: number,
+    usuario: string,
     nombre: string,
-    peso: number,
-    simbolo: string,
+    apellidos :  string,
+    edad: number,
+    correo: string,
 }

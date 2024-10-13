@@ -22,17 +22,14 @@
                 <div class="header">{{ time }}</div>
               </mat-grid-tile>
               <mat-grid-tile *ngFor="let recinto of recintos" class="caja">
-                <ng-container>
-                  <div
-                    [ngClass]="{
-                      reservado: getReserva(time, recinto),
-                      libre: !getReserva(time, recinto)
-                    }"
-                    (click)="reserva(time,recinto,getReserva(time,recinto))">
-                    
-                    {{ getReserva(time, recinto) ? "Ocupado" : "Libre" }}
-                  </div>
-                </ng-container>
+                <div
+                  [ngClass]="{
+                    reservado: getReserva(time, recinto),
+                    libre: !getReserva(time, recinto)
+                  }"
+                  (click)="reserva(time, recinto, getReserva(time, recinto))">
+                  {{ getReserva(time, recinto) ? "Ocupado" : "Libre" }}
+                </div>
               </mat-grid-tile>
               <mat-divider></mat-divider>
             </ng-container>

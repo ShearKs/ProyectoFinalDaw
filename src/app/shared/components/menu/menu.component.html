@@ -21,12 +21,20 @@
         <button mat-menu-item [routerLink]="['/ejemplos/formulario']">
           Ejemplo Formulario
         </button>
+        <button mat-menu-item [routerLink]="['/ejemplos/perfil']">
+          Perfil  
+        </button>
       </mat-menu>
     </li>
 
-    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/contactos') }">
-      <button mat-button [routerLink]="['/contactos']">Contactos</button>
+    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/usuarios') }">
+      <button mat-button [routerLink]="['/usuarios']">Usuarios</button>
     </li>
+
+    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/cursos') }">
+      <button mat-button [routerLink]="['/cursos']">Cursos</button>
+    </li>
+
     <li
       class="navbar-item"
       [ngClass]="{ active: isActiveRoute('/elegir-deporte') }">

@@ -13,7 +13,7 @@
       <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="formularioComponent">
         <mat-form-field appearance="fill">
           <mat-label>Nombre</mat-label>
-          <input matInput formControlName="nombre" [readonly]= !this.editable />
+          <input matInput formControlName = "nombre" [readonly]= !this.editable />
           <mat-error *ngIf="formulario.get('nombre')?.hasError('required')">El nombre es obligatorio</mat-error>
         </mat-form-field>
 
