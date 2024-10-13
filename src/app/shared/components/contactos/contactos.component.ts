@@ -88,12 +88,20 @@ export class ContactosComponent implements OnInit, AfterViewInit {
         this.entidadDatos = data;
 
         if (data.length > 0) {
-          //establacemos las columnas
-          this.columnas = ['id', ...Object.keys(data[0]).filter(key => key !== 'id')];
-
+          // Recopilamos todas las claves únicas de todos los objetos en los datos
+          const allKeys = new Set<string>();
+          data.forEach(item => {
+            Object.keys(item).forEach(key => {
+              allKeys.add(key);
+            });
+          });
+  
+          // Convertimos el conjunto de claves a un array y establecemos las columnas
+          this.columnas = ['id', ...Array.from(allKeys).filter(key => key !== 'id')];
         }
 
         console.log('Columnas definidas: ', this.columnas); // Aquí deberías ver 'acciones'
+        console.log(this.entidadDatos)
         this.datasource.data = this.entidadDatos;
       })
 
