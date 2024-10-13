@@ -28,8 +28,8 @@ export const routes: Routes = [
                 component: LoginComponent
             },
             {
-                path:'registro',
-                component:RegistroComponent
+                path: 'registro',
+                component: RegistroComponent
             },
             {
                 path: 'formulario',
@@ -40,6 +40,12 @@ export const routes: Routes = [
                 component: PerfilComponent
             }
         ]
+    },
+    {
+        path: 'usuarios',
+        component: ContactosComponent,
+        data: { entidad: 'usuarios' }
+
     },
     {
         path: 'contactos',

@@ -7,7 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { modelo } from '../contactos.component';
+//import { usuario } from '../contactos.component';
+
 
 @Component({
   selector: 'app-detalle-contacto',
@@ -66,14 +67,16 @@ export class DetalleContactoComponent implements OnInit, AfterViewInit {
 
         console.log('Posición: ',this.data.contacto.datos.posicion)
 
-        const contactoActualizado: modelo = {
-          //La posición se mantiene ya que la posición no se puede modificar..
-          posicion: this.data.contacto.datos.posicion,
-          nombre: this.formulario.get('nombre')?.value,
-          peso: parseInt(this.formulario.get('peso')?.value),
-          simbolo: this.formulario.get('simbolo')?.value
-        }
-        this.data.eventEmitter.emit(contactoActualizado)
+        // const contactoActualizado: usuario = {
+          
+        //   id: this.data.contacto.datos.id,
+        //   nombre: this.formulario.get('nombre')?.value,
+        //   apellidos: this.formulario.get('apellidos')?.value,
+        //   usuario: this.formulario.get('usuario')?.value,
+        //   edad: parseInt(this.formulario.get('edad')?.value),
+        //   correo: this.formulario.get('correo')?.value
+        // }
+        //this.data.eventEmitter.emit(contactoActualizado)
       }
 
       console.log('Formulario enviado', this.formulario.value);

@@ -5,10 +5,9 @@
         mat-raised-button
         color="primary"
         class="add-contacto"
-        (click)="nuevoContacto()"
-      >
+        (click)="nuevoContacto()">
         <mat-icon>add</mat-icon>
-        Anadir nuevo contacto
+        Añadir nuevo contacto
       </button>
     </ng-container>
   </div>
@@ -26,32 +25,14 @@
 
     <div class="tabla-crud">
       <table mat-table [dataSource]="datasource" class="tablaContactos">
-        <!-- <ng-container *ngFor="let columna of columnas" [matColumnDef]="columna"></ng-container>
-          <th mat-header-cell *matHeaderCellDef>{{ columna | titlecase }}</th>
+        <!-- Columnas dinámicas (sin la columna de acciones) -->
+        <ng-container *ngFor="let columna of columnas" [matColumnDef]="columna">
+          <th mat-header-cell *matHeaderCellDef>{{ columna }}</th>
           <td mat-cell *matCellDef="let element">{{ element[columna] }}</td>
-        </ng-container> -->
-
-        <ng-container matColumnDef="posicion">
-          <th mat-header-cell *matHeaderCellDef>No.</th>
-          <td mat-cell *matCellDef="let element">{{ element.posicion }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef>Nombre</th>
-          <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="peso">
-          <th mat-header-cell *matHeaderCellDef>Peso</th>
-          <td mat-cell *matCellDef="let element">{{ element.peso }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="simbolo">
-          <th mat-header-cell *matHeaderCellDef>Simbolo</th>
-          <td mat-cell *matCellDef="let element">{{ element.simbolo }}</td>
-        </ng-container>
-
-        <div matColumnDef="acciones">
+        <!-- Columna de acciones -->
+        <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef class="tdAcciones">Acciones</th>
           <td mat-cell *matCellDef="let element">
             <div class="botones-accion">
@@ -77,21 +58,17 @@
               </button>
             </div>
           </td>
-        </div>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnas.concat('acciones')"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas.concat('acciones')"></tr>
 
-        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-        <tr
-          mat-row
-          class="filaContacto"
-          *matRowDef="let row; columns: columnas"
-        ></tr>
+
       </table>
 
       <mat-paginator
         [pageSizeOptions]="[5, 10, 20]"
         showFirstLastButtons
-        aria-label="Select page of periodic elements"
-      >
+        aria-label="Select page of periodic elements">
       </mat-paginator>
     </div>
   </div>
