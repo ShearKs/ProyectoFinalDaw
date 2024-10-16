@@ -28,3 +28,16 @@ export const sameObject = (objeto1: any, objeto2: any): boolean => {
     // Si llegamos aquí, los objetos son iguales
     return true;
 };
+
+
+
+export function singularEntity(entities: string): string {
+    if (typeof entities !== "string") {
+        return "entidad introducida no es válida";
+    }
+
+    return entities.endsWith('es') ? entities.slice(0, -2) :
+        entities.endsWith('s') ? entities.slice(0, -1) :
+            entities;
+}
+

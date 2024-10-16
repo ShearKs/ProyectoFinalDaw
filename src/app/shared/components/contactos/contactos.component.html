@@ -5,9 +5,10 @@
         mat-raised-button
         color="primary"
         class="add-contacto"
-        (click)="nuevoContacto()">
+        (click)="nuevoRegistro()">
         <mat-icon>add</mat-icon>
-        Añadir nuevo contacto
+
+        Añadir nuevo {{ this.singEntity }}
       </button>
     </ng-container>
   </div>
@@ -39,30 +40,40 @@
               <button
                 mat-icon-button
                 class="icon-delete"
-                (click)="eliminarContacto(element)">
+                (click)="eliminarRegistro(element)">
                 <mat-icon>delete</mat-icon>
               </button>
 
               <button
                 mat-icon-button
                 class="icon-read"
-                (click)="detalleContacto(element, false)">
+                (click)="detalleEntidad(element, false)">
                 <mat-icon class="mat-19">visibility</mat-icon>
               </button>
 
               <button
                 mat-icon-button
                 class="icon-edit"
-                (click)="detalleContacto(element, true)">
+                (click)="detalleEntidad(element, true)">
                 <mat-icon class="mat-19">edit</mat-icon>
               </button>
             </div>
           </td>
         </ng-container>
+
+        <!-- Fila para mostrar un mensaje cuando no hay datos -->
+        <tr class="mat-row" *ngIf="!datasource || datasource.data.length === 0">
+          <td class="mat-cell" [attr.colspan]="columnas.length + 1">
+            No hay datos disponibles para mostrar
+          </td>
+        </tr>
+
+        <!-- Encabezado y filas de la tabla-->
         <tr mat-header-row *matHeaderRowDef="columnas.concat('acciones')"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnas.concat('acciones')"></tr>
-
-
+        <tr
+          mat-row
+          *matRowDef="let row; columns: columnas.concat('acciones')"
+        ></tr>
       </table>
 
       <mat-paginator

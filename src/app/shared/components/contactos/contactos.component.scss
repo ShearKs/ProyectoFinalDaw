@@ -8,7 +8,6 @@
     display: flex;
     justify-content:flex-end;
 
-
     padding: 5px;
     margin: 5%;
 
@@ -37,6 +36,8 @@
       border: 2px solid #292929;
       box-shadow: 3px 10px 5px rgb(69, 69, 69);
       width: 100%;
+      //Para que no se quede fijas las filas (probar)
+      overflow-x: auto;
 
       .tablaContactos{
        
