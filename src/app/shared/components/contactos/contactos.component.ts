@@ -17,6 +17,7 @@ import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SingularStringDirective } from '../../directives/singular-string.directive';
+import { FormularioGenericoComponent } from '../formulario-generico/formulario-generico.component';
 
 
 export interface entidad {
@@ -160,63 +161,60 @@ export class ContactosComponent implements OnInit, AfterViewInit {
     })
   }
 
-  //Detalle contacto sirve tanto para ver como para editar, es la misma vista....
-  public detalleEntidad(entity: entidad, esEditable: boolean): void {
+    //Detalle contacto sirve tanto para ver como para editar, es la misma vista....
+    public detalleEntidad(entity: entidad, esEditable: boolean): void {
 
-    const entidadEditada = new EventEmitter<entidad>();
-    //Clonado del objeto...
-    const oldEntity = JSON.parse(JSON.stringify(entity))
-
-    const dialog = this.dialog.open(EmptyDialogComponent, {
-      data: {
-        component: DetalleContactoComponent,
-        contacto: {
-          datos: entity,
-          editable: esEditable
-        },
-        eventEmitter: entidadEditada
-      }
-    });
-
-    //Para editar el contacto....
-    entidadEditada.subscribe((entidadUpdate: entidad) => {
-
-      //Optenemos el id del contacto actualizado...
-      const index = this.datasource.data.findIndex(e => e.id === entidadUpdate.id)
-
-      if (index > -1) {
-
-        //Miramos si hemos modificado algo...
-        if (!sameObject(oldEntity, entidadUpdate)) {
-
-          //Nos encargamos mandarle la información al php para editar el usuario
-          this._gestorDatos.editEntidad(entity.id, this.entidad, entidadUpdate).subscribe({
-
-            next: (result) => {
-
-              if (result.status = "exito") {
-                //Actualizamos el contacto en cuestión
-                this.datasource.data[index] = entidadUpdate;
-                //Actualizamos la tabla
-                this.datasource.data = [...this.datasource.data]
-
-                this._abrirDialogoConfirmacion(`Se ha editado ${this.entidad} correctamente`, true);
-
-              }else{
-                this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}, motivo: ${result.mensaje}`,false)
-              }
-            },
-            error: () => {
-              this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}`, false)
-            }
-          })
-        } else {
-          console.error('Los contactos son iguales no se abre el diálogo...')
+      const entidadEditada = new EventEmitter<entidad>();
+      //Clonado del objeto...
+      const oldEntity = JSON.parse(JSON.stringify(entity))
+  
+      const dialog = this.dialog.open(EmptyDialogComponent, {
+        data: {
+          component: FormularioGenericoComponent,
+          data: {
+            titulo: "Visualizado de "+this.entidad,
+            cabecera: this.columnas,
+            entidad: entity,
+            editable: esEditable
+          },
+          eventEmitter: entidadEditada
         }
-        dialog.close();
-      }
-    })
-  }
+      });
+  
+      //Para editar el contacto....
+      entidadEditada.subscribe((entidadUpdate: entidad) => {
+  
+        //Optenemos el id del contacto actualizado...
+        const index = this.datasource.data.findIndex(e => e.id === entidadUpdate.id)
+  
+        if (index > -1) {
+  
+          //Miramos si hemos modificado algo...
+          if (!sameObject(oldEntity, entidadUpdate)) {
+  
+            //Nos encargamos mandarle la información al php para editar el usuario
+            this._gestorDatos.editEntidad(entity.id, this.entidad, entidadUpdate).subscribe({
+  
+              next: (result) => {
+  
+                if (result.status = "exito") {
+               
+                }else{
+                  this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}, motivo: ${result.mensaje}`,false)
+                }
+              },
+              error: () => {
+                this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}`, false)
+              }
+            })
+          } else {
+            console.error('Los contactos son iguales no se abre el diálogo...')
+          }
+          dialog.close();
+        }
+      })
+    }
+
 
   private _abrirDialogoConfirmacion(mensaje: string, correcto: boolean): void {
 
