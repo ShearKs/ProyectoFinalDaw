@@ -8,10 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { EmptyDialogComponent } from '../empty-dialog/empty-dialog.component';
-import { DetalleContactoComponent } from './detalle-contacto/detalle-contacto.component';
-import { AddContactoComponent } from './add-contacto/add-contacto.component';
 import { BasicDialogComponent } from '../basic-dialog/basic-dialog.component';
-import { sameObject, singularEntity } from '../../../functions';
+import { sameObject, singularEntity, upperString } from '../../../functions';
 import { GestorDatosService } from './gestor-datos.service';
 import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -31,7 +29,7 @@ export interface entidad {
 @Component({
   selector: 'app-contactos',
   standalone: true,
-  imports: [SingularStringDirective, ReactiveFormsModule, CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatIconModule, MatDialogModule],
+  imports: [SingularStringDirective,ReactiveFormsModule, CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatIconModule, MatDialogModule],
   templateUrl: './contactos.component.html',
   styleUrl: './contactos.component.scss'
 })
@@ -42,6 +40,7 @@ export class ContactosComponent implements OnInit, AfterViewInit {
   @Input() public servicioDatos: any;
   @Input() public entidad !: string;
   public singEntity: string = "";
+  public entidadFormat :string = "";
 
 
   public entidadDatos: entidad[] = [];
@@ -63,8 +62,7 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
     this.entidad = this.route.snapshot.data['entidad'];
     this.singEntity = singularEntity(this.entidad)
-
-    console.log('Entidad seleccionada: ', this.entidad)
+    this.entidadFormat = upperString(this.entidad);
     this.cargarDatos();
 
   }
@@ -77,12 +75,13 @@ export class ContactosComponent implements OnInit, AfterViewInit {
   }
 
   private cargarDatos(): void {
-
+    console.log(this.entidad)
     this._gestorDatos.getEntidad(this.entidad).pipe(
-
-      tap((data: entidad[]) => {
+      
+      tap((data: any[]) => {
         this.entidadDatos = data;
-
+        console.log('--------------')
+        console.log(data)
         if (data.length > 0) {
           // Recopilamos todas las claves únicas de todos los objetos en los datos
           const allKeys = new Set<string>();
@@ -108,25 +107,39 @@ export class ContactosComponent implements OnInit, AfterViewInit {
   }
 
   public nuevoRegistro(): void {
-
-    const nuevoRegistroEmitter = new EventEmitter<entidad>();
-
+    const nuevoRegistroEmitter = new EventEmitter<entidad>(); 
+    const entidadCabeceras: { [key: string]: string } = {};
+    this.columnas.forEach(key => {
+      entidadCabeceras[key] = "";
+    });
+  
     const dialogRef = this.dialog.open(EmptyDialogComponent, {
       data: {
-        component: AddContactoComponent,
-        datos: null,
-        eventEmitter: nuevoRegistroEmitter
+        component: FormularioGenericoComponent,
+        datos: {
+          titulo: "Añade un " + this.singEntity,
+          entidad: entidadCabeceras
+        },
+        eventEmitter: nuevoRegistroEmitter 
       }
     });
-
+  
+    // Suscribirse al evento para recibir los datos del hijo
     nuevoRegistroEmitter.subscribe((registro: entidad) => {
-      //Añadimos el contacto a la tabla.
-      this._addRegistro(registro)
-    })
 
+      this._gestorDatos.addEntidad(this.entidad, registro)
+      .pipe(
+          tap((result =>{
+            console.log('si que entro')
+            console.log("Estatus :",result.status);
+            console.log("Mensaje: ",result.mensaje)
+          }))   
+      ).subscribe();
+    });
+  
     dialogRef.afterClosed().subscribe(result => {
-      console.log('El diálogo fue cerrado')
-    })
+      console.log('El diálogo fue cerrado');
+    });
   }
 
 
@@ -171,8 +184,8 @@ export class ContactosComponent implements OnInit, AfterViewInit {
       const dialog = this.dialog.open(EmptyDialogComponent, {
         data: {
           component: FormularioGenericoComponent,
-          data: {
-            titulo: "Visualizado de "+this.entidad,
+          datos: {
+            titulo: "Información de "+ this.singEntity,
             cabecera: this.columnas,
             entidad: entity,
             editable: esEditable

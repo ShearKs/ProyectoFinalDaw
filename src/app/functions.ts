@@ -41,3 +41,9 @@ export function singularEntity(entities: string): string {
             entities;
 }
 
+//Función que devuelva una formateado un string la primera letra en mayúscula y las demás en minusula
+export function upperString(cadena : string){
+
+    return cadena.charAt(0).toUpperCase() + cadena.slice(1).toLowerCase();
+}
+

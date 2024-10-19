@@ -4,25 +4,38 @@
   border: 5px solid black;
   background-color: aliceblue;
 
-  .seccion-acciones {
-    display: flex;
-    justify-content:flex-end;
+  .header {
 
-    padding: 5px;
-    margin: 5%;
-
-    .add-contacto {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-
-      margin: 5px;
-      cursor: pointer;
-      background-color: #292929;
-      font-family: Arial, Helvetica, sans-serif;
-      color: white;
+    padding: 15px;
+    margin: 1.25rem;
+    
+    .titulo{
+      margin: 0.5rem;
+      padding: 0.25rem;
+      text-align: center;
     }
+
+    .seccion-acciones {
+      display: flex;
+      justify-content: flex-end;
+
+
+      .add-contacto {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+
+        margin: 5px;
+        cursor: pointer;
+        background-color: #292929;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+      }
+
+    }
+
+
   }
 
   .contenedorTablaContactos {
@@ -39,8 +52,8 @@
       //Para que no se quede fijas las filas (probar)
       overflow-x: auto;
 
-      .tablaContactos{
-       
+      .tablaContactos {
+
         th {
           padding: 0.5rem;
           color: white;
@@ -70,6 +83,7 @@
       }
     }
   }
+
   .icon-delete {
     background-color: rgb(177, 58, 58);
   }

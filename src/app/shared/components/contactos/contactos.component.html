@@ -1,17 +1,25 @@
 <div class="tabla-component">
-  <div class="seccion-acciones">
-    <ng-container>
-      <button
-        mat-raised-button
-        color="primary"
-        class="add-contacto"
-        (click)="nuevoRegistro()">
-        <mat-icon>add</mat-icon>
 
-        Añadir nuevo {{ this.singEntity }}
-      </button>
-    </ng-container>
+  <div class="header">
+    <h1 class="titulo">{{this.entidadFormat}}</h1>
+    <div class="seccion-acciones">
+     
+      <ng-container>
+        <button
+          mat-raised-button
+          color="primary"
+          class="add-contacto"
+          (click)="nuevoRegistro()">
+          <mat-icon>add</mat-icon>
+  
+          Añadir nuevo {{ this.singEntity }}
+        </button>
+      </ng-container>
+    </div>
+
   </div>
+  
+
 
   <div class="contenedorTablaContactos">
     <mat-form-field class="filtro-tabla">
@@ -20,8 +28,7 @@
         matInput
         (keyup)="aplicarFiltro($event)"
         placeholder="Introduce para buscar algo en la tabla...."
-        #input
-      />
+        #input/>
     </mat-form-field>
 
     <div class="tabla-crud">

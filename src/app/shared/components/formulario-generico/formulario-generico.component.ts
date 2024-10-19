@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -7,28 +7,35 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { GestorDatosService } from '../contactos/gestor-datos.service';
+import { MatDatepickerModule, MatDateRangePicker } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-formulario-generico',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButton, CommonModule, MatCardModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatOptionModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButton, CommonModule, MatCardModule],
   templateUrl: './formulario-generico.component.html',
   styleUrl: './formulario-generico.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormularioGenericoComponent implements OnInit {
 
-  public formularioDinamico: FormGroup;
-  public listaInputs: string[] = ['id', 'Nombre', 'Fecha', 'Estado', 'Rol'];
+  //Event emitter para enviar los datos al componente principal
+  @Output() eventEmitter = new EventEmitter<any>();
 
+  public formularioDinamico: FormGroup;
   //Datos que obtenemos del componente de la tabla
-  public cabecera : string [] = [];
-  public entity : any = {};
-  public esEditable : boolean = false;
+  public titulo: string = "Formulario Genérico";
+  public entity: any = {};
+  public esEditable: boolean = false;
+  public entidadOject: any[] = [];
+
 
   constructor(
     private fb: FormBuilder,
-    private dialog: MatDialog,
     private readonly _gestorDatos: GestorDatosService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
@@ -37,36 +44,91 @@ export class FormularioGenericoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //Cargamos todos los datos
-    this.cabecera = this.data.data.cabecera
-    this.entity = this.data.data.entidad
-    this.esEditable = this.data.data.editable
+    this.titulo = this.data.datos.titulo || "";
+    this.entity = this.data.datos.entidad || {}
+    this.esEditable = this.data.datos.editable || false
 
-    console.log("Cabecera")
-    console.log(this.cabecera)
-    console.log("Editable?:  ",this.esEditable)
-    console.log("Datos")
-    console.log(this.entity)
-
-    console.log(this.data)
+    //Llenamos la clave y le valor 
+    this.entidadOject = Object.entries(this.entity).map(([propiedad, valor]) => {
+      const propiedadF: string = propiedad.toLowerCase();
+      //valor por defecto
+      let tipo = 'text';
+      if (propiedadF.includes('fecha')) {
+        tipo = 'date';
+      } else if (propiedadF.includes('contrasena') || propiedadF.includes('contraseña') || propiedadF.includes('contraseña')) {
+        tipo = 'password';
+      } else if (propiedadF.includes('estado') || propiedadF.includes('rol')) {
+        tipo = 'select'
+      }
+      return { propiedad, valor, tipo };
+    })
 
     //Ejecutamos la función para crear el formulario de forma dinámica
     this.crearFormularioDinamico();
   }
 
   private crearFormularioDinamico(): void {
+    this.entidadOject.forEach(entidad => {
 
-    this.listaInputs.forEach(input => {
+      if (entidad.propiedad.toLowerCase() === 'id') return;
 
-      this.formularioDinamico.addControl(input, this.fb.control('', Validators.required));
+      //Cada uno podrá incluir más validadores aparte de ser required
+      const validators = this.getValidadorPorPropiedad(entidad.propiedad);
+
+      this.formularioDinamico.addControl(entidad.propiedad,
+        this.fb.control(entidad.valor, validators));
     });
-
   }
 
+  private getValidadorPorPropiedad(propiedad: string) {
 
+    //Todos serán required
+    const validators = [Validators.required];
 
+    const propiedadF: string = propiedad.toLowerCase();
 
+    //Condicionantes por si quieren más validadores
+    switch (propiedadF) {
 
+      case 'dni':
+        validators.push(Validators.pattern(/^\d{8}[A-Z]$/));
+        break;
+      case 'mail':
+      case 'email':
+        validators.push(Validators.email);
+        break;
+      case 'edad':
+        validators.push(Validators.min(0), Validators.max(120));
+        break;
+    }
+    return validators;
+  }
 
+  public getOptionsForSelect(propiedad: string): string[] {
+    const optionsMap: { [key: string]: string[] } = {
+      estado: ['activo', 'inactivo'],
+      rol: ['trabajador', 'cliente']
+    };
+    return optionsMap[propiedad.toLowerCase()] || [];
+  }
+
+  //Para recoger los valores del formulario
+  public onSubmit() {
+    if (this.formularioDinamico.valid) {
+      const formValues = { ...this.formularioDinamico.value };
+
+      // Itera sobre los campos para formatear los que sean de tipo fecha
+      Object.keys(formValues).forEach(key => {
+        if (formValues[key] instanceof Date) {
+          formValues[key] = formValues[key].toISOString().split('T')[0]; // Formato YYYY-MM-DD
+        }
+      });
+
+      this.eventEmitter.emit(formValues)
+
+    } else {
+      console.log("el formulario no es válido...")
+    }
+  }
 
 }

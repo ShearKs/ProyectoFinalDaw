@@ -15,15 +15,14 @@ export class GestorDatosService {
   //Método que retorna los diferentes usuarios..
   public getEntidad(entidad: string): Observable<any> {
 
-    const body = { modo: 'read' };
+    const body = { modo: 'read', entidad };
 
     return this._http.post<any>(`${this.apiUrl}/controlador_${entidad}.php`, body);
   }
 
-  public addEntidad(id: number, entityName: string, entityData: any): Observable<any> {
+  public addEntidad(entityName: string, entityData: any): Observable<any> {
 
-    const body = { modo: 'create', nombreEntidad: entityName, entityData, id };
-
+    const body = { modo: 'create', entidad: entityName, entityData: entityData };
     return this._http.post<any>(`${this.apiUrl}/controlador_${entityName}.php`, body);
   }
 
