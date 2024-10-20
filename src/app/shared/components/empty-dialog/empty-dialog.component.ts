@@ -56,7 +56,7 @@ export class EmptyDialogComponent implements OnInit, AfterViewInit {
         if (this.data.eventEmitter && componentRef.instance.eventEmitter) {
 
           componentRef.instance.eventEmitter.subscribe((nuevoElemento: any) => {
-            console.log("hola")
+
             //Emite el nuevo evento
             this.data.eventEmitter.emit(nuevoElemento);
             //Una vez hayamos emitido el evento cerramos el diálogo

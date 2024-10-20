@@ -91,7 +91,7 @@ export class ContactosComponent implements OnInit, AfterViewInit {
           });
 
           // Convertimos el conjunto de claves a un array y establecemos las columnas
-          this.columnas = ['id', ...Array.from(allKeys).filter(key => key !== 'id')];
+          this.columnas = ['id', ...Array.from(allKeys).filter(key => key !== 'id' && key !== 'usuario_id')];
         }
 
         this.datasource.data = this.entidadDatos;
@@ -193,11 +193,13 @@ export class ContactosComponent implements OnInit, AfterViewInit {
     //Para editar el contacto....
     entidadEditada.subscribe((entidadUpdate: entidad) => {
 
+  
       //Optenemos el id del contacto actualizado...
       const index = this.datasource.data.findIndex(e => e.id === entidadUpdate.id)
 
       if (index > -1) {
 
+    
         //Miramos si hemos modificado algo...
         if (!sameObject(oldEntity, entidadUpdate)) {
 
@@ -206,13 +208,12 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
             next: (result) => {
 
-              if (result.status = "exito") {
-
-              } else {
-                this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}, motivo: ${result.mensaje}`, false)
-              }
+              this._abrirDialogoConfirmacion(`Se ha actualizado correctamente un ${this.singEntity}`, true)
+              //Actualizamos la tabla para que los cambios se vean reflejados...
+              this.cargarDatos();
             },
             error: () => {
+  
               this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}`, false)
             }
           })

@@ -34,8 +34,9 @@ export class GestorDatosService {
   }
 
   public editEntidad(id: number, entityName: string, entidadActualizada: any): Observable<any> {
+    console.log('Estoy en el edit mi gente')
 
-    const body = { modo: 'edit', entityData: entidadActualizada, nombreEntidad: entityName, id }
+    const body = { modo: 'update', entidad: entityName,entityData: entidadActualizada, nombreEntidad: entityName, id }
 
     return this._http.post<any>(`${this.apiUrl}/controlador_${entityName}.php`, body);
 

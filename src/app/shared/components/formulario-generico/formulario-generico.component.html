@@ -7,7 +7,7 @@
     <mat-card-content>
       <form [formGroup]="formularioDinamico" class="formularioComponent" (ngSubmit)="onSubmit()">
         <ng-container *ngFor="let entidad of entidadOject">
-          <div *ngIf="entidad.propiedad !== 'id' && !entidad.propiedad.toLowerCase().includes('fecha')">
+          <div *ngIf="entidad.propiedad !== 'id' && entidad.propiedad !== 'usuario_id' && !entidad.propiedad.toLowerCase().includes('fecha')"   >
             <!-- Campo de texto, email o contraseña -->
             <ng-container *ngIf="entidad.tipo === 'text' || entidad.tipo === 'email' || entidad.tipo === 'password'">
               <mat-form-field appearance="outline">

@@ -43,11 +43,14 @@ export class FormularioGenericoComponent implements OnInit {
 
   ngOnInit(): void {
 
+  
+
     this.titulo = this.data.datos.titulo || "";
     this.entity = this.data.datos.entidad || {}
     this.esEditable = this.data.datos.editable || false
 
-    console.log('editable los inputs ? ', this.esEditable)
+    console.log(this.entity)
+
 
     //Llenamos la clave y le valor 
     this.entidadOject = Object.entries(this.entity).map(([propiedad, valor]) => {
@@ -123,6 +126,12 @@ export class FormularioGenericoComponent implements OnInit {
   public onSubmit() {
     if (this.formularioDinamico.valid) {
       const formValues = { ...this.formularioDinamico.value };
+
+      //Incluimos el id ya que en el formulario no lo mostramos...
+      const id = this.entity.id;
+      const ususario_id = this.entity.usuario_id;
+      formValues.id = id;
+      formValues.usuario_id = ususario_id;
 
       // Itera sobre los campos para formatear los que sean de tipo fecha
       Object.keys(formValues).forEach(key => {
