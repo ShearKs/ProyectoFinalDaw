@@ -35,7 +35,7 @@
       <table mat-table [dataSource]="datasource" class="tablaContactos">
         <!-- Columnas dinámicas (sin la columna de acciones) -->
         <ng-container *ngFor="let columna of columnas" [matColumnDef]="columna">
-          <th mat-header-cell *matHeaderCellDef>{{ columna }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ columna | titlecase }}</th>
           <td mat-cell *matCellDef="let element">{{ element[columna] }}</td>
         </ng-container>
 

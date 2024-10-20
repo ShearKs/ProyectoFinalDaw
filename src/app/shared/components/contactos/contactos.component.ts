@@ -29,7 +29,7 @@ export interface entidad {
 @Component({
   selector: 'app-contactos',
   standalone: true,
-  imports: [SingularStringDirective,ReactiveFormsModule, CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatIconModule, MatDialogModule],
+  imports: [SingularStringDirective, ReactiveFormsModule, CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatIconModule, MatDialogModule],
   templateUrl: './contactos.component.html',
   styleUrl: './contactos.component.scss'
 })
@@ -40,7 +40,7 @@ export class ContactosComponent implements OnInit, AfterViewInit {
   @Input() public servicioDatos: any;
   @Input() public entidad !: string;
   public singEntity: string = "";
-  public entidadFormat :string = "";
+  public entidadFormat: string = "";
 
 
   public entidadDatos: entidad[] = [];
@@ -69,19 +69,18 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    console.log(this.datasource.data)
+
 
     this.datasource.paginator = this.paginator;
   }
 
   private cargarDatos(): void {
-    console.log(this.entidad)
+ 
     this._gestorDatos.getEntidad(this.entidad).pipe(
-      
+
       tap((data: any[]) => {
         this.entidadDatos = data;
-        console.log('--------------')
-        console.log(data)
+    
         if (data.length > 0) {
           // Recopilamos todas las claves únicas de todos los objetos en los datos
           const allKeys = new Set<string>();
@@ -95,48 +94,47 @@ export class ContactosComponent implements OnInit, AfterViewInit {
           this.columnas = ['id', ...Array.from(allKeys).filter(key => key !== 'id')];
         }
 
-        console.log('Columnas definidas: ', this.columnas); // Aquí deberías ver 'acciones'
-        console.log(this.entidadDatos)
         this.datasource.data = this.entidadDatos;
 
-        console.log('Datos que contiene la tabla')
-        console.log(this.datasource.data)
+      
       })
 
     ).subscribe();
   }
 
   public nuevoRegistro(): void {
-    const nuevoRegistroEmitter = new EventEmitter<entidad>(); 
+    const nuevoRegistroEmitter = new EventEmitter<entidad>();
     const entidadCabeceras: { [key: string]: string } = {};
     this.columnas.forEach(key => {
       entidadCabeceras[key] = "";
     });
-  
+
     const dialogRef = this.dialog.open(EmptyDialogComponent, {
       data: {
         component: FormularioGenericoComponent,
         datos: {
           titulo: "Añade un " + this.singEntity,
-          entidad: entidadCabeceras
+          entidad: entidadCabeceras,
+          editable: true
         },
-        eventEmitter: nuevoRegistroEmitter 
+        eventEmitter: nuevoRegistroEmitter
       }
     });
-  
+
     // Suscribirse al evento para recibir los datos del hijo
     nuevoRegistroEmitter.subscribe((registro: entidad) => {
 
       this._gestorDatos.addEntidad(this.entidad, registro)
-      .pipe(
-          tap((result =>{
-            console.log('si que entro')
-            console.log("Estatus :",result.status);
-            console.log("Mensaje: ",result.mensaje)
-          }))   
-      ).subscribe();
+        .pipe(
+          tap((result => {
+            if (result.status === 'exito') {
+              this._abrirDialogoConfirmacion('Se ha añadido un registro con éxito', true);
+              this.cargarDatos();
+            }
+          }))
+        ).subscribe();
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('El diálogo fue cerrado');
     });
@@ -161,8 +159,6 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
         this._gestorDatos.eliminarEntidad(entidad.id, this.entidad).subscribe({
           next: () => {
-            
-
             //Si todo es correcto actualizamos la tabla..
             this.cargarDatos();
           },
@@ -174,59 +170,59 @@ export class ContactosComponent implements OnInit, AfterViewInit {
     })
   }
 
-    //Detalle contacto sirve tanto para ver como para editar, es la misma vista....
-    public detalleEntidad(entity: entidad, esEditable: boolean): void {
+  //Detalle contacto sirve tanto para ver como para editar, es la misma vista....
+  public detalleEntidad(entity: entidad, esEditable: boolean): void {
 
-      const entidadEditada = new EventEmitter<entidad>();
-      //Clonado del objeto...
-      const oldEntity = JSON.parse(JSON.stringify(entity))
-  
-      const dialog = this.dialog.open(EmptyDialogComponent, {
-        data: {
-          component: FormularioGenericoComponent,
-          datos: {
-            titulo: "Información de "+ this.singEntity,
-            cabecera: this.columnas,
-            entidad: entity,
-            editable: esEditable
-          },
-          eventEmitter: entidadEditada
-        }
-      });
-  
-      //Para editar el contacto....
-      entidadEditada.subscribe((entidadUpdate: entidad) => {
-  
-        //Optenemos el id del contacto actualizado...
-        const index = this.datasource.data.findIndex(e => e.id === entidadUpdate.id)
-  
-        if (index > -1) {
-  
-          //Miramos si hemos modificado algo...
-          if (!sameObject(oldEntity, entidadUpdate)) {
-  
-            //Nos encargamos mandarle la información al php para editar el usuario
-            this._gestorDatos.editEntidad(entity.id, this.entidad, entidadUpdate).subscribe({
-  
-              next: (result) => {
-  
-                if (result.status = "exito") {
-               
-                }else{
-                  this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}, motivo: ${result.mensaje}`,false)
-                }
-              },
-              error: () => {
-                this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}`, false)
+    const entidadEditada = new EventEmitter<entidad>();
+    //Clonado del objeto...
+    const oldEntity = JSON.parse(JSON.stringify(entity))
+
+    const dialog = this.dialog.open(EmptyDialogComponent, {
+      data: {
+        component: FormularioGenericoComponent,
+        datos: {
+          titulo: "Información de " + this.singEntity,
+          cabecera: this.columnas,
+          entidad: entity,
+          editable: esEditable
+        },
+        eventEmitter: entidadEditada
+      }
+    });
+
+    //Para editar el contacto....
+    entidadEditada.subscribe((entidadUpdate: entidad) => {
+
+      //Optenemos el id del contacto actualizado...
+      const index = this.datasource.data.findIndex(e => e.id === entidadUpdate.id)
+
+      if (index > -1) {
+
+        //Miramos si hemos modificado algo...
+        if (!sameObject(oldEntity, entidadUpdate)) {
+
+          //Nos encargamos mandarle la información al php para editar el usuario
+          this._gestorDatos.editEntidad(entity.id, this.entidad, entidadUpdate).subscribe({
+
+            next: (result) => {
+
+              if (result.status = "exito") {
+
+              } else {
+                this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}, motivo: ${result.mensaje}`, false)
               }
-            })
-          } else {
-            console.error('Los contactos son iguales no se abre el diálogo...')
-          }
-          dialog.close();
+            },
+            error: () => {
+              this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}`, false)
+            }
+          })
+        } else {
+          console.error('Los contactos son iguales no se abre el diálogo...')
         }
-      })
-    }
+        dialog.close();
+      }
+    })
+  }
 
 
   private _abrirDialogoConfirmacion(mensaje: string, correcto: boolean): void {

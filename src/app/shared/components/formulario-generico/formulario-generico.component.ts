@@ -3,13 +3,12 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Inject, OnInit, Outpu
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { GestorDatosService } from '../contactos/gestor-datos.service';
-import { MatDatepickerModule, MatDateRangePicker } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -48,6 +47,8 @@ export class FormularioGenericoComponent implements OnInit {
     this.entity = this.data.datos.entidad || {}
     this.esEditable = this.data.datos.editable || false
 
+    console.log('editable los inputs ? ', this.esEditable)
+
     //Llenamos la clave y le valor 
     this.entidadOject = Object.entries(this.entity).map(([propiedad, valor]) => {
       const propiedadF: string = propiedad.toLowerCase();
@@ -57,9 +58,11 @@ export class FormularioGenericoComponent implements OnInit {
         tipo = 'date';
       } else if (propiedadF.includes('contrasena') || propiedadF.includes('contraseña') || propiedadF.includes('contraseña')) {
         tipo = 'password';
-      } else if (propiedadF.includes('estado') || propiedadF.includes('rol')) {
+      } else if (propiedadF.includes('estado') || propiedadF.includes('rol') || propiedadF.includes('tipo_usuario')) {
         tipo = 'select'
       }
+
+
       return { propiedad, valor, tipo };
     })
 
@@ -70,19 +73,22 @@ export class FormularioGenericoComponent implements OnInit {
   private crearFormularioDinamico(): void {
     this.entidadOject.forEach(entidad => {
 
-      if (entidad.propiedad.toLowerCase() === 'id') return;
+      if (entidad.propiedad.toLowerCase() === 'id' || entidad.propiedad === 'fecha_add') return;
 
       //Cada uno podrá incluir más validadores aparte de ser required
       const validators = this.getValidadorPorPropiedad(entidad.propiedad);
 
+      const control = this.fb.control(entidad.valor.toLowerCase(), validators);
+
+      if (!this.esEditable) control.disable();
+
       this.formularioDinamico.addControl(entidad.propiedad,
-        this.fb.control(entidad.valor, validators));
+        control);
     });
   }
 
   private getValidadorPorPropiedad(propiedad: string) {
 
-    //Todos serán required
     const validators = [Validators.required];
 
     const propiedadF: string = propiedad.toLowerCase();
@@ -105,9 +111,10 @@ export class FormularioGenericoComponent implements OnInit {
   }
 
   public getOptionsForSelect(propiedad: string): string[] {
+
     const optionsMap: { [key: string]: string[] } = {
       estado: ['activo', 'inactivo'],
-      rol: ['trabajador', 'cliente']
+      tipo_usuario: ['cliente', 'trabajador']
     };
     return optionsMap[propiedad.toLowerCase()] || [];
   }
@@ -125,7 +132,6 @@ export class FormularioGenericoComponent implements OnInit {
       });
 
       this.eventEmitter.emit(formValues)
-
     } else {
       console.log("el formulario no es válido...")
     }
