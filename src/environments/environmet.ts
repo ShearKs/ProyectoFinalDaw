@@ -6,6 +6,7 @@ export const environment = {
     
     controllers: {
         usuario: '/usuario.php',
-        perfil: '/perfil.php'
+        perfil: '/perfil.php',
+        obtenerDeporte: 'obtener_deportes'
     }
 };
