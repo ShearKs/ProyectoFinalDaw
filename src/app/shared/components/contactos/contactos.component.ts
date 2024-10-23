@@ -49,6 +49,11 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
   public datasource = new MatTableDataSource(this.entidadDatos);
 
+  public columnasListar: string[] = [];
+
+  //Campos que eliminamos del formulario 
+  public camposDlt: any = {};
+
 
   //Cogemos referencia del paginador
   @ViewChild(MatPaginator) paginator !: MatPaginator;
@@ -59,10 +64,16 @@ export class ContactosComponent implements OnInit, AfterViewInit {
     private readonly _gestorDatos: GestorDatosService) { }
 
   ngOnInit(): void {
+    //Recogemos los datos de la entidad
+    this.route.data.subscribe(data => {
 
-    this.entidad = this.route.snapshot.data['entidad'];
+      this.entidad = data['entidad'];
+      this.columnasListar = data['columnasListar'];
+      this.camposDlt = data['inputsElimForm'];
+    });
+
     this.singEntity = singularEntity(this.entidad)
-    this.entidadFormat = upperString(this.entidad);
+    this.entidadFormat = upperString(this.entidad)
     this.cargarDatos();
 
   }
@@ -75,12 +86,12 @@ export class ContactosComponent implements OnInit, AfterViewInit {
   }
 
   private cargarDatos(): void {
- 
+
     this._gestorDatos.getEntidad(this.entidad).pipe(
 
       tap((data: any[]) => {
         this.entidadDatos = data;
-    
+
         if (data.length > 0) {
           // Recopilamos todas las claves únicas de todos los objetos en los datos
           const allKeys = new Set<string>();
@@ -92,11 +103,16 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
           // Convertimos el conjunto de claves a un array y establecemos las columnas
           this.columnas = ['id', ...Array.from(allKeys).filter(key => key !== 'id' && key !== 'usuario_id')];
+
+          //Hacemos el filtrado de columnas
+          const columnasFiltradas: string[] = this.columnasListar.filter(valor => this.columnas.includes(valor));
+
+          this.columnas = columnasFiltradas;
         }
 
         this.datasource.data = this.entidadDatos;
 
-      
+
       })
 
     ).subscribe();
@@ -115,7 +131,8 @@ export class ContactosComponent implements OnInit, AfterViewInit {
         datos: {
           titulo: "Añade un " + this.singEntity,
           entidad: entidadCabeceras,
-          editable: true
+          editable: true,
+          camposAEliminar: this.camposDlt
         },
         eventEmitter: nuevoRegistroEmitter
       }
@@ -184,7 +201,8 @@ export class ContactosComponent implements OnInit, AfterViewInit {
           titulo: "Información de " + this.singEntity,
           cabecera: this.columnas,
           entidad: entity,
-          editable: esEditable
+          editable: esEditable,
+          camposAEliminar: this.camposDlt
         },
         eventEmitter: entidadEditada
       }
@@ -193,13 +211,13 @@ export class ContactosComponent implements OnInit, AfterViewInit {
     //Para editar el contacto....
     entidadEditada.subscribe((entidadUpdate: entidad) => {
 
-  
+
       //Optenemos el id del contacto actualizado...
       const index = this.datasource.data.findIndex(e => e.id === entidadUpdate.id)
 
       if (index > -1) {
 
-    
+
         //Miramos si hemos modificado algo...
         if (!sameObject(oldEntity, entidadUpdate)) {
 
@@ -213,7 +231,7 @@ export class ContactosComponent implements OnInit, AfterViewInit {
               this.cargarDatos();
             },
             error: () => {
-  
+
               this._abrirDialogoConfirmacion(`Ha habido un error al eliminar ${this.entidad}`, false)
             }
           })

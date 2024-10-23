@@ -3,10 +3,10 @@ export const environment = {
     baseUrl: 'http://localhost',
     apiUrl: 'http://localhost/BackEnd_sfe_project/api',
  
-    
+    //llamadas a api
     controllers: {
-        usuario: '/usuario.php',
-        perfil: '/perfil.php',
+        usuario: 'usuario.php',
+        perfil: 'perfil.php',
         obtenerDeporte: 'obtener_deportes'
     }
 };

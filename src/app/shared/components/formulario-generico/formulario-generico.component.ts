@@ -32,6 +32,16 @@ export class FormularioGenericoComponent implements OnInit {
   public esEditable: boolean = false;
   public entidadOject: any[] = [];
 
+  //campos a eliminar en el formulario
+  public camposEliminar: any = {};
+
+
+  ///Array los cuales nos marcaran el tipo con los datos..
+  public tiposFechas: string[] = [];
+  public tiposPasword: string[] = [];
+  public tiposSelect: string[] = [];
+
+
 
   constructor(
     private fb: FormBuilder,
@@ -43,14 +53,14 @@ export class FormularioGenericoComponent implements OnInit {
 
   ngOnInit(): void {
 
-  
-
     this.titulo = this.data.datos.titulo || "";
     this.entity = this.data.datos.entidad || {}
     this.esEditable = this.data.datos.editable || false
 
-    console.log(this.entity)
+    //Objeto de camnpos a eliminar
+    this.camposEliminar = this.data.datos.camposAEliminar || {}
 
+    console.log(this.camposEliminar)
 
     //Llenamos la clave y le valor 
     this.entidadOject = Object.entries(this.entity).map(([propiedad, valor]) => {
@@ -78,17 +88,22 @@ export class FormularioGenericoComponent implements OnInit {
 
       if (entidad.propiedad.toLowerCase() === 'id' || entidad.propiedad === 'fecha_add') return;
 
-      //Cada uno podrá incluir más validadores aparte de ser required
-      const validators = this.getValidadorPorPropiedad(entidad.propiedad);
+      // Verifica si el campo está en los inputs a eliminar del formulario
+      const esCampoEliminar = this.esCampoAEliminar(entidad.propiedad, entidad.tipo);
 
-      const control = this.fb.control(entidad.valor.toLowerCase(), validators);
-
-      if (!this.esEditable) control.disable();
+      // Si el campo debe eliminarse, no le aplicamos validaciones (o se dejan las que no sean required)
+      const validators = esCampoEliminar ? [] : this.getValidadorPorPropiedad(entidad.propiedad);
 
       this.formularioDinamico.addControl(entidad.propiedad,
-        control);
+        this.fb.control(entidad.valor, validators));
     });
   }
+
+  private esCampoAEliminar(propiedad: string, tipo: string): boolean {
+    const camposAEliminar = this.camposEliminar[tipo] || [];
+    return camposAEliminar.includes(propiedad);
+  }
+
 
   private getValidadorPorPropiedad(propiedad: string) {
 
@@ -122,9 +137,20 @@ export class FormularioGenericoComponent implements OnInit {
     return optionsMap[propiedad.toLowerCase()] || [];
   }
 
+  public isCampoVisible(propiedad: string, tipo: string): boolean {
+
+    const camposAEliminar = this.camposEliminar[tipo] || [];
+
+    return !camposAEliminar.includes(propiedad);
+  }
+
+
   //Para recoger los valores del formulario
   public onSubmit() {
+
+  
     if (this.formularioDinamico.valid) {
+
       const formValues = { ...this.formularioDinamico.value };
 
       //Incluimos el id ya que en el formulario no lo mostramos...
@@ -143,6 +169,16 @@ export class FormularioGenericoComponent implements OnInit {
       this.eventEmitter.emit(formValues)
     } else {
       console.log("el formulario no es válido...")
+
+
+      Object.keys(this.formularioDinamico.controls).forEach(field => {
+        const control = this.formularioDinamico.get(field);
+        if (control && control.invalid) {
+          console.log(`Campo no válido: ${field}`);
+          console.log(control.errors);  // Esto te mostrará el tipo de error, como 'required', 'email', etc.
+        }
+      });
+
     }
   }
 

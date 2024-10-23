@@ -44,7 +44,24 @@ export const routes: Routes = [
     {
         path: 'usuarios',
         component: ContactosComponent,
-        data: { entidad: 'usuarios' }
+        data: {
+            entidad: 'usuarios',
+            columnasListar: ['id', 'nombre_usuario', 'nombre', 'apellidos','email','telefono','fecha_nac','tipo_usuario'],
+            tiposCampos: {
+                text:[],
+                date:[],
+                select : [],
+                password:[],
+                
+
+            },
+            //Objeto que le pasas el tipo y el campo que es y se encarga en formulario de eliminarlo.
+            inputsElimForm: {
+                text: [''],
+                date: ['fecha_add'],
+                select: ['estado'],
+            }
+        }
 
     },
     {
