@@ -81,6 +81,10 @@
           gap: 0.5rem;
         }
       }
+
+      ::ng-deep mat-paginator-container{
+        width: 100% !important;
+      }
     }
   }
 

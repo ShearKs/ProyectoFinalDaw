@@ -4,31 +4,35 @@
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
+          <mat-icon matPrefix>person</mat-icon>
           <input
             matInput
             type="text"
             placeholder="Usuario"
             formControlName="usuario"
           />
+          <mat-error *ngIf="loginForm.get('usuario')?.hasError('required')">
+            El usuario es obligatorio.
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-icon matPrefix>lock</mat-icon>
           <input
             matInput
             [type]="this.authService.contrasenaOculta ? 'password' : 'text'"
             placeholder="Contraseña"
             formControlName="contrasena"
-            type="password"
-          />
+            type="password"/>
 
-          <!-- 
-          <button mat-icon-button matSuffix type="button" matSuffix (click) = "mostrarContrasena($event)"> -->
           <mat-icon
             matSuffix
             (click)="this.authService.mostrarContrasena($event)"
-            >visibility</mat-icon
-          >
-          <!-- </button> -->
+            >{{ this.authService.esVisiblePass() }}</mat-icon>
+
+          <mat-error *ngIf="loginForm.get('contrasena')?.hasError('required')">
+            La contraseña es obligatoria.
+          </mat-error>
         </mat-form-field>
 
         <app-boton-generico label="Autenticarse" color="primary">

@@ -5,6 +5,7 @@
         <form [formGroup]="regisForm" (submit)="onSubmit()">
           <mat-form-field  appearance="outline">
             <mat-label>Nombre</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
             <input
               matInput
               type="text"
@@ -14,6 +15,7 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Apellidos</mat-label>
+            <mat-icon matPrefix>group</mat-icon>
             <input
               matInput
               type="text"
@@ -22,6 +24,7 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline">
+            <mat-icon matPrefix>account_circle</mat-icon>
             <mat-label>Usuario</mat-label>
             <input
               matInput
@@ -31,6 +34,7 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline">
+            <mat-icon matPrefix>mail</mat-icon>
             <mat-label>Correo</mat-label>
             <input
               matInput
@@ -40,6 +44,7 @@
           </mat-form-field>
   
           <mat-form-field appearance="outline">
+            <mat-icon matPrefix>lock</mat-icon>
             <mat-label>Contraseña</mat-label>
             <input
               matInput
@@ -47,10 +52,11 @@
               placeholder="Introduce la contraseña"
               formControlName="contrasena1"
               type="password"/>
-              <mat-icon matSuffix (click) = "this.authService.mostrarContrasena($event) ">visibility</mat-icon>
+              <mat-icon matSuffix (click) = "this.authService.mostrarContrasena($event) ">{{this.authService.esVisiblePass()}}</mat-icon>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
+            <mat-icon matPrefix>lock</mat-icon>
             <mat-label>Confirmar Contraseña</mat-label>
             <input
               matInput
@@ -58,7 +64,7 @@
               placeholder="Vuelve a introducir la contraseña"
               formControlName="contrasena2"
               type="password"/>
-              <mat-icon matSuffix (click) = "this.authService.mostrarContrasena($event) ">visibility</mat-icon>
+              <mat-icon matSuffix (click) = "this.authService.mostrarContrasena($event) ">{{this.authService.esVisiblePass()}}</mat-icon>
           </mat-form-field>
 
         <div class="mensaje-registro">

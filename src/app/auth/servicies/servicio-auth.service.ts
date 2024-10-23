@@ -14,4 +14,11 @@ export class ServicioAuthService {
     this.contrasenaOculta = !this.contrasenaOculta;
   }
 
+  public esVisiblePass():string{
+
+    return this.contrasenaOculta ? "visibility_off" : 
+      "visibility";
+  }
+
+
 }

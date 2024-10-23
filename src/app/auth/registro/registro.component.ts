@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [MatFormFieldModule,MatIconModule,RouterLink,MatInputModule, MatButtonModule, ReactiveFormsModule, MatCardModule],
+  imports: [MatFormFieldModule, MatIconModule, RouterLink, MatInputModule, MatButtonModule, ReactiveFormsModule, MatCardModule],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.scss'
 })
@@ -35,17 +35,21 @@ export class RegistroComponent {
   public onSubmit() {
     console.log('hola esto es el registro')
 
-    const nombre = this.regisForm.get('nombre')?.value
-    const apellidos = this.regisForm.get('apellidos')?.value
-    const usuario = this.regisForm.get('usuario')?.value
-    const correo = this.regisForm.get('correo')?.value
-    const contrasena = this.regisForm.get('contrasena1')?.value
+    if (this.regisForm.valid) {
 
-    console.log(nombre)
-    console.log(apellidos)
-    console.log(usuario)
-    console.log(correo)
-    console.log(contrasena)
+      const nombre = this.regisForm.get('nombre')?.value
+      const apellidos = this.regisForm.get('apellidos')?.value
+      const usuario = this.regisForm.get('usuario')?.value
+      const correo = this.regisForm.get('correo')?.value
+      const contrasena = this.regisForm.get('contrasena1')?.value
+
+      console.log(nombre)
+      console.log(apellidos)
+      console.log(usuario)
+      console.log(correo)
+      console.log(contrasena)
+
+    }
   }
 
 
