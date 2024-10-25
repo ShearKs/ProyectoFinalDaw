@@ -1,4 +1,11 @@
-<div class="app-container">
+<div *ngIf="!isLoggedIn">
+
+  <app-login (loginSuccess)="autenticado()"></app-login>
+
+</div>
+
+
+<div *ngIf="isLoggedIn" class="app-container">
   <div class="header">
     <app-menu></app-menu>
   </div>

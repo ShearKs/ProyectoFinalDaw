@@ -9,6 +9,25 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { Location } from '@angular/common';
 import { ReservaEstadoDirective } from './reserva-estado.directive';
+import { ReservasService } from './reservas.service';
+import { tap } from 'rxjs';
+
+export interface Reserva {
+
+  id?: number;
+  idCliente: number;
+  idPista: number;
+  idHorario: number;
+  idDeporte: number;
+  fecha: string;
+}
+
+
+
+
+
+
+
 
 @Component({
   selector: 'app-reservar-deporte',
@@ -37,6 +56,8 @@ export class ReservarDeporteComponent implements OnInit {
   //Propiedad para almacenar el estado de las reservas.
   public reservasEstado: { [key: string]: boolean } = {}
 
+  public fechaHoy: Date = new Date();
+
   public reservas: any = [
     { id: 1458555, idPista: 1, rangoHoras: { inicio: '09:00', fin: '10:00' }, pistaCubierta: true },
     { id: 4555453, idPista: 2, rangoHoras: { inicio: '09:00', fin: '10:00' }, pistaCubierta: false },
@@ -50,15 +71,53 @@ export class ReservarDeporteComponent implements OnInit {
     { id: 5523452, idPista: 3, rangoHoras: { inicio: '12:00', fin: '13:00' }, pistaCubierta: false },
   ];
 
-  constructor(private ruta: ActivatedRoute, private location: Location) { }
+  public reservasBdd: any [] = [];
+
+  constructor(
+    private ruta: ActivatedRoute,
+    private location: Location,
+    private readonly _apiReservas: ReservasService) { }
 
   ngOnInit(): void {
     const deporteId = this.ruta.snapshot.paramMap.get('id');
     this.deporteId = deporteId ? +deporteId : 0;
     console.log('Deporte seleccionado: ', this.deporteId);
-    console.log('--- Reservas ---');
-    console.log(this.reservas);
+
+    console.log('Dia de hoy: ', this.fechaHoy)
+    this.cargarReservas()
+    console.log(this.reservasBdd)
   }
+
+  //Método que se encarga de cargar todas las reservas que hay en la bdd..
+  public cargarReservas(): void {
+    this._apiReservas.getReservas(this.deporteId).pipe(
+      tap((reservas) => {
+        // Verificamos qué llega en reservas antes de mapear
+        console.log('Reservas desde el backend:', reservas);
+  
+        this.reservasBdd = reservas.map(reserva => ({
+          id: reserva.id,
+          idPista: reserva.idPista,
+          rangoHoras: {
+            inicio: reserva.horario_inicio.slice(0, 5), // Tomamos solo las horas y minutos
+            fin: reserva.horario_fin.slice(0, 5)        // Tomamos solo las horas y minutos
+          }
+        }));
+  
+        // Verificamos el estado de reservasBdd después de mapear
+        console.log('Reservas mapeadas:', this.reservasBdd);
+      })
+    ).subscribe({
+        next: () => {
+          // Aquí se puede asegurar que el dato ya está listo
+          console.log('Carga de reservas completada.');
+        },
+        error: (err) => {
+          console.error('Error al cargar las reservas:', err);
+        }
+    });
+  }
+
 
   public getReserva(time: string, recinto: string): boolean {
     const idPista = parseInt(recinto.split(' ')[1]);
