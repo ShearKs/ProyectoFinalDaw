@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { filter } from 'rxjs/operators';
 import { AutenticationService } from '../../../auth/servicies/autentication.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -21,14 +22,21 @@ export class MenuComponent implements OnInit {
 
   //Almacena la ruta actual para determinar que elemento del menú está activo.
   public rutaActual: string = "";
+  //Para controlar la autenticación
+  public isLoggedIn: boolean = false;
 
   constructor(
     private readonly _router: Router,
     private readonly _authService: AutenticationService,
     private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
+
+    this.isLoggedIn = this._authService.isLoggedIn();
+
+
     //Escucha los cambios en las rutas de navegación
     // 'NavigationEnd' indica que la navegación ha termiando y se puede actualizar la ruta
     this._router.events.pipe(
@@ -52,10 +60,9 @@ export class MenuComponent implements OnInit {
   //Método para cerrar sesión
   public onCerrarSesion(): void {
 
-    this._authService.cerrarSesion();
+    console.log('Cerrar sesión emitido desde MenuComponent')
+    this.cerrarSesionEvent.emit();
 
-    //Nos redirigimos al login de la aplicación
-    this._router.navigate(['/login']);
   }
 
 

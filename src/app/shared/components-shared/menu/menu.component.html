@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" *ngIf="isLoggedIn">
   <ul class="navbar-list">
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/') }">
       <button mat-button [routerLink]="['/']">

@@ -3,8 +3,9 @@ import { RouterOutlet, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from "./auth/login/login.component";
 import { MenuComponent } from './shared/components-shared/menu/menu.component';
-import { SpinerCargaComponent } from './shared/components-shared/spiner-carga/spiner-carga.component';
+
 import { AutenticationService } from './auth/servicies/autentication.service';
+import { SpinerCargaComponent } from './shared/components-shared/spiner-carga/spiner-carga.component';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +24,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    this.isLoggedIn = !!token; // Verifica si hay un token
+    this.checkLoginStatus();
   }
 
   public autenticado(): void {
@@ -32,13 +32,15 @@ export class AppComponent implements OnInit {
   }
 
   public onCerrarSesion(): void {
+    console.log('Ejecutando onCerrarSesion en AppComponent')
     this._authService.cerrarSesion();
-    this.isLoggedIn = false; // Actualiza el estado de autenticación
-    this._router.navigate(['/login']); // Redirige al login
+    this.isLoggedIn = false; 
+    this._router.navigate(['/login']);
   }
 
   private checkLoginStatus() {
-    this.isLoggedIn = !!localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    this.isLoggedIn = !!token;
     console.log('está autenticado? ', this.isLoggedIn);
   }
 }

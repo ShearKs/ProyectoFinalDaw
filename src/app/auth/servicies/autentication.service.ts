@@ -28,7 +28,7 @@ export class AutenticationService {
     return this._http.post<LoginResponse>(`${this.apiUrl}/${this.authEndPoint}.php`, { modo: 'registro', data: nuevoUsuario });
   }
 
-  isLoggedIn(): boolean {
+  public isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
 
