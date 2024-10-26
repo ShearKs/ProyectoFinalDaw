@@ -12,12 +12,7 @@
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/ejemplos') }">
       <button mat-button [matMenuTriggerFor]="examplesMenu">Ejemplos</button>
       <mat-menu #examplesMenu="matMenu">
-        <button mat-menu-item [routerLink]="['/ejemplos/tabla-api']">
-          Ejemplo Tabla API
-        </button>
-        <button mat-menu-item [routerLink]="['/ejemplos/login']">
-          Ejemplo Login
-        </button>
+        
         <button mat-menu-item [routerLink]="['/ejemplos/formulario']">
           Ejemplo Formulario
         </button>
@@ -41,6 +36,14 @@
 
       <button mat-button [routerLink]="['/elegir-deporte']">
         Seleccionar Deporte
+      </button>
+    </li>
+    <li
+      class="navbar-item"
+      [ngClass]="{ active: isActiveRoute('/elegir-deporte') }">
+
+      <button mat-button >
+        Cerrar Sesión
       </button>
     </li>
   </ul>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NavigationEnd, Router, RouterLink, RouterModule, RouterOutlet ,Event} from '@angular/router';
-import { TablaApiComponent } from '../../../tabla-api/tabla-api.component';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +9,7 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [RouterOutlet, MatIconModule, CommonModule, RouterLink, RouterModule, TablaApiComponent, MatButtonModule, MatMenuModule],
+  imports: [RouterOutlet, MatIconModule, CommonModule, RouterLink, RouterModule, MatButtonModule, MatMenuModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })

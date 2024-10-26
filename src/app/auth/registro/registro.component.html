@@ -1,80 +1,62 @@
 <div class="carta">
-    <mat-card appearance="outlined">
-      <mat-card-title>Crea un nuevo usuario</mat-card-title>
-      <mat-card-content>
-        <form [formGroup]="regisForm" (submit)="onSubmit()">
-          <mat-form-field  appearance="outline">
-            <mat-label>Nombre</mat-label>
-            <mat-icon matPrefix>person</mat-icon>
-            <input
-              matInput
-              type="text"
-              placeholder="Introduce tu nombre"
-              formControlName="nombre"/>
-          </mat-form-field>
+  <mat-card appearance="outlined">
+    <mat-card-title>Crea un nuevo usuario</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="regisForm" (submit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput type="text" placeholder="Introduce tu nombre" formControlName="nombre" />
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Apellidos</mat-label>
-            <mat-icon matPrefix>group</mat-icon>
-            <input
-              matInput
-              type="text"
-              placeholder="Introduce tus apellidos"
-              formControlName="apellidos"/>
-          </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Apellidos</mat-label>
+          <mat-icon matPrefix>group</mat-icon>
+          <input matInput type="text" placeholder="Introduce tus apellidos" formControlName="apellidos" />
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>account_circle</mat-icon>
-            <mat-label>Usuario</mat-label>
-            <input
-              matInput
-              type="text"
-              placeholder="Nombre de Usuario"
-              formControlName="usuario"/>
-          </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>account_circle</mat-icon>
+          <mat-label>Usuario</mat-label>
+          <input matInput type="text" placeholder="Nombre de Usuario" formControlName="usuario" />
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>mail</mat-icon>
-            <mat-label>Correo</mat-label>
-            <input
-              matInput
-              type="mail"
-              placeholder="Introduce tu dirección de correo"
-              formControlName="correo"/>
-          </mat-form-field>
-  
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>lock</mat-icon>
-            <mat-label>Contraseña</mat-label>
-            <input
-              matInput
-              [type]="this.authService.contrasenaOculta ? 'password' : 'text' "
-              placeholder="Introduce la contraseña"
-              formControlName="contrasena1"
-              type="password"/>
-              <mat-icon matSuffix (click) = "this.authService.mostrarContrasena($event) ">{{this.authService.esVisiblePass()}}</mat-icon>
-          </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>mail</mat-icon>
+          <mat-label>Correo</mat-label>
+          <input matInput type="mail" placeholder="Introduce tu dirección de correo" formControlName="correo" />
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>lock</mat-icon>
-            <mat-label>Confirmar Contraseña</mat-label>
-            <input
-              matInput
-              [type]="this.authService.contrasenaOculta ? 'password' : 'text' "
-              placeholder="Vuelve a introducir la contraseña"
-              formControlName="contrasena2"
-              type="password"/>
-              <mat-icon matSuffix (click) = "this.authService.mostrarContrasena($event) ">{{this.authService.esVisiblePass()}}</mat-icon>
-          </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-label>Contraseña</mat-label>
+          <input matInput [type]="this.authService.contrasenaOculta ? 'password' : 'text' "
+            placeholder="Introduce la contraseña" formControlName="contrasena1" type="password" />
+          <mat-icon matSuffix
+            (click)="this.authService.mostrarContrasena($event) ">{{this.authService.esVisiblePass()}}</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-icon matPrefix>lock</mat-icon>
+          <mat-label>Confirmar Contraseña</mat-label>
+          <input matInput [type]="this.authService.contrasenaOculta ? 'password' : 'text' "
+            placeholder="Vuelve a introducir la contraseña" formControlName="contrasena2" type="password" />
+          <mat-icon matSuffix
+            (click)="this.authService.mostrarContrasena($event) ">{{this.authService.esVisiblePass()}}</mat-icon>
+
+        </mat-form-field>
+
+        <mat-error *ngIf="regisForm.get('contrasena2')?.hasError('noCoinciden')">
+          Las contraseñas no coinciden
+       </mat-error>
 
         <div class="mensaje-registro">
-            ¿Ya estás registrado <a [routerLink]="['/ejemplos/login']"  >inicia sesión</a> ?
+          ¿Ya estás registrado <a [routerLink]="['/login']">inicia sesión</a> ?
         </div>
 
-          <button mat-flat-button color="primary" >Registrate</button>
-        </form>
+        <button mat-flat-button color="primary">Registrate</button>
+      </form>
 
-      </mat-card-content>
-    </mat-card>
-  </div>
-  
+    </mat-card-content>
+  </mat-card>
+</div>

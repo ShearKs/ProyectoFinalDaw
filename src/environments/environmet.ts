@@ -9,6 +9,7 @@ export const environment = {
         perfil: 'perfil.php',
         obtenerDeporte: 'obtener_deportes',
         reservas:'reservas',
-        login:'login'
+        login:'login',
+        registro:'registro',
     }
 };

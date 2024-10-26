@@ -3,13 +3,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatError, MatFormField } from '@angular/material/form-field';
 import { FormGroup, FormBuilder, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { BotonGenericoComponent } from "../../shared/components/boton-generico/boton-generico.component";
+
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ServicioAuthService } from '../servicies/servicio-auth.service';
 import { NgIf } from '@angular/common';
 import { AutenticationService } from '../servicies/autentication.service';
 import { tap } from 'rxjs';
+import { BotonGenericoComponent } from '../../shared/components-shared/boton-generico/boton-generico.component';
 
 @Component({
   selector: 'app-login',
