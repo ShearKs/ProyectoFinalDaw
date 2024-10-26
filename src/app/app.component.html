@@ -1,15 +1,15 @@
+<!-- Contenido para cuando no está autenticado -->
 <div *ngIf="!isLoggedIn">
-
   <app-login (loginSuccess)="autenticado()"></app-login>
-
 </div>
 
+<!-- Contenido para cuando está autenticado -->
 <div *ngIf="isLoggedIn" class="app-container">
   <div class="header">
-    <app-menu></app-menu>
+    <app-menu (cerrarSesionEvent)="onCerrarSesion()"></app-menu>
+    <app-spiner-carga></app-spiner-carga>
   </div>
-  <app-spiner-carga></app-spiner-carga>
   <div class="main-content">
-    <router-outlet></router-outlet>
+    <router-outlet></router-outlet> <!-- Aquí se renderizarán las rutas -->
   </div>
 </div>

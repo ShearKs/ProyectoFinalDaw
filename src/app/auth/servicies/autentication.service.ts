@@ -3,14 +3,8 @@ import { environment } from '../../../environments/environmet';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../interfaces/usuario.interface';
+import { LoginResponse } from '../interfaces/loginresponse.interface';
 
-interface LoginResponse {
-
-  success: boolean;
-  user?: any;
-  message?: string,
-  token?: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -18,25 +12,31 @@ interface LoginResponse {
 export class AutenticationService {
 
   private apiUrl: string = environment.apiUrl;
-  private loginEndPoint: string = environment.controllers.login;
-  private registroEndPoint: string = environment.controllers.registro;
+  private authEndPoint: string = environment.controllers.autenticacion;
+
 
   constructor(private readonly _http: HttpClient) { }
 
   public login(username: string, password: string): Observable<LoginResponse> {
 
-
-    return this._http.post<LoginResponse>(`${this.apiUrl}/${this.loginEndPoint}.php`, { usuario: username, contrasena: password });
+    return this._http.post<LoginResponse>(`${this.apiUrl}/${this.authEndPoint}.php`, { modo: 'login', data: { username, password } });
 
   }
 
-  public crearUsuario(nuevoUsuario : Usuario){
+  public crearUsuario(nuevoUsuario: Usuario): Observable<any> {
 
-    return this._http.post<LoginResponse>(`${this.apiUrl}/${this.registroEndPoint}.php`, nuevoUsuario);
+    return this._http.post<LoginResponse>(`${this.apiUrl}/${this.authEndPoint}.php`, { modo: 'registro', data: nuevoUsuario });
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 
 
+  public cerrarSesion(): void {
 
+    localStorage.removeItem('token');
+  }
 
 
 }

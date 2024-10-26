@@ -16,6 +16,20 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-label>Fecha de Nacimiento</mat-label>
+          <mat-icon matPrefix>calendar_today</mat-icon>
+          <input matInput [matDatepicker]="picker" placeholder="Introduce tu fecha de nacimiento" formControlName="fechaNacimiento" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono</mat-label>
+          <mat-icon matPrefix>phone</mat-icon>
+          <input matInput type="tel" placeholder="Introduce tu número de teléfono" formControlName="telefono" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-icon matPrefix>account_circle</mat-icon>
           <mat-label>Usuario</mat-label>
           <input matInput type="text" placeholder="Nombre de Usuario" formControlName="usuario" />

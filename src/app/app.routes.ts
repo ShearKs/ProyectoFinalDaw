@@ -10,42 +10,46 @@ import { CursosComponent } from './components/cursos/cursos.component';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { FormularioComponent } from './shared/components-shared/formulario/formulario.component';
 import { ContactosComponent } from './shared/components-shared/contactos/contactos.component';
+import { AuthGuard } from './auth/auth.guard';
+import { CanActivateGuard } from './auth/can-activate.guard';
+import { MenuComponent } from './shared/components-shared/menu/menu.component';
 
 
 export const routes: Routes = [
 
     {
-       
-        path: '',
-        component: HomeComponent
-    }
-    ,
-    {  
+        canActivate: [CanActivateGuard],
         path: 'login',
         component: LoginComponent
     },
     {
-       
+        canActivate: [CanActivateGuard],
         path: 'registro',
         component: RegistroComponent
+    },
+    {
+        canActivate: [AuthGuard],
+        path: '',
+        component: HomeComponent
     },
     {
         path: 'ejemplos',
         children: [
 
             {
+                canActivate: [AuthGuard],
                 path: 'formulario',
                 component: FormularioComponent
             },
             {
-                
+                canActivate: [AuthGuard],
                 path: 'perfil',
                 component: PerfilComponent
             }
         ]
     },
     {
-       
+        canActivate: [AuthGuard],
         path: 'usuarios',
         component: ContactosComponent,
         data: {
@@ -66,23 +70,27 @@ export const routes: Routes = [
         }
 
     },
+    // {
+    //     canActivate: [AuthGuard],
+    //     component: MenuComponent
+    // },
     {
-       
+        canActivate: [AuthGuard],
         path: 'contactos',
         component: ContactosComponent
     },
     {
-      
+        canActivate: [AuthGuard],
         path: 'cursos',
         component: CursosComponent
     },
     {
-       
+        canActivate: [AuthGuard],
         path: 'elegir-deporte',
         component: ElegirDeporteComponent
     },
     {
-       
+        canActivate: [AuthGuard],
         path: 'elegir-deporte/reservar-deporte/:id',
         component: ReservarDeporteComponent
     }

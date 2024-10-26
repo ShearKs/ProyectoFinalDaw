@@ -1,9 +1,7 @@
 <nav class="navbar">
   <ul class="navbar-list">
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/') }">
-      <button
-        mat-button
-        [routerLink]="['/']">
+      <button mat-button [routerLink]="['/']">
         <mat-icon>home</mat-icon>
         Inicio
       </button>
@@ -12,7 +10,6 @@
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/ejemplos') }">
       <button mat-button [matMenuTriggerFor]="examplesMenu">Ejemplos</button>
       <mat-menu #examplesMenu="matMenu">
-        
         <button mat-menu-item [routerLink]="['/ejemplos/formulario']">
           Ejemplo Formulario
         </button>
@@ -30,19 +27,14 @@
       <button mat-button [routerLink]="['/cursos']">Cursos</button>
     </li>
 
-    <li
-      class="navbar-item"
-      [ngClass]="{ active: isActiveRoute('/elegir-deporte') }">
-
+    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/elegir-deporte') }">
       <button mat-button [routerLink]="['/elegir-deporte']">
         Seleccionar Deporte
       </button>
     </li>
-    <li
-      class="navbar-item"
-      [ngClass]="{ active: isActiveRoute('/elegir-deporte') }">
 
-      <button mat-button >
+    <li class="navbar-item">
+      <button mat-button (click)="onCerrarSesion()">
         Cerrar Sesión
       </button>
     </li>
