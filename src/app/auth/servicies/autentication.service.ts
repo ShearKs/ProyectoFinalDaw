@@ -36,6 +36,8 @@ export class AutenticationService {
   public cerrarSesion(): void {
 
     localStorage.removeItem('token');
+    localStorage.removeItem('fechaHoy');
+    localStorage.removeItem('user');
   }
 
 

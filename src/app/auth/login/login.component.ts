@@ -26,9 +26,6 @@ export class LoginComponent implements OnInit {
 
   @Output() loginSuccess = new EventEmitter<void>();
 
-  // Aquí puedes manejar el estado de tu formulario, por ejemplo
-  private isFormDirty: boolean = false;
-
   public loginForm: FormGroup;
 
   constructor(
@@ -64,9 +61,14 @@ export class LoginComponent implements OnInit {
       tap((respuesta) => {
         if (respuesta.success) {
           localStorage.setItem('token', respuesta.token!);
-          console.log('autenticado');
+          //Insertamos el usuario para utilizar sus datos
+          localStorage.setItem('user',respuesta.user)
+
+
           this.loginSuccess.emit(); // Emitir evento de éxito
-          this._router.navigate(['/']); // Redirigir a la página deseada
+
+          //Nos vamos al home
+          this._router.navigate(['/']);
         } else {
           this._abrirDialogoConfirmacion('Error al iniciar sesión', false); // Mostrar mensaje de error
         }
