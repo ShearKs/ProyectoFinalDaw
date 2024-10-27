@@ -7,6 +7,7 @@ export interface Usuario {
     telefono: number;
     email: string;
     contrasena?: string;
-    fecha_add: string | null;
+    fecha_add?: string | null;
     fecha_nac: string;
+    tipo_usuario? :string
   }

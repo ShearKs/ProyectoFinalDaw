@@ -80,8 +80,6 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-
-
     this.datasource.paginator = this.paginator;
   }
 

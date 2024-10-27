@@ -13,10 +13,13 @@
         <button mat-menu-item [routerLink]="['/ejemplos/formulario']">
           Ejemplo Formulario
         </button>
-        <button mat-menu-item [routerLink]="['/ejemplos/perfil']">
-          Perfil  
-        </button>
       </mat-menu>
+    </li>
+
+    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/perfil') }">
+      <button mat-button [routerLink]="['/perfil']">
+        <mat-icon matSuffix>person</mat-icon>
+        Perfil</button>
     </li>
 
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/usuarios') }">
@@ -29,12 +32,15 @@
 
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/elegir-deporte') }">
       <button mat-button [routerLink]="['/elegir-deporte']">
+        <mat-icon matSuffix>sports_baseball</mat-icon>
         Seleccionar Deporte
       </button>
     </li>
 
     <li class="navbar-item">
+      
       <button mat-button (click)="onCerrarSesion()">
+        <mat-icon matSuffix>logout</mat-icon>
         Cerrar Sesión
       </button>
     </li>

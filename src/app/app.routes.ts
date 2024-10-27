@@ -33,6 +33,11 @@ export const routes: Routes = [
         component: HomeComponent
     },
     {
+        canActivate: [AuthGuard],
+        path: 'perfil',
+        component: PerfilComponent
+    },
+    {
         path: 'ejemplos',
         children: [
 
@@ -41,11 +46,7 @@ export const routes: Routes = [
                 path: 'formulario',
                 component: FormularioComponent
             },
-            {
-                canActivate: [AuthGuard],
-                path: 'perfil',
-                component: PerfilComponent
-            }
+           
         ]
     },
     {

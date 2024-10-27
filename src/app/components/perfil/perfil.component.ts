@@ -9,12 +9,15 @@ import { tap } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { CommonModule, TitleCasePipe } from '@angular/common';
+import { sameObject } from '../../functions';
+import { Usuario } from '../../auth/interfaces/usuario.interface';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatCardModule, MatDatepickerModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [MatCardModule, CommonModule, TitleCasePipe, MatDatepickerModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,7 +45,7 @@ export class PerfilComponent implements OnInit {
     });
 
     // Recogemos al usuario que está en localStorage
-    this.usuarioLogged= JSON.parse(localStorage.getItem('user') || '{}'); // Asegúrate de parsear correctamente
+    this.usuarioLogged = JSON.parse(localStorage.getItem('user') || '{}'); // Asegúrate de parsear correctamente
 
     // Cargar datos del usuario en el formulario
     this.formulario.patchValue({
@@ -56,9 +59,45 @@ export class PerfilComponent implements OnInit {
     console.log(this.usuarioLogged);
   }
 
+
   //función en la que puedes editar el componente...
   public setEditable(): void {
     this.modoEdit = !this.modoEdit
+  }
+
+  public onSubmit(){
+
+    //Recogemos todo que tenemos para editar al usuario..
+    const nombre = this.formulario.get('nombre')?.value;
+    const apellidos = this.formulario.get('apellidos')?.value;
+    const email = this.formulario.get('correo')?.value;
+    const telefono = this.formulario.get('telefono')?.value;
+    const fecha_nac = this.formulario.get('fecha_nac')?.value;
+
+    const usuarioEdit : Usuario = {
+      //El  id y el nombre de usuario va a ser siempre el mismo no se va a cambiar...
+      id: this.usuarioLogged.id,
+      nombre_usuario : this.usuarioLogged.nombre_usuario,
+      nombre : this.formulario.get('nombre')?.value,
+      apellidos : this.formulario.get('apellidos')?.value,
+      email: this.formulario.get('correo')?.value,
+      telefono: this.formulario.get('telefono')?.value,
+      fecha_nac: this.formulario.get('fecha_nac')?.value,
+      tipo_usuario: this.usuarioLogged.tipo_usuario,
+
+    }
+
+    console.log(usuarioEdit)
+
+    if(!sameObject(this.usuarioLogged,usuarioEdit)){
+
+      console.log('Es el mismo usuario')
+
+    }else{
+      alert('No has cambiado nada...');
+    }
+
+
   }
 
 
