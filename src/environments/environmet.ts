@@ -6,7 +6,7 @@ export const environment = {
     //llamadas a api
     controllers: {
         usuario: 'usuario.php',
-        perfil: 'perfil.php',
+        perfil: 'perfil',
         obtenerDeporte: 'obtener_deportes',
         reservas:'reservas',
         autenticacion: 'autenticacion',

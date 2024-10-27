@@ -12,9 +12,9 @@ import { Usuario } from '../../auth/interfaces/usuario.interface';
 export class PerfilServiciosService {
 
   private baseUrl: string = environment.apiUrl;
-  private entidad: string = environment.controllers.perfil;
-
-  private apiUrl = `${this.baseUrl}${this.entidad}`;
+  private apiUrl: string = environment.controllers.perfil;
+  
+  private modo: string = '';
 
   constructor(private readonly _http: HttpClient) { }
 
@@ -23,6 +23,7 @@ export class PerfilServiciosService {
   }
 
   public editarUsuario(usuarioEdit : Usuario):Observable<any>   {
-    return this._http.post<any>(`${this.baseUrl}/${this.apiUrl}`,usuarioEdit);
+
+    return this._http.post<any>(`${this.baseUrl}/controlador_${this.apiUrl}.php`,{modo: 'edit', usuario: usuarioEdit});
   }
 }

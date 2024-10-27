@@ -31,6 +31,7 @@ export class PerfilComponent implements OnInit {
   constructor(
     private readonly _perfilServicio: PerfilServiciosService,
     private readonly __fb: FormBuilder,
+    private readonly __apiPerfil: PerfilServiciosService,
   ) { }
   ngOnInit(): void {
 
@@ -65,7 +66,7 @@ export class PerfilComponent implements OnInit {
     this.modoEdit = !this.modoEdit
   }
 
-  public onSubmit(){
+  public onSubmit() {
 
     //Recogemos todo que tenemos para editar al usuario..
     const nombre = this.formulario.get('nombre')?.value;
@@ -74,12 +75,12 @@ export class PerfilComponent implements OnInit {
     const telefono = this.formulario.get('telefono')?.value;
     const fecha_nac = this.formulario.get('fecha_nac')?.value;
 
-    const usuarioEdit : Usuario = {
+    const usuarioEdit: Usuario = {
       //El  id y el nombre de usuario va a ser siempre el mismo no se va a cambiar...
       id: this.usuarioLogged.id,
-      nombre_usuario : this.usuarioLogged.nombre_usuario,
-      nombre : this.formulario.get('nombre')?.value,
-      apellidos : this.formulario.get('apellidos')?.value,
+      nombre_usuario: this.usuarioLogged.nombre_usuario,
+      nombre: this.formulario.get('nombre')?.value,
+      apellidos: this.formulario.get('apellidos')?.value,
       email: this.formulario.get('correo')?.value,
       telefono: this.formulario.get('telefono')?.value,
       fecha_nac: this.formulario.get('fecha_nac')?.value,
@@ -88,16 +89,22 @@ export class PerfilComponent implements OnInit {
     }
 
     console.log(usuarioEdit)
+    console.log(this.usuarioLogged)
 
-    if(!sameObject(this.usuarioLogged,usuarioEdit)){
+    if (!sameObject(this.usuarioLogged, usuarioEdit)) {
 
-      console.log('Es el mismo usuario')
+      //si hemos cambiado algún dato hacemos la petición para cambiaa los dartos de usuario a 
+      this.__apiPerfil.editarUsuario(usuarioEdit).pipe(
+        tap((resultEdit => {
 
-    }else{
+          console.log(resultEdit)
+
+        }))
+      ).subscribe();
+
+    } else {
       alert('No has cambiado nada...');
     }
-
-
   }
 
 
