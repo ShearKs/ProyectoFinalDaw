@@ -67,16 +67,8 @@ export class PerfilComponent implements OnInit {
   }
 
   public onSubmit() {
-
-    //Recogemos todo que tenemos para editar al usuario..
-    const nombre = this.formulario.get('nombre')?.value;
-    const apellidos = this.formulario.get('apellidos')?.value;
-    const email = this.formulario.get('correo')?.value;
-    const telefono = this.formulario.get('telefono')?.value;
-    const fecha_nac = this.formulario.get('fecha_nac')?.value;
-
+    // Obtenemos los datos del formulario
     const usuarioEdit: Usuario = {
-      //El  id y el nombre de usuario va a ser siempre el mismo no se va a cambiar...
       id: this.usuarioLogged.id,
       nombre_usuario: this.usuarioLogged.nombre_usuario,
       nombre: this.formulario.get('nombre')?.value,
@@ -85,27 +77,32 @@ export class PerfilComponent implements OnInit {
       telefono: this.formulario.get('telefono')?.value,
       fecha_nac: this.formulario.get('fecha_nac')?.value,
       tipo_usuario: this.usuarioLogged.tipo_usuario,
-
-    }
-
-    console.log(usuarioEdit)
-    console.log(this.usuarioLogged)
-
+    };
+  
     if (!sameObject(this.usuarioLogged, usuarioEdit)) {
-
-      //si hemos cambiado algún dato hacemos la petición para cambiaa los dartos de usuario a 
       this.__apiPerfil.editarUsuario(usuarioEdit).pipe(
-        tap((resultEdit => {
-
-          console.log(resultEdit)
-
-        }))
+        tap(resultEdit => {
+          if (resultEdit.status === "exito") {
+            // Actualiza localStorage y la referencia de usuarioLogged
+            localStorage.setItem('user', JSON.stringify(usuarioEdit));
+            this.usuarioLogged = { ...usuarioEdit };
+  
+            // Actualiza el formulario con los datos nuevos
+            this.formulario.patchValue({
+              nombre: usuarioEdit.nombre,
+              apellidos: usuarioEdit.apellidos,
+              telefono: usuarioEdit.telefono,
+              correo: usuarioEdit.email,
+              fecha_nac: usuarioEdit.fecha_nac,
+            });
+          }
+        })
       ).subscribe();
-
     } else {
       alert('No has cambiado nada...');
     }
   }
+  
 
 
 }

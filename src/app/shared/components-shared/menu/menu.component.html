@@ -18,16 +18,20 @@
 
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/perfil') }">
       <button mat-button [routerLink]="['/perfil']">
-        <mat-icon matSuffix>person</mat-icon>
+        <mat-icon matSuffix>account_circle</mat-icon>
         Perfil</button>
     </li>
 
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/usuarios') }">
-      <button mat-button [routerLink]="['/usuarios']">Usuarios</button>
+      <button mat-button [routerLink]="['/usuarios']">
+        <mat-icon matSuffix>group</mat-icon>
+        Usuarios</button>
     </li>
 
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/cursos') }">
-      <button mat-button [routerLink]="['/cursos']">Cursos</button>
+      <button mat-button [routerLink]="['/cursos']">
+        <mat-icon matSuffix>school</mat-icon>
+        Cursos</button>
     </li>
 
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/elegir-deporte') }">
@@ -38,7 +42,7 @@
     </li>
 
     <li class="navbar-item">
-      
+
       <button mat-button (click)="onCerrarSesion()">
         <mat-icon matSuffix>logout</mat-icon>
         Cerrar Sesión

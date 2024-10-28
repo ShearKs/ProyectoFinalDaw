@@ -1,1 +1,18 @@
-<p>cursos works!</p>
+<div class="cursos-container">
+    <mat-card *ngFor="let curso of cursos" class="curso-card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="curso-avatar">
+          <mat-icon color="primary">school</mat-icon>
+        </div>
+        <mat-card-title>{{ curso.nombre }}</mat-card-title>
+        <mat-card-subtitle>Plazas disponibles: {{ curso.plazas }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Deporte ID: {{ curso.idDeporte }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>Apuntarse</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  

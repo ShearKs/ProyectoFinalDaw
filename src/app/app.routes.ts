@@ -38,6 +38,11 @@ export const routes: Routes = [
         component: PerfilComponent
     },
     {
+        canActivate: [AuthGuard],
+        path: 'cursos',
+        component: CursosComponent
+    },
+    {
         path: 'ejemplos',
         children: [
 
