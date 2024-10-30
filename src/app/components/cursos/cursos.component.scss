@@ -1,18 +1,37 @@
 .cursos-container {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  align-items: center;
-
+  align-items: flex-start;
+  gap: 1rem;
   padding: 2rem;
   background-color: azure;
 }
 
 .curso-card {
-  width: 300px;
+  width: 400px; /* Establecer un ancho fijo */
+  // O también puedes usar un ancho máximo
+  max-width: 100%; /* Permitir que la tarjeta sea tan ancha como el contenedor */
 }
 
 .curso-avatar {
-  background-color: #3f51b5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #9fa3be;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+  align-items: center;
+
+  .btn-apuntarse {
+    border-radius: 0.5rem;
+    background-color: rgb(204, 216, 216);
+    cursor: pointer;
+  }
 }

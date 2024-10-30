@@ -2,20 +2,22 @@
   <mat-card class="example-card" appearance="outlined">
     <mat-card-header>
       <div mat-card-avatar class="header-image">
-        <mat-icon color="primary">person</mat-icon>
+        <mat-icon color="primary" class="profile-icon">person</mat-icon>
       </div>
       <mat-card-title>
         Perfil de usuario - {{ usuarioLogged.nombre }}, {{ usuarioLogged.apellidos }}
       </mat-card-title>
-      <mat-card-subtitle>{{usuarioLogged?.tipo_usuario | titlecase }}</mat-card-subtitle>
-      <button mat-button (click)="setEditable()">
+      <mat-card-subtitle>{{usuarioLogged.tipo_usuario | titlecase }}</mat-card-subtitle>
+
+      <button mat-button (click)="setEditable()" [ngClass]="{'btn-green': !modoEdit, 'btn-red' : modoEdit}">
         <mat-icon>edit</mat-icon>
-        {{ modoEdit ? 'Cancelar' : 'Editar' }}
+        {{ modoEdit ? 'Cancelar edición' : 'Editar' }}
       </button>
+
     </mat-card-header>
 
     <mat-card-content>
-      <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+      <form [formGroup]="formulario" [ngClass]="{'edit-mode': modoEdit}" (ngSubmit)="onSubmit()">
 
         <!-- <div class="campo-formulario">
           <mat-form-field appearance="outline">
@@ -46,19 +48,11 @@
           </mat-form-field>
         </div>
 
-        <div class="campo-formulario">
-          <mat-form-field appearance="outline">
-            <mat-icon matPrefix>person</mat-icon>
-            <mat-label>Teléfono</mat-label>
-            <input matInput type="tel" formControlName="telefono" [readonly]="!modoEdit" />
-          </mat-form-field>
-        </div>
 
         <div class="campo-formulario">
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Introduce tu fecha de Nacmiento</mat-label>
             <input matInput [matDatepicker]="dp1" formControlName="fecha_nac" [readonly]="!modoEdit">
-            <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="dp1"></mat-datepicker-toggle>
             <mat-datepicker #dp1 [disabled]="!modoEdit"></mat-datepicker>
           </mat-form-field>
@@ -67,6 +61,7 @@
         <div *ngIf="this.modoEdit">
           <button mat-button type="submit" class="btnEdit">Cambia tus datos</button>
         </div>
+
       </form>
     </mat-card-content>
   </mat-card>
