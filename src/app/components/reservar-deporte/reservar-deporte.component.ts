@@ -21,14 +21,6 @@ export interface Reserva {
   idDeporte: number;
   fecha: string;
 }
-
-
-
-
-
-
-
-
 @Component({
   selector: 'app-reservar-deporte',
   standalone: true,

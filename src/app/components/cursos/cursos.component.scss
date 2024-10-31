@@ -1,18 +1,25 @@
 .cursos-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 1rem;
+
+  flex-wrap: wrap; /* Permite que las tarjetas se envuelvan si no hay suficiente espacio */
+  gap: 1rem; /* Espaciado entre las tarjetas */
+  justify-content: center; /* Centra las tarjetas en el contenedor */
   padding: 2rem;
   background-color: azure;
 }
 
 .curso-card {
-  width: 400px; /* Establecer un ancho fijo */
-  // O también puedes usar un ancho máximo
+  width: 400px; /* Ancho fijo */
   max-width: 100%; /* Permitir que la tarjeta sea tan ancha como el contenedor */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 8px; /* Esquinas redondeadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombreado */
+  transition: transform 0.3s, box-shadow 0.3s; /* Transición para animación */
+
+  &:hover {
+    transform: translateY(-5px); /* Levanta la tarjeta al pasar el cursor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Aumenta el sombreado al pasar el cursor */
+  }
 }
 
 .curso-avatar {
@@ -25,13 +32,10 @@
 
 mat-card-actions {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 16px;
-  align-items: center;
+  justify-content: flex-end; /* Alinea el botón a la derecha */
+  margin-top: auto; /* Asegura que el botón esté al final del contenido */
+}
 
-  .btn-apuntarse {
-    border-radius: 0.5rem;
-    background-color: rgb(204, 216, 216);
-    cursor: pointer;
-  }
+.btn-apuntarse {
+  margin: 0 auto; /* Centra el botón dentro del contenedor */
 }

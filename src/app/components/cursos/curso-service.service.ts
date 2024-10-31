@@ -11,14 +11,14 @@ import { Inscripcion } from './interfaces/inscripciones.interface';
 export class CursoServiceService {
 
   private apiUrl: string = environment.apiUrl;
-  private cursosEndPoint: string = `${this.apiUrl}/controlador_${environment.controllers.curso}`;
+  private cursosEndPoint: string = `${this.apiUrl}/controlador_${environment.controllers.cursos}`;
 
   constructor(private readonly _http: HttpClient) { }
 
   //Devuelve todos los cursos desponibles y las plazas disponibles...
   public getCursos(): Observable<any> {
 
-    return this._http.get<any>(`${this.cursosEndPoint}.php?modo='getCurso'`);
+    return this._http.get<any>(`${this.cursosEndPoint}.php?modo=getCurso`);
   }
 
   //Método que lo utilizará el administrador ..
