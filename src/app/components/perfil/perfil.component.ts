@@ -12,12 +12,13 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { sameObject } from '../../functions';
 import { Usuario } from '../../auth/interfaces/usuario.interface';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatCardModule, CommonModule, TitleCasePipe, MatDatepickerModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [MatTabsModule ,MatCardModule, CommonModule, TitleCasePipe, MatDatepickerModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

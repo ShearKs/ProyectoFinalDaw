@@ -7,14 +7,6 @@
       </button>
     </li>
 
-    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/ejemplos') }">
-      <button mat-button [matMenuTriggerFor]="examplesMenu">Ejemplos</button>
-      <mat-menu #examplesMenu="matMenu">
-        <button mat-menu-item [routerLink]="['/ejemplos/formulario']">
-          Ejemplo Formulario
-        </button>
-      </mat-menu>
-    </li>
 
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/perfil') }">
       <button mat-button [routerLink]="['/perfil']">

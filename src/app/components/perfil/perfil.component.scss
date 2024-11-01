@@ -6,101 +6,102 @@
   margin: 8%;
 
   mat-card {
-    border-radius: 12px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: box-shadow 0.3s, transform 0.3s; /* Transición suave para hover */
+    border-radius: 12px; // Bordes redondeados
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra suave
+    transition: box-shadow 0.3s, transform 0.3s; // Transición suave para hover
 
     &:hover {
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Aumentar sombra al pasar el mouse */
-      transform: scale(1.02); /* Escalar ligeramente al hacer hover */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); // Aumentar sombra al pasar el mouse
+      transform: scale(1.02); // Escalar ligeramente al hacer hover
     }
 
-  
     .header-image {
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: rgb(122, 222, 255);
       margin: 0.35rem;
-      width: 50px; /* Tamaño del círculo (ajusta según sea necesario) */
-      height: 50px; /* Tamaño del círculo (ajusta según sea necesario) */
-      border-radius: 50%; /* Hace que el contenedor sea redondo */
-      overflow: hidden; /* Asegura que el contenido no sobresalga del contenedor */
+      width: 50px; // Tamaño del círculo (ajusta según sea necesario)
+      height: 50px; // Tamaño del círculo (ajusta según sea necesario)
+      border-radius: 50%; // Hace que el contenedor sea redondo
+      overflow: hidden; // Asegura que el contenido no sobresalga del contenedor
     }
-    
+
     .profile-icon {
       font-size: 24px;
-      line-height: 50px; 
-
+      line-height: 50px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-content: center;
     }
 
-    mat-card-header {
-      //Dependiendo de si es para editar o para cancelar está en color rojo o verde.
-      .btn-green {
-        color: white;
-        background-color: green;
-      }
-
-      .btn-red {
-        color: white;
-        background-color: red;
-      }
-    }
-
     mat-card-content {
-      margin: 1.2rem;
+      margin: 0.75rem;
+
+
+      .btn-edicion {
+
+
+        display: flex;
+        justify-content: flex-end;
+        margin: 0.5rem;
+
+        .btn-green {
+          color: white;
+          background-color: green;
+        }
+
+        .btn-red {
+          color: white;
+          background-color: red;
+        }
+      }
+
+
 
       .edit-mode {
-        border-left: 3px solid #4caf50; /* Verde */
+        border-left: 3px solid #4caf50; // Verde
         padding-left: 8px;
       }
 
       .campo-formulario {
         transition: border 0.3s;
         width: 100%;
-        display: flex; /* Asegura que el contenedor use flexbox */
-        flex-wrap: wrap; /* Permite que los elementos se envuelvan si es necesario */
+        display: flex; // Asegura que el contenedor use flexbox
+        flex-wrap: wrap; // Permite que los elementos se envuelvan si es necesario
         gap: 1.5px;
 
         mat-form-field {
-          flex: 1; /* Permite que los mat-form-field ocupen el mismo espacio */
+          flex: 1; // Permite que los mat-form-field ocupen el mismo espacio
           margin: 0.25rem;
 
           input {
-            width: 100%; /* Asegura que el input ocupe todo el ancho del mat-form-field */
+            width: 100%; // Asegura que el input ocupe todo el ancho del mat-form-field
           }
         }
       }
-    }
 
-    // .btnEdit {
-    //   background-color: #4caf50; /* Verde primario */
-    //   color: white;
-    //   font-weight: bold;
-    //   padding: 10px 20px;
-    //   border-radius: 4px;
-    //   transition: background-color 0.3s, transform 0.3s;
-    //   width: 100%;
-    //   margin: 0.5rem;
-    // }
+      .button-container {
+        display: flex; // Usar flexbox para alinear los elementos
+        justify-content: flex-end; // Alinear el botón a la derecha
+        margin-top: 1rem; // Añadir margen superior (ajusta según sea necesario)
+      }
 
-    .btnEdit {
-      background-color: #4caf50; /* Verde primario */
-      color: white;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 8px; /* Bordes redondeados */
-      transition: background-color 0.3s, transform 0.3s;
-      width: 100%;
-      margin: 0.5rem;
+      .btnEdit {
+        background-color: #4caf50; // Verde primario
+        color: white;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 8px; // Bordes redondeados
+        transition: background-color 0.3s, transform 0.3s;
+        margin-left: auto; // Empujar el botón a la derecha
+        margin-top: 1rem; // Añadir margen superior (ajusta según sea necesario)
 
-      &:hover {
-        background-color: #45a049; /* Un verde más oscuro al hacer hover */
-        transform: translateY(-2px); /* Mover hacia arriba al hacer hover */
+        &:hover {
+          background-color: #45a049; // Un verde más oscuro al hacer hover
+          transform: translateY(-2px); // Mover hacia arriba al hacer hover
+        }
       }
     }
   }
