@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-title>{{ titulo }}</mat-card-title>
+  <form [formGroup]="formularioDinamico" (ngSubmit)="onSubmit()">
+    <div *ngFor="let propiedad of formularioDinamico.controls | keyvalue">
+      <div >
+        <mat-form-field appearance="fill">
+          <mat-label>{{ propiedad.key }}</mat-label>
+          <input *ngIf="determinarTipo(propiedad.key) === 'text'" matInput [formControlName]="propiedad.key">
+          <input *ngIf="determinarTipo(propiedad.key) === 'date'" matInput [formControlName]="propiedad.key" [matDatepicker]="picker">
+          <mat-datepicker-toggle *ngIf="determinarTipo(propiedad.key) === 'date'" matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <input *ngIf="determinarTipo(propiedad.key) === 'password'" matInput [formControlName]="propiedad.key" type="password">
+          <mat-select *ngIf="determinarTipo(propiedad.key) === 'select'" [formControlName]="propiedad.key">
+            <mat-option *ngFor="let option of getOptionsForSelect(propiedad.key)" [value]="option">{{ option }}</mat-option>
+          </mat-select>
+         
+
+          
+        </mat-form-field>
+      </div>
+    </div>
+    <button mat-raised-button type="submit" [disabled]="formularioDinamico.invalid">
+      Enviar
+    </button>
+  </form>
+</mat-card>

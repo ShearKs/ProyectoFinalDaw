@@ -118,10 +118,13 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
   public nuevoRegistro(): void {
     const nuevoRegistroEmitter = new EventEmitter<entidad>();
+
     const entidadCabeceras: { [key: string]: string } = {};
     this.columnas.forEach(key => {
       entidadCabeceras[key] = "";
     });
+
+    console.log(entidadCabeceras);
 
     const dialogRef = this.dialog.open(EmptyDialogComponent, {
       data: {

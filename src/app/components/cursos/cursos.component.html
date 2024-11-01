@@ -1,23 +1,41 @@
-<div class="cursos-container">
-  <mat-card *ngFor="let curso of cursos" class="curso-card" appearance="outlined">
+<div class="cursos-wrapper">
+  <div class="cursos-cabecera">
+    <h2 class="titulo-cursos">Cursos que hay en la actualidad</h2>
+    <button mat-flat-button (click)="anadirCurso()" color="primary" class="btn-anadir-curso" >
+      <mat-icon class="icono_anadir">add</mat-icon> Añadir Curso
+    </button>
+  </div>
 
-    <mat-card-header>
-      <div mat-card-avatar class="curso-avatar">
-        <mat-icon color="primary">{{curso.icono}}</mat-icon>
-      </div>
-      <mat-card-title>{{ curso.nombre }}</mat-card-title>
-      <mat-card-subtitle>Plazas disponibles: {{ curso.plazas }}</mat-card-subtitle>
+  <div class="cursos-container">
+    <mat-card *ngFor="let curso of cursos" class="curso-card" appearance="outlined">
+      <mat-card-header>
+        <div mat-card-avatar class="curso-avatar">
+          <mat-icon color="primary">{{ curso.icono_curso }}</mat-icon>
+        </div>
+        <mat-card-title>
+          {{ curso.nombre }}
+          <span *ngIf="curso.esta_inscrito === 1" class="inscrito-label">Inscrito</span>
+        </mat-card-title>
+        <mat-card-subtitle>Plazas disponibles: {{ curso.plazas }}</mat-card-subtitle>
+      </mat-card-header>
 
-    </mat-card-header>
-    <mat-card-content>
-      <p>Deporte : {{ curso.deporte }}</p>
-      {{curso.informacion | slice:0:150}}<span *ngIf="curso.informacion?.length">[...]</span>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button class="btn-apuntarse" (click)="apuntarseCurso(curso.id)">
+      <mat-card-content>
+        <p>Deporte: {{ curso.deporte }}</p>
+        {{ curso.informacion | slice: 0:150 }}<span *ngIf="curso.informacion?.length">[...]</span>
+      </mat-card-content>
 
-        <mat-icon matSuffix>person_add</mat-icon>
-        Apuntarse</button>
-    </mat-card-actions>
-  </mat-card>
+      <mat-card-actions>
+        <ng-container *ngIf="curso.esta_inscrito === 0; else inscrito">
+          <button mat-button class="btn-apuntarse" (click)="inscribirseCurso(curso.id)">
+            <mat-icon matSuffix>person_add</mat-icon> Apuntarse
+          </button>
+        </ng-container>
+        <ng-template #inscrito>
+          <button mat-button class="btn-apuntarse" disabled>
+            <mat-icon matSuffix>check_circle</mat-icon> Apuntado
+          </button>
+        </ng-template>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

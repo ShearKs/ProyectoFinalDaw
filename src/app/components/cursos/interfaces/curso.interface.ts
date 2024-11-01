@@ -1,8 +1,10 @@
 export interface Curso {
     id: number;
     nombre: string;
-    icono: string;
+    icono_curso: string;
     plazas: number;
     deporte: string;
-    informacion? :string;
+    informacion?: string;
+    esta_inscrito?: number;
+    idDeporte?: number;
 }

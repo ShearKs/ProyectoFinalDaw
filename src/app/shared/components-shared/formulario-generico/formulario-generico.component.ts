@@ -10,7 +10,6 @@ import { GestorDatosService } from '../contactos/gestor-datos.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-
 @Component({
   selector: 'app-formulario-generico',
   standalone: true,
@@ -22,164 +21,137 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class FormularioGenericoComponent implements OnInit {
 
-  //Event emitter para enviar los datos al componente principal
-  @Output() eventEmitter = new EventEmitter<any>();
-
-  public formularioDinamico: FormGroup;
-  //Datos que obtenemos del componente de la tabla
-  public titulo: string = "Formulario Genérico";
-  public entity: any = {};
-  public esEditable: boolean = false;
-  public entidadOject: any[] = [];
-
-  //campos a eliminar en el formulario
-  public camposEliminar: any = {};
-
-
-  ///Array los cuales nos marcaran el tipo con los datos..
-  public tiposFechas: string[] = [];
-  public tiposPasword: string[] = [];
-  public tiposSelect: string[] = [];
 
 
 
-  constructor(
-    private fb: FormBuilder,
-    private readonly _gestorDatos: GestorDatosService,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {
-    this.formularioDinamico = this.fb.group({});
-  }
+  // @Output() formSubmit = new EventEmitter<any>();
+  // formularioDinamico: FormGroup;
+  // titulo = 'Formulario Genérico';
+  // entidadObject: any[] = [];
+  // camposEliminar: any = {};
+
+  // constructor(
+  //   private fb: FormBuilder,
+  //   private gestorDatosService: GestorDatosService,
+  //   @Inject(MAT_DIALOG_DATA) public data: any,
+  // ) {
+  //   this.formularioDinamico = this.fb.group({});
+  // }
 
   ngOnInit(): void {
 
-    this.titulo = this.data.datos.titulo || "";
-    this.entity = this.data.datos.entidad || {}
-    this.esEditable = this.data.datos.editable || false
 
-    //Objeto de camnpos a eliminar
-    this.camposEliminar = this.data.datos.camposAEliminar || {}
-
-    console.log(this.camposEliminar)
-
-    //Llenamos la clave y le valor 
-    this.entidadOject = Object.entries(this.entity).map(([propiedad, valor]) => {
-      const propiedadF: string = propiedad.toLowerCase();
-      //valor por defecto
-      let tipo = 'text';
-      if (propiedadF.includes('fecha')) {
-        tipo = 'date';
-      } else if (propiedadF.includes('contrasena') || propiedadF.includes('contraseña') || propiedadF.includes('contraseña')) {
-        tipo = 'password';
-      } else if (propiedadF.includes('estado') || propiedadF.includes('rol') || propiedadF.includes('tipo_usuario')) {
-        tipo = 'select'
-      }
+    // this.inicializarDatos();
+    // const entidadFiltrada = this.filtrarDatosEntidad(this.data.datos.entidad || {});
+    // this.entidadObject = this.construirEntidadObject(entidadFiltrada);
+    // this.crearFormulario();
+    // console.log('Entidades filtradas:', this.entidadObject); 
 
 
-      return { propiedad, valor, tipo };
-    })
 
-    //Ejecutamos la función para crear el formulario de forma dinámica
-    this.crearFormularioDinamico();
+
   }
 
-  private crearFormularioDinamico(): void {
-    this.entidadOject.forEach(entidad => {
+  // private inicializarDatos(): void {
+  //   this.titulo = this.data.datos.titulo || 'Formulario Genérico';
+  //   this.camposEliminar = this.data.datos.camposAEliminar || {};
+  // }
 
-      if (entidad.propiedad.toLowerCase() === 'id' || entidad.propiedad === 'fecha_add') return;
+  // private filtrarDatosEntidad(entidad: any): any {
+  //   const camposValidos = ['nombre', 'apellidos', 'direccion', 'fecha', 'numero']; // Cambia estos campos según sea necesario
+  //   return Object.keys(entidad)
+  //     .filter(key => camposValidos.includes(key))
+  //     .reduce((obj, key) => {
+  //       obj[key] = entidad[key];
+  //       return obj;
+  //     }, {});
+  // }
 
-      // Verifica si el campo está en los inputs a eliminar del formulario
-      const esCampoEliminar = this.esCampoAEliminar(entidad.propiedad, entidad.tipo);
+  // private construirEntidadObject(entidad: any): any[] {
+  //   return Object.entries(entidad).map(([propiedad, valor]) => {
+  //     const tipo = this.determinarTipo(propiedad);
+  //     return { propiedad, valor, tipo };
+  //   });
+  // }
 
-      // Si el campo debe eliminarse, no le aplicamos validaciones (o se dejan las que no sean required)
-      const validators = esCampoEliminar ? [] : this.getValidadorPorPropiedad(entidad.propiedad);
+  // private determinarTipo(propiedad: string): string {
+  //   const propiedadLower = propiedad.toLowerCase();
+  //   if (propiedadLower.includes('fecha')) return 'date';
+  //   if (propiedadLower.includes('contrasena') || propiedadLower.includes('contraseña')) return 'password';
+  //   if (['estado', 'rol', 'tipo_usuario'].includes(propiedadLower)) return 'select';
+  //   return 'text';
+  // }
 
-      this.formularioDinamico.addControl(entidad.propiedad,
-        this.fb.control(entidad.valor, validators));
-    });
-  }
+  // private crearFormulario(): void {
+  //   this.entidadObject.forEach(entidad => {
+  //     if (entidad.propiedad.toLowerCase() === 'id' || entidad.propiedad === 'fecha_add') return;
+  //     const validators = this.esCampoAEliminar(entidad.propiedad) ? [] : this.getValidadorPorPropiedad(entidad.propiedad);
+  //     this.formularioDinamico.addControl(entidad.propiedad, this.fb.control(entidad.valor, validators));
+  //   });
+  // }
 
-  private esCampoAEliminar(propiedad: string, tipo: string): boolean {
-    const camposAEliminar = this.camposEliminar[tipo] || [];
-    return camposAEliminar.includes(propiedad);
-  }
+  // private esCampoAEliminar(propiedad: string): boolean {
+  //   const tipo = this.determinarTipo(propiedad);
+  //   const camposAEliminar = this.camposEliminar[tipo] || [];
+  //   return camposAEliminar.includes(propiedad);
+  // }
 
+  // private getValidadorPorPropiedad(propiedad: string): Validators[] {
+  //   const validators = [Validators.required];
+  //   switch (propiedad.toLowerCase()) {
+  //     case 'dni':
+  //       validators.push(Validators.pattern(/^\d{8}[A-Z]$/));
+  //       break;
+  //     case 'email':
+  //       validators.push(Validators.email);
+  //       break;
+  //     case 'edad':
+  //       validators.push(Validators.min(0), Validators.max(120));
+  //       break;
+  //   }
+  //   return validators;
+  // }
 
-  private getValidadorPorPropiedad(propiedad: string) {
+  // getOptionsForSelect(propiedad: string): string[] {
+  //   const optionsMap: { [key: string]: string[] } = {
+  //     estado: ['activo', 'inactivo'],
+  //     tipo_usuario: ['cliente', 'trabajador']
+  //   };
+  //   return optionsMap[propiedad.toLowerCase()] || [];
+  // }
 
-    const validators = [Validators.required];
+  // isCampoVisible(propiedad: string): boolean {
+  //   const tipo = this.determinarTipo(propiedad);
+  //   return !this.camposEliminar[tipo]?.includes(propiedad);
+  // }
 
-    const propiedadF: string = propiedad.toLowerCase();
+  // onSubmit(): void {
+  //   if (this.formularioDinamico.valid) {
+  //     const formValues = { ...this.formularioDinamico.value, id: this.data.datos.entidad.id };
+  //     this.formatarFechas(formValues);
+  //     this.formSubmit.emit(formValues);
+  //   } else {
+  //     this.mostrarErroresFormulario();
+  //   }
+  // }
 
-    //Condicionantes por si quieren más validadores
-    switch (propiedadF) {
+  // private formatarFechas(formValues: any): void {
+  //   Object.keys(formValues).forEach(key => {
+  //     if (formValues[key] instanceof Date) {
+  //       formValues[key] = formValues[key].toISOString().split('T')[0];
+  //     }
+  //   });
+  // }
 
-      case 'dni':
-        validators.push(Validators.pattern(/^\d{8}[A-Z]$/));
-        break;
-      case 'mail':
-      case 'email':
-        validators.push(Validators.email);
-        break;
-      case 'edad':
-        validators.push(Validators.min(0), Validators.max(120));
-        break;
-    }
-    return validators;
-  }
-
-  public getOptionsForSelect(propiedad: string): string[] {
-
-    const optionsMap: { [key: string]: string[] } = {
-      estado: ['activo', 'inactivo'],
-      tipo_usuario: ['cliente', 'trabajador']
-    };
-    return optionsMap[propiedad.toLowerCase()] || [];
-  }
-
-  public isCampoVisible(propiedad: string, tipo: string): boolean {
-
-    const camposAEliminar = this.camposEliminar[tipo] || [];
-
-    return !camposAEliminar.includes(propiedad);
-  }
-
-
-  //Para recoger los valores del formulario
-  public onSubmit() {
-
-  
-    if (this.formularioDinamico.valid) {
-
-      const formValues = { ...this.formularioDinamico.value };
-
-      //Incluimos el id ya que en el formulario no lo mostramos...
-      const id = this.entity.id;
-      const ususario_id = this.entity.usuario_id;
-      formValues.id = id;
-      formValues.usuario_id = ususario_id;
-
-      // Itera sobre los campos para formatear los que sean de tipo fecha
-      Object.keys(formValues).forEach(key => {
-        if (formValues[key] instanceof Date) {
-          formValues[key] = formValues[key].toISOString().split('T')[0]; // Formato YYYY-MM-DD
-        }
-      });
-
-      this.eventEmitter.emit(formValues)
-    } else {
-      console.log("el formulario no es válido...")
-
-
-      Object.keys(this.formularioDinamico.controls).forEach(field => {
-        const control = this.formularioDinamico.get(field);
-        if (control && control.invalid) {
-          console.log(`Campo no válido: ${field}`);
-          console.log(control.errors);  // Esto te mostrará el tipo de error, como 'required', 'email', etc.
-        }
-      });
-
-    }
-  }
-
+  // private mostrarErroresFormulario(): void {
+  //   Object.keys(this.formularioDinamico.controls).forEach(field => {
+  //     const control = this.formularioDinamico.get(field);
+  //     if (control && control.invalid) {
+  //       console.error(`Campo no válido: ${field}`, control.errors);
+  //     }
+  //   });
+  // }
 }
+
+
+

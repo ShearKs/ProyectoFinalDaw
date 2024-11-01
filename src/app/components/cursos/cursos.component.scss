@@ -1,30 +1,76 @@
+.cursos-wrapper {
+  padding: 2rem;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 2rem;
+
+  .cursos-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+
+    .titulo-cursos {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #333;
+      margin: 0;
+    }
+
+    .btn-anadir-curso {
+      display: flex;
+      align-items: center;
+      gap: 4px; // Espacio entre el icono y el texto
+      font-weight: bold;
+      padding: 0.5rem 1rem; // Asegura que el botón tenga un tamaño consistente
+      font-size: 1rem;
+
+      .icono-anadir {
+        font-size: 1.2rem;
+        vertical-align: middle; // Centra el icono verticalmente con el texto
+      }
+    }
+  }
+}
+
 .cursos-container {
   display: flex;
-
-  flex-wrap: wrap; /* Permite que las tarjetas se envuelvan si no hay suficiente espacio */
-  gap: 1rem; /* Espaciado entre las tarjetas */
-  justify-content: center; /* Centra las tarjetas en el contenedor */
-  padding: 2rem;
-  background-color: azure;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  background-color: #e0f7fa;
+  padding: 1rem;
+  border-radius: 8px;
 }
 
 .curso-card {
-  width: 400px; /* Ancho fijo */
-  max-width: 100%; /* Permitir que la tarjeta sea tan ancha como el contenedor */
-  border: 1px solid #ccc; /* Borde */
-  border-radius: 8px; /* Esquinas redondeadas */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombreado */
-  transition: transform 0.3s, box-shadow 0.3s; /* Transición para animación */
+  width: 400px;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  .inscrito-label {
+    background-color: #388e3c;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+    font-weight: bold;
+    font-size: 0.875rem;
+    display: inline-block;
+  }
 
   &:hover {
-    transform: translateY(-5px); /* Levanta la tarjeta al pasar el cursor */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Aumenta el sombreado al pasar el cursor */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   }
 }
 
 .curso-avatar {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #9fa3be;
@@ -32,10 +78,10 @@
 
 mat-card-actions {
   display: flex;
-  justify-content: flex-end; /* Alinea el botón a la derecha */
-  margin-top: auto; /* Asegura que el botón esté al final del contenido */
+  justify-content: flex-end;
+  margin-top: auto;
 }
 
 .btn-apuntarse {
-  margin: 0 auto; /* Centra el botón dentro del contenedor */
+  margin: 0 auto;
 }

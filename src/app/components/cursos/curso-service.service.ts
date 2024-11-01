@@ -16,12 +16,12 @@ export class CursoServiceService {
   constructor(private readonly _http: HttpClient) { }
 
   //Devuelve todos los cursos desponibles y las plazas disponibles...
-  public getCursos(): Observable<any> {
+  public getCursos(idCliente: number): Observable<any> {
 
-    return this._http.get<any>(`${this.cursosEndPoint}.php?modo=getCurso`);
+    return this._http.post<any>(`${this.cursosEndPoint}.php`, { modo: 'getCurso', idCliente });
   }
 
-  //Método que lo utilizará el administrador ..
+  //Método que lo utilizará el administrador para añadir un nuevo curso desde la aplicación ..
   public addCurso(nuevoCurso: Curso): Observable<any> {
 
     return this._http.post<any>(`${this.cursosEndPoint}.php`, { modo: 'addCurso', nuevoCurso });
@@ -30,7 +30,7 @@ export class CursoServiceService {
 
   public anadirInscripcion(nuevaInscripcion: Inscripcion): Observable<any> {
 
-    return this._http.post<any>(`${this.cursosEndPoint}.php`, { modo: 'addInscripcion', nuevaInscripcion });
+    return this._http.post<any>(`${this.cursosEndPoint}.php`, { modo: 'addInscripcion', inscripcion: nuevaInscripcion });
   }
 
 

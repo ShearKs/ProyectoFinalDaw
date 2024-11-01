@@ -9,7 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
   standalone: true,
   imports: [MatDialogContent, MatDialogModule, MatButtonModule, MatDividerModule, MatDialogActions, ContactosComponent],
   templateUrl: './empty-dialog.component.html',
-  styleUrl: './empty-dialog.component.scss'
+  styleUrls: ['./empty-dialog.component.scss'] 
 })
 export class EmptyDialogComponent implements OnInit, AfterViewInit {
 
@@ -49,14 +49,15 @@ export class EmptyDialogComponent implements OnInit, AfterViewInit {
 
         //Si hay datos, los asigna al componente.
         if (this.data.datos) {
+          console.log('Holi1')
           componentRef.instance.datos = this.data.datos;
         }
 
         //Si hay un eventEmitter nos subscribimos a él.
         if (this.data.eventEmitter && componentRef.instance.eventEmitter) {
-
+          console.log('Holi2')
           componentRef.instance.eventEmitter.subscribe((nuevoElemento: any) => {
-
+            console.log('Holi3')
             //Emite el nuevo evento
             this.data.eventEmitter.emit(nuevoElemento);
             //Una vez hayamos emitido el evento cerramos el diálogo
