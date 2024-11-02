@@ -1,9 +1,7 @@
 <div class="form-container">
-
     <h1 class="form-title">Crear Nuevo Curso</h1>
     <p class="form-description">Complete el siguiente formulario para añadir un nuevo curso a la aplicación.</p>
     <form [formGroup]="cursoForm" (ngSubmit)="onSubmit()">
-
         <mat-form-field appearance="outline" class="form-field">
             <mat-label>Nombre del Curso</mat-label>
             <input matInput formControlName="nombre" placeholder="Introduzca el nombre del curso" />
@@ -23,21 +21,23 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Descripción</mat-label>
-            <textarea matInput formControlName="descripcion" placeholder="Descripción del curso"></textarea>
-            <mat-error *ngIf="cursoForm.get('descripcion')?.invalid">La descripción es obligatoria.</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="form-field">
             <mat-label>Deporte</mat-label>
             <mat-select formControlName="idDeporte">
-                <mat-option *ngFor="let key of deportes | keyvalue" [value]="key.key">
+                <mat-option *ngFor="let key of deportes | keyvalue" [value]="+key.key">
                     {{ key.value }}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="cursoForm.get('idDeporte')?.invalid">Seleccione un deporte</mat-error>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="cursoForm.invalid">Crear Curso</button>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput formControlName="descripcion" placeholder="Descripción del curso"></textarea>
+            <mat-error *ngIf="cursoForm.get('descripcion')?.invalid">La descripción es obligatoria.</mat-error>
+        </mat-form-field>
+
+
+
+        <button mat-raised-button color="primary" type="submit" class="clase-momentanea" [disabled]="cursoForm.invalid">Crear Curso</button>
     </form>
 </div>

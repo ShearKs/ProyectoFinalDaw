@@ -102,18 +102,53 @@ export class CursosComponent implements OnInit {
       ).subscribe();
     })
 
-
-    // nuevoRegistroEmitter.subscribe((nuevoCurso: any) => {
-    //   console.log('El curso que va a crear es ')
-    //   console.log(nuevoCurso)
-
-    // });
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('El diálogo fue cerrado');
-    // });
-
   }
+
+  public editarCurso(curso: Curso): void {
+
+    const deportes: { [key: string]: string } = {};
+
+    // Obtener los deportes disponibles para el formulario
+    this._apiDepo.getDeportes().pipe(
+      tap((deportesObject => {
+        deportesObject.forEach(deporte => {
+          deportes[deporte.id] = deporte.nombre;
+        });
+      }))
+    ).subscribe();
+
+    // Para formulario general
+    const cursoEditadoEmitter = new EventEmitter<any>();
+    const dialogRef = this._dialog.open(EmptyDialogComponent, {
+      data: {
+        component: FormularioCursoComponent,
+        datos: {
+          deportes: deportes,
+          curso: curso
+        },
+        eventEmitter: cursoEditadoEmitter
+      }
+    });
+
+    cursoEditadoEmitter.subscribe((cursoActualizado: Curso) => {
+      console.log('Curso actualizado: ', cursoActualizado);
+
+      this._apiCursos.editarCurso(cursoActualizado).pipe(
+        tap((result => {
+          console.log(result);
+
+          if (result.status === 'exito') {
+            console.log('Curso editado correctamente');
+            // Volver a actualizar la vista con el curso editado...
+            this.obtenerCursos();
+          }
+        }))
+      ).subscribe();
+    });
+  }
+
+
+
 
   //Peticiones a la api....
   private obtenerCursos() {
@@ -127,6 +162,9 @@ export class CursosComponent implements OnInit {
       }))
     ).subscribe();
   }
+
+
+
 
   public inscribirseCurso(idCurso: number) {
     if (!this.usuario) {

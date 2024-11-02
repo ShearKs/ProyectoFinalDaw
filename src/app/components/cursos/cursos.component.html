@@ -15,6 +15,7 @@
         <mat-card-title>
           {{ curso.nombre }}
           <span *ngIf="curso.esta_inscrito === 1" class="inscrito-label">Inscrito</span>
+          <button (click)="editarCurso(curso)">Editar</button>
         </mat-card-title>
         <mat-card-subtitle>Plazas disponibles: {{ curso.plazas }}</mat-card-subtitle>
       </mat-card-header>

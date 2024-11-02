@@ -28,11 +28,15 @@ export class CursoServiceService {
 
   }
 
+  public editarCurso(cursoEditado: Curso): Observable<any> {
+    return this._http.post(`${this.cursosEndPoint}.php`, { modo: 'editarCurso', cursoEditado });
+  }
+
+
   public anadirInscripcion(nuevaInscripcion: Inscripcion): Observable<any> {
 
     return this._http.post<any>(`${this.cursosEndPoint}.php`, { modo: 'addInscripcion', inscripcion: nuevaInscripcion });
   }
-
 
 
 

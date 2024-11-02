@@ -30,15 +30,13 @@ export class FormularioCursoComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     //Datos que nos llega desde el diálogo.
     @Inject(MAT_DIALOG_DATA) public data: any
-
-
   ) {
     this.cursoForm = this.fb.group({
-      nombre: ['', Validators.required],
-      icono_curso: ['', Validators.required],
-      plazas: [1, [Validators.required, Validators.min(1)]],
-      descripcion: ['', Validators.required] ,
-      idDeporte: ['', Validators.required]
+      nombre: [data?.datos?.curso?.nombre || '', Validators.required],
+      icono_curso: [data?.datos?.curso?.icono_curso || '', Validators.required],
+      plazas: [data?.datos?.curso?.plazas || 1, [Validators.required, Validators.min(1)]],
+      descripcion: [data?.datos?.curso?.informacion || '', Validators.required],
+      idDeporte: ['', Validators.required],
     });
   }
   ngOnInit(): void {
@@ -48,13 +46,27 @@ export class FormularioCursoComponent implements OnInit {
       this.deportes = this.data.datos.deportes;
     }
 
-    console.log(this.deportes)
+
+    //Si hay algun deporte válido
+    if (this.data?.datos?.curso?.idDeporte) {
+      this.cursoForm.patchValue({
+        idDeporte: this.data.datos.curso.idDeporte
+      });
+
+      this.cursoForm.get('idDeporte')?.markAsTouched();
+      this.cursoForm.get('idDeporte')?.markAsDirty();
+      this.cursoForm.get('idDeporte')?.updateValueAndValidity();
+    }
+
+
+    this.cdr.detectChanges();
+
   }
 
   onSubmit() {
     if (this.cursoForm.valid) {
       const nuevoCurso = this.cursoForm.value;
-   
+
       this.eventEmitter.emit(nuevoCurso);
     }
   }
