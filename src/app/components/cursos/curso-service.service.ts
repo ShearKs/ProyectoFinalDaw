@@ -32,6 +32,10 @@ export class CursoServiceService {
     return this._http.post(`${this.cursosEndPoint}.php`, { modo: 'editarCurso', cursoEditado });
   }
 
+  public eliminarCurso(idCurso: number) {
+    return this._http.post(`${this.cursosEndPoint}.php`, { modo: 'eliminarCurso', idCurso });
+  }
+
 
   public anadirInscripcion(nuevaInscripcion: Inscripcion): Observable<any> {
 

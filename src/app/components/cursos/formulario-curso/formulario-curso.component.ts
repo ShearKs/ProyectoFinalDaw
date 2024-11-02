@@ -21,6 +21,7 @@ export class FormularioCursoComponent implements OnInit {
   @Output() eventEmitter = new EventEmitter<any>();
 
   public cursoForm: FormGroup;
+  public isEditMode: boolean;
 
   //Para almacenar los deportes
   public deportes: { [key: string]: string } = {};
@@ -31,12 +32,14 @@ export class FormularioCursoComponent implements OnInit {
     //Datos que nos llega desde el diálogo.
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.isEditMode = !!data?.datos?.curso;
     this.cursoForm = this.fb.group({
+      id: [data?.datos?.curso?.id || ''],
       nombre: [data?.datos?.curso?.nombre || '', Validators.required],
       icono_curso: [data?.datos?.curso?.icono_curso || '', Validators.required],
       plazas: [data?.datos?.curso?.plazas || 1, [Validators.required, Validators.min(1)]],
       descripcion: [data?.datos?.curso?.informacion || '', Validators.required],
-      idDeporte: ['', Validators.required],
+      idDeporte: [data?.datos?.curso?.idDeporte || '', Validators.required],
     });
   }
   ngOnInit(): void {
@@ -45,21 +48,6 @@ export class FormularioCursoComponent implements OnInit {
     if (this.data && this.data.datos?.deportes) {
       this.deportes = this.data.datos.deportes;
     }
-
-
-    //Si hay algun deporte válido
-    if (this.data?.datos?.curso?.idDeporte) {
-      this.cursoForm.patchValue({
-        idDeporte: this.data.datos.curso.idDeporte
-      });
-
-      this.cursoForm.get('idDeporte')?.markAsTouched();
-      this.cursoForm.get('idDeporte')?.markAsDirty();
-      this.cursoForm.get('idDeporte')?.updateValueAndValidity();
-    }
-
-
-    this.cdr.detectChanges();
 
   }
 

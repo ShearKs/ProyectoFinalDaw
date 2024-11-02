@@ -1,5 +1,5 @@
 <div class="form-container">
-    <h1 class="form-title">Crear Nuevo Curso</h1>
+    <h1 class="form-title">{{ isEditMode ? 'Editar Curso' : 'Crear Nuevo Curso' }}</h1>
     <p class="form-description">Complete el siguiente formulario para añadir un nuevo curso a la aplicación.</p>
     <form [formGroup]="cursoForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline" class="form-field">
@@ -36,8 +36,8 @@
             <mat-error *ngIf="cursoForm.get('descripcion')?.invalid">La descripción es obligatoria.</mat-error>
         </mat-form-field>
 
+        <button mat-raised-button color="primary" type="submit" class="btn-submit" [disabled]="cursoForm.invalid">
 
-
-        <button mat-raised-button color="primary" type="submit" class="clase-momentanea" [disabled]="cursoForm.invalid">Crear Curso</button>
+            {{ isEditMode ? 'Actualizar Curso' : 'Crear Curso' }}</button>
     </form>
 </div>

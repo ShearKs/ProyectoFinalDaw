@@ -1,7 +1,8 @@
 <div class="cursos-wrapper">
   <div class="cursos-cabecera">
     <h2 class="titulo-cursos">Cursos que hay en la actualidad</h2>
-    <button mat-flat-button (click)="anadirCurso()" color="primary" class="btn-anadir-curso" >
+    <button *ngIf="usuario.tipo_usuario === 'trabajador' " (click)="anadirCurso()" color="primary"
+      class="btn-anadir-curso">
       <mat-icon class="icono_anadir">add</mat-icon> Añadir Curso
     </button>
   </div>
@@ -13,9 +14,20 @@
           <mat-icon color="primary">{{ curso.icono_curso }}</mat-icon>
         </div>
         <mat-card-title>
+
           {{ curso.nombre }}
-          <span *ngIf="curso.esta_inscrito === 1" class="inscrito-label">Inscrito</span>
-          <button (click)="editarCurso(curso)">Editar</button>
+          <span *ngIf="curso.esta_inscrito === 1 && usuario.tipo_usuario === 'cliente' "
+            class="inscrito-label">Inscrito</span>
+          <ng-container *ngIf="usuario.tipo_usuario === 'trabajador' ">
+            <div class="btn-acciones">
+              <button class="btn-edit" (click)="editarCurso(curso)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="btn-delete" (click)="eliminarCurso(curso.id)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+            </div>
+          </ng-container>
         </mat-card-title>
         <mat-card-subtitle>Plazas disponibles: {{ curso.plazas }}</mat-card-subtitle>
       </mat-card-header>
@@ -25,7 +37,7 @@
         {{ curso.informacion | slice: 0:150 }}<span *ngIf="curso.informacion?.length">[...]</span>
       </mat-card-content>
 
-      <mat-card-actions>
+      <mat-card-actions *ngIf="usuario.tipo_usuario === 'cliente'">
         <ng-container *ngIf="curso.esta_inscrito === 0; else inscrito">
           <button mat-button class="btn-apuntarse" (click)="inscribirseCurso(curso.id)">
             <mat-icon matSuffix>person_add</mat-icon> Apuntarse

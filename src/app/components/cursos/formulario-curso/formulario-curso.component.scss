@@ -8,6 +8,9 @@
   background-color: #f7f7f7;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+
 }
 
 .form-title {
@@ -22,7 +25,7 @@
   font-size: 16px;
   margin-bottom: 20px;
   color: #666;
-  /* Color gris para la descripción */
+
 }
 
 .form-field {
@@ -30,7 +33,7 @@
 
   mat-form-field {
     width: 100%;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
   }
 
   input,
@@ -42,10 +45,21 @@
 
   mat-error {
     font-size: 0.75rem;
-    color: #f44336; // Rojo para resaltar los errores
+    color: #f44336;
   }
+
 }
 
+.btn-submit {
+  display: flex;
+  justify-content: center;
+  width: 100%; // Asegúrate de que tome el ancho completo del formulario
+  margin-top: 20px;
+
+  button {
+    align-self: center;
+  }
+}
 button {
   margin-top: 20px;
   padding: 10px 20px;

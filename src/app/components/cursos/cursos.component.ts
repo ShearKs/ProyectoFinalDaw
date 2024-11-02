@@ -52,6 +52,9 @@ export class CursosComponent implements OnInit {
     const userData = localStorage.getItem('user');
     this.usuario = userData ? JSON.parse(userData) : null;
     this.obtenerCursos();
+
+    console.log('Usuario')
+    console.log(this.usuario)
   }
 
   public anadirCurso(): void {
@@ -147,7 +150,17 @@ export class CursosComponent implements OnInit {
     });
   }
 
+  public eliminarCurso(idCurso: number) {
 
+    this._apiCursos.eliminarCurso(idCurso).pipe(
+      tap((resul => {
+        console.log(resul)
+
+        //Una vez eliminados los cursos actualizamos la vista
+        this.obtenerCursos();
+      }))
+    ).subscribe();
+  }
 
 
   //Peticiones a la api....
@@ -162,8 +175,6 @@ export class CursosComponent implements OnInit {
       }))
     ).subscribe();
   }
-
-
 
 
   public inscribirseCurso(idCurso: number) {
