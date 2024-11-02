@@ -14,7 +14,6 @@ import { BotonGenericoComponent } from '../../shared/components-shared/boton-gen
 import { MatDialog } from '@angular/material/dialog';
 import { BasicDialogComponent } from '../../shared/components-shared/basic-dialog/basic-dialog.component';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -40,8 +39,8 @@ export class LoginComponent implements OnInit {
       contrasena: ['', Validators.required],
     });
   }
+
   canDeactivate(): boolean {
-    // Puedes agregar lógica aquí para preguntar al usuario si realmente quiere salir
     return confirm('¿Estás seguro de que quieres salir sin guardar los cambios?');
   }
 
@@ -61,22 +60,21 @@ export class LoginComponent implements OnInit {
       tap((respuesta) => {
         if (respuesta.success) {
           localStorage.setItem('token', respuesta.token!);
-          //Insertamos el usuario para utilizar sus datos
-          localStorage.setItem('user',respuesta.user)
+          localStorage.setItem('user', respuesta.user);
 
+          // Emitir evento de éxito de inicio de sesión
+          this.loginSuccess.emit();
 
-          this.loginSuccess.emit(); // Emitir evento de éxito
-
-          //Nos vamos al home
+          // Navegar a la página de inicio
           this._router.navigate(['/']);
         } else {
-          this._abrirDialogoConfirmacion('Error al iniciar sesión', false); // Mostrar mensaje de error
+          this._abrirDialogoConfirmacion('Error al iniciar sesión', false);
         }
       }),
       catchError(error => {
         console.error('Error de autenticación:', error);
-        this._abrirDialogoConfirmacion('Error al iniciar sesión', false); // Mostrar mensaje de error
-        return of(null); // Retornar un observable vacío
+        this._abrirDialogoConfirmacion('Error al iniciar sesión', false);
+        return of(null);
       })
     ).subscribe();
   }
