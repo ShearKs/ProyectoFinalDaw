@@ -9,16 +9,25 @@ import { Observable } from 'rxjs';
 export class ReservasService {
 
   private apiUrl: string = environment.apiUrl;
-  private reservasEndpoint : string = environment.controllers.reservas
+  private reservasEndpoint: string = environment.controllers.reservas
 
   constructor(private readonly __http: HttpClient) { }
 
   //Función para obtener las reservas
-  public getReservas(idDeporte: number) : Observable<any[]> {
-    return this.__http.get<any>(`${this.apiUrl}/${this.reservasEndpoint}.php?idDeporte=${idDeporte}`)
+  public getReservas(idDeporte: number): Observable<any[]> {
+    return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'getReservas', idDeporte })
   }
 
+  //Para recoger las pistas de ese deporte determinado
+  public getPistas(idDeporte: number): Observable<any> {
+    return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'getPistas', idDeporte })
+  }
 
+  //Para recoger el horario que tiene un deporte..
+  public getHorario(idDeporte: number): Observable<any> {
+
+    return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'getHorario', idDeporte });
+  }
 
 
 }

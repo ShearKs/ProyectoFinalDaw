@@ -36,8 +36,10 @@ export class ElegirDeporteComponent implements OnInit {
     administrdor: true,
   }
 
-  public pageSize = 6; // Tamaño de la página
-  public pageIndex = 0; // Índice de la página actual
+  // Tamaño de la página
+  public pageSize = 6;
+  // Índice de la página actual
+  public pageIndex = 0;
 
   constructor(
     private router: Router,
