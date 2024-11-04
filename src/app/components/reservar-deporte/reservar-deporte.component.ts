@@ -12,8 +12,8 @@ import { ReservaEstadoDirective } from './reserva-estado.directive';
 import { ReservasService } from './reservas.service';
 import { tap } from 'rxjs';
 import { Pista } from './pista.interface';
-import { Horario } from './horario.interface';
 import { Reserva } from './reserva.interface';
+import { Horario } from './horario.interface';
 
 @Component({
   selector: 'app-reservar-deporte',
@@ -41,10 +41,12 @@ export class ReservarDeporteComponent implements OnInit {
     '11:00 - 12:00', '12:00 - 13:00', '13:00 - 14:00'
   ];
 
-  public horarios: { idPista: number, inicio: string, fin: string }[] = [];
+  public horarios: any = [];
+
+
   public horariosOcupados: { [key: string]: boolean } = {};
 
-  public pistas: {id:number, nombre:string}[] = [];
+  public pistas: { id: number, nombre: string }[] = [];
 
   //Propiedad para almacenar el estado de las reservas.
   public reservasEstado: { [key: string]: boolean } = {}
@@ -52,7 +54,7 @@ export class ReservarDeporteComponent implements OnInit {
   public fechaHoy: Date = new Date();
 
   public reservas: any = [
-  
+
   ];
 
   public reservasCargadas: boolean = false;
@@ -69,8 +71,8 @@ export class ReservarDeporteComponent implements OnInit {
     console.log('id deporte: ', this.deporteId)
 
 
-    this.cargarPistas();
     this.cargarHorario();
+    this.cargarPistas();
     this.cargarReservas()
 
 
@@ -94,7 +96,7 @@ export class ReservarDeporteComponent implements OnInit {
       next: () => {
         console.log('Carga de reservas completada.');
         this.reservasCargadas = true;
-        this.verificarOcupacion();
+
       },
       error: (err) => {
         console.error('Error al cargar las reservas:', err);
@@ -102,25 +104,15 @@ export class ReservarDeporteComponent implements OnInit {
     });
   }
 
-  public verificarOcupacion(): void {
-    this.horarios.forEach(horario => {
-      const ocupado = this.reservas.some((reserva: { rangoHoras: { inicio: string; fin: string; }; }) => 
-        reserva.rangoHoras.inicio === horario.inicio && 
-        reserva.rangoHoras.fin === horario.fin
-      );
-      // Aquí puedes añadir lógica para marcar el horario como ocupado o libre
-    });
-  }
+
 
   public cargarPistas(): void {
-
-    const pistasArray: string[] = [];
     this._apiReservas.getPistas(this.deporteId).pipe(
       tap((pistas: Pista[]) => {
-       this.pistas = pistas.map(pista => ({
+        this.pistas = pistas.map(pista => ({
           id: pista.id,
           nombre: pista.nombre,
-       }))
+        }))
       })).subscribe();
   }
 
@@ -129,38 +121,26 @@ export class ReservarDeporteComponent implements OnInit {
   public cargarHorario(): void {
     this._apiReservas.getHorario(this.deporteId).pipe(
       tap((horarios: Horario[]) => {
-        this.horarios = horarios.map(h => ({
-          idPista: h.idPista,
-          inicio: h.inicio.slice(0, 5),
-          fin: h.fin.slice(0, 5)
+        console.log(horarios)
+        this.horarios = horarios.map(horario => ({
+          id: horario.id,
+          rangoHoras: `${horario.inicio.slice(0, 5)} - ${horario.fin.slice(0, 5)}`
         }));
-  
+
         console.log('Horarios cargados:', this.horarios);
-        console.log('Reservas:', this.reservas);
-  
-        // Llenar solo los horarios ocupados si coinciden con reservas
-        this.horarios.forEach(horario => {
-          const ocupado = this.reservas.some((reserva: { idPista: number; rangoHoras: { inicio: string; fin: string; }; }) =>
-            reserva.idPista === horario.idPista &&
-            reserva.rangoHoras.inicio === horario.inicio &&
-            reserva.rangoHoras.fin === horario.fin
-          );
-  
-          console.log(`Horario: ${horario.inicio}-${horario.fin} Pista: ${horario.idPista} Ocupado: ${ocupado}`);
-  
-          if (ocupado) {
-            const key = `${horario.inicio}-${horario.idPista}`;
-            this.horariosOcupados[key] = true;
-          }
-        });
-  
-        console.log('Horarios ocupados:', this.horariosOcupados);
       })
-    ).subscribe();
+    ).subscribe({
+      next: () => {
+        console.log('Carga de horarios completada.');
+      },
+      error: (err) => {
+        console.error('Error al cargar los horarios:', err);
+      }
+    })
   }
 
   public getReserva(time: string, recinto: { id: number, nombre: string }): boolean {
-    if (!this.reservasCargadas) return false; 
+    if (!this.reservasCargadas) return false;
 
     const reservaEncontrada = this.reservas.find((r: any) =>
       r.idPista === recinto.id &&
@@ -168,8 +148,6 @@ export class ReservarDeporteComponent implements OnInit {
     );
     return !!reservaEncontrada;
   }
-
-
   private estaDentroDelRango(time: string, inicio: string, fin: string): boolean {
     const [horaInicio, horaFin] = [inicio, fin].map(h => h.split(':').map(Number));
     const [horaConsulta] = time.split(':').map(Number);
@@ -178,12 +156,12 @@ export class ReservarDeporteComponent implements OnInit {
     return (horaConsulta >= horaInicio[0] && horaConsulta < horaFin[0]);
   }
 
-  public reserva(time: string, recinto: { id: number, nombre: string }, ocupado: boolean): void {
+  public reserva(horario: Horario, recinto: { id: number, nombre: string }, ocupado: boolean): void {
     if (ocupado) {
       console.log('Esa pista no está disponible...');
       return;
     }
-    console.log(`Se ha clicado la pista: ${recinto.nombre} con fecha: ${time}`);
+    console.log(`Se ha clicado la pista: ${recinto.nombre} id:${recinto.id} , con horario ${horario.id}`);
   }
 
   public handleClickAtras(event: Event): void {

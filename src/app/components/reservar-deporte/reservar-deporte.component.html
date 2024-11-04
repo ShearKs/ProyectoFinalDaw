@@ -19,21 +19,21 @@
               <div class="header">{{ pista.nombre }}</div>
             </mat-grid-tile>
 
-        
-            <ng-container *ngFor="let time of times">
+            <!-- Recorrer horarios en lugar de times -->
+            <ng-container *ngFor="let horario of horarios">
               <mat-grid-tile>
-                <div class="header">{{ time }}</div>
+                <div class="header">{{ horario.rangoHoras }}</div>
               </mat-grid-tile>
 
               <ng-container *ngFor="let recinto of pistas">
                 <mat-grid-tile class="caja">
                   <div
                     [ngClass]="{
-                      reservado: getReserva(time, recinto),
-                      libre: !getReserva(time, recinto)
+                      reservado: getReserva(horario.rangoHoras, recinto),
+                      libre: !getReserva(horario.rangoHoras, recinto)
                     }"
-                    (click)="reserva(time, recinto, getReserva(time, recinto))">
-                    {{ getReserva(time, recinto) ? "Ocupado" : "Libre" }}
+                    (click)="reserva(horario, recinto, getReserva(horario.rangoHoras, recinto))">
+                    {{ getReserva(horario.rangoHoras, recinto) ? "Ocupado" : "Libre" }}
                   </div>
                 </mat-grid-tile>
               </ng-container>

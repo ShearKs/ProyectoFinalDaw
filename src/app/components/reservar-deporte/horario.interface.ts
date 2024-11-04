@@ -1,7 +1,8 @@
+
+
 export interface Horario {
 
-    id?: number;
-    idPista: number;
+    id: number;
     inicio: string;
     fin: string;
     disponible?: number;
