@@ -11,21 +11,23 @@
     <div class="cosas">
       <mat-card>
         <mat-card-content>
-          <mat-grid-list cols="{{ pistas.length + 1 }}" rowHeight="100px">
-            <mat-grid-tile></mat-grid-tile> <!-- Espacio para el encabezado de la columna -->
+          <mat-grid-list cols="{{ horarios.length + 1 }}" rowHeight="100px">
+            <mat-grid-tile></mat-grid-tile> <!-- Espacio para el encabezado de la fila -->
 
-            <!-- Encabezados de Pistas -->
-            <mat-grid-tile *ngFor="let pista of pistas">
-              <div class="header">{{ pista.nombre }}</div>
-            </mat-grid-tile>
-
-            <!-- Recorrer horarios en lugar de times -->
+            <!-- Encabezados de Horarios -->
             <ng-container *ngFor="let horario of horarios">
               <mat-grid-tile>
                 <div class="header">{{ horario.rangoHoras }}</div>
               </mat-grid-tile>
+            </ng-container>
 
-              <ng-container *ngFor="let recinto of pistas">
+            <!-- Recorrer pistas en lugar de horarios -->
+            <ng-container *ngFor="let recinto of pistas">
+              <mat-grid-tile>
+                <div class="header">{{ recinto.nombre }}</div>
+              </mat-grid-tile>
+
+              <ng-container *ngFor="let horario of horarios">
                 <mat-grid-tile class="caja">
                   <div
                     [ngClass]="{

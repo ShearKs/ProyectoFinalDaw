@@ -86,8 +86,8 @@ export class ReservarDeporteComponent implements OnInit {
           id: reserva.id,
           idPista: reserva.idPista,
           rangoHoras: {
-            inicio: reserva.inicio.slice(0, 5),
-            fin: reserva.fin.slice(0, 5)
+            inicio: reserva.inicio.slice(0, 5) ,
+            fin: reserva.fin.slice(0, 5) 
           }
         }));
         console.log('Datos de reservas cargadas:', this.reservas);
