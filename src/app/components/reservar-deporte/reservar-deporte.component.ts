@@ -44,7 +44,7 @@ export class ReservarDeporteComponent implements OnInit {
   public horarios: { idPista: number, inicio: string, fin: string }[] = [];
   public horariosOcupados: { [key: string]: boolean } = {};
 
-  public pistas: string[] = ['Pista 1', 'Pista 2', 'Pista 3', 'Pista 4', 'Pista 5', 'Pista 6'];
+  public pistas: {id:number, nombre:string}[] = [];
 
   //Propiedad para almacenar el estado de las reservas.
   public reservasEstado: { [key: string]: boolean } = {}
@@ -52,16 +52,7 @@ export class ReservarDeporteComponent implements OnInit {
   public fechaHoy: Date = new Date();
 
   public reservas: any = [
-    // { id: 1458555, idPista: 1, rangoHoras: { inicio: '09:00', fin: '10:00' }, pistaCubierta: true },
-    // { id: 4555453, idPista: 2, rangoHoras: { inicio: '09:00', fin: '10:00' }, pistaCubierta: false },
-    // { id: 9837234, idPista: 3, rangoHoras: { inicio: '09:00', fin: '10:00' }, pistaCubierta: false },
-    // { id: 4523445, idPista: 1, rangoHoras: { inicio: '10:00', fin: '11:00' }, pistaCubierta: true },
-    // { id: 2355235, idPista: 1, rangoHoras: { inicio: '13:00', fin: '14:00' }, pistaCubierta: true },
-    // { id: 2345234, idPista: 4, rangoHoras: { inicio: '09:00', fin: '10:00' }, pistaCubierta: false },
-    // { id: 2345452, idPista: 2, rangoHoras: { inicio: '10:00', fin: '11:00' }, pistaCubierta: false },
-    // { id: 2345523, idPista: 4, rangoHoras: { inicio: '13:00', fin: '14:00' }, pistaCubierta: false },
-    // { id: 2345222, idPista: 5, rangoHoras: { inicio: '13:00', fin: '14:00' }, pistaCubierta: true },
-    // { id: 5523452, idPista: 3, rangoHoras: { inicio: '12:00', fin: '13:00' }, pistaCubierta: false },
+  
   ];
 
   public reservasCargadas: boolean = false;
@@ -117,24 +108,19 @@ export class ReservarDeporteComponent implements OnInit {
         reserva.rangoHoras.inicio === horario.inicio && 
         reserva.rangoHoras.fin === horario.fin
       );
-  
-      //console.log(`Horario ${horario.inicio} - ${horario.fin}: ${ocupado ? 'Ocupado' : 'Libre'}`);
       // Aquí puedes añadir lógica para marcar el horario como ocupado o libre
     });
   }
-
 
   public cargarPistas(): void {
 
     const pistasArray: string[] = [];
     this._apiReservas.getPistas(this.deporteId).pipe(
       tap((pistas: Pista[]) => {
-        pistas.forEach(pista => {
-          pistasArray.push(pista.nombre);
-        });
-
-        console.log(pistasArray);
-        this.pistas = pistasArray;
+       this.pistas = pistas.map(pista => ({
+          id: pista.id,
+          nombre: pista.nombre,
+       }))
       })).subscribe();
   }
 
@@ -173,14 +159,11 @@ export class ReservarDeporteComponent implements OnInit {
     ).subscribe();
   }
 
-  public getReserva(time: string, recinto: string): boolean {
+  public getReserva(time: string, recinto: { id: number, nombre: string }): boolean {
     if (!this.reservasCargadas) return false; 
 
-    const idPista = this.pistas.indexOf(recinto) + 1;
-    
-
     const reservaEncontrada = this.reservas.find((r: any) =>
-      r.idPista === idPista &&
+      r.idPista === recinto.id &&
       this.estaDentroDelRango(time, r.rangoHoras.inicio, r.rangoHoras.fin)
     );
     return !!reservaEncontrada;
@@ -195,12 +178,12 @@ export class ReservarDeporteComponent implements OnInit {
     return (horaConsulta >= horaInicio[0] && horaConsulta < horaFin[0]);
   }
 
-  public reserva(time: string, recinto: string, ocupado: boolean): void {
+  public reserva(time: string, recinto: { id: number, nombre: string }, ocupado: boolean): void {
     if (ocupado) {
       console.log('Esa pista no está disponible...');
       return;
     }
-    console.log(`Se ha clicado la pista: ${recinto} con fecha: ${time}`);
+    console.log(`Se ha clicado la pista: ${recinto.nombre} con fecha: ${time}`);
   }
 
   public handleClickAtras(event: Event): void {

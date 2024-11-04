@@ -1,5 +1,5 @@
 export interface Pista {
-    id?: number;
+    id: number;
     nombre: string;
     idDeporte: number;
     cubierta?: number;

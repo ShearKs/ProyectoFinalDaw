@@ -15,8 +15,8 @@
             <mat-grid-tile></mat-grid-tile> <!-- Espacio para el encabezado de la columna -->
 
             <!-- Encabezados de Pistas -->
-            <mat-grid-tile *ngFor="let recinto of pistas">
-              <div class="header">{{ recinto }}</div>
+            <mat-grid-tile *ngFor="let pista of pistas">
+              <div class="header">{{ pista.nombre }}</div>
             </mat-grid-tile>
 
         

@@ -1,0 +1,33 @@
+[33mebd1db9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m obtención de reservas ocupadas por deporte
+[33m7c86569[m dialogo de confirmación hecho como general(servicio)
+[33m3ba0f0c[m arreglado el bug de no poder darle al registro
+[33mc7d5b61[m añadida la posibilidad para el admintrador de editar,añadir y eliminar cursos
+[33mb7a79c7[m Arreglado el select en el edit para que salga el valor del select option
+[33mf734c5b[m añadido otro tab en el perfil
+[33mc3350f1[m posibilidad para añadir cursos desde la app
+[33m7261499[m Obtener cursos con bdd
+[33m1b7c596[m Cambio en la interfaz de perfil y modificado la interfaz de cursos
+[33mcb34486[m carga de objeto cuando se actualiza el perfil y comenzado el componente de cursos
+[33m7f908e8[m posibilidad de editar el usuario
+[33m6b87a24[m Recogida de campos para poder editar el perfil de usuario
+[33mbb96e92[m recuperación de datos de localstorage y campos añadidos al perfil
+[33mc1f25ac[m solucionado el bug de cerrar sesión
+[33me0ee530[m guard mah o meno funcionando (con bugs)
+[33m8645a01[m Inicio de registro y cambiada la carpeta components de shared para hacerlo para aclarativo
+[33m0ab619b[m Integración de login básico
+[33m3899ecc[m implementación de hacer los campos ocultos..
+[33m73e38e0[m Mostrado de deportes con bdd
+[33m6db694a[m Arreglo de formulario de login y registro y correción de vista de deportes
+[33m2361682[m crud implementado a falta de terminar el edit...
+[33m90901d0[m incorporrado el método de creación de registro en contactos y inhabilitado cuando se lee el campo
+[33mc899458[m Arreglo del componente para la correcto mandao de solicitudes
+[33mb67632c[m Creación de formulario genérico
+[33m4d0578f[m Añadir funcionalidad para que la tabla sea de uso general
+[33m0feb9e0[m añadido para quitar campos según lo deseemos
+[33mcd4a783[m Fusionando master en main, aceptando todos los cambios de master
+[33m92b6813[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m Cambio de tabla para que sea general
+[33md4db950[m eliminación de la carpeta repetida
+[33m35a61fd[m subida a master
+[33mb06d326[m subida a master
+[33m1769f4d[m Primer commit conche tu madre
+[33m4d66c26[m initial commit
