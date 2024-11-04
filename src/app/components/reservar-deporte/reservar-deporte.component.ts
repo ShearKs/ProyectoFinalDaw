@@ -70,17 +70,24 @@ export class ReservarDeporteComponent implements OnInit {
 
     console.log('id deporte: ', this.deporteId)
 
+    const fechaHoyString = localStorage.getItem('fechaHoy');
+
+    if (fechaHoyString) {
+      this.fechaHoy = new Date(fechaHoyString);
+    } else {
+      this.fechaHoy = new Date(); // Si no hay fecha en localStorage, se usa la fecha actual
+      localStorage.setItem('fechaHoy', this.fechaHoy.toISOString()); // Almacena la fecha actual en localStorage
+    }
+
 
     this.cargarHorario();
     this.cargarPistas();
     this.cargarReservas()
-
-
   }
 
   //Método que se encarga de cargar todas las reservas que hay en la bdd..
   public cargarReservas(): void {
-    this._apiReservas.getReservas(this.deporteId).pipe(
+    this._apiReservas.getReservas(this.deporteId, this.fechaHoy).pipe(
       tap((reservas: Reserva[]) => {
         this.reservas = reservas.map(reserva => ({
           id: reserva.id,
@@ -167,6 +174,7 @@ export class ReservarDeporteComponent implements OnInit {
       idCliente: 4,
       idPista: recinto.id,
       idHorario: horario.id,
+      fecha: this.fechaHoy,
     }
 
     this._apiReservas.hacerReserva(reserva).pipe(
