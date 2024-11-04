@@ -1,10 +1,10 @@
 export interface Reserva {
-    id: number;
+    id?: number;
     idCliente?: number;
     idPista: number;
     idHorario: number;
     idDeporte?: number;
     fecha?: string;
-    inicio: string; 
-    fin: string;     
+    inicio?: string; 
+    fin?: string;     
 }

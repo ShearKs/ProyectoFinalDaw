@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environmet';
 import { Observable } from 'rxjs';
+import { Reserva } from './reserva.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,13 @@ export class ReservasService {
 
     return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'getHorario', idDeporte });
   }
+
+  public hacerReserva(reserva: Reserva): Observable<any> {
+
+    return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'hacerReserva', reserva });
+  }
+
+
 
 
 }

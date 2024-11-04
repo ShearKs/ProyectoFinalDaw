@@ -86,8 +86,8 @@ export class ReservarDeporteComponent implements OnInit {
           id: reserva.id,
           idPista: reserva.idPista,
           rangoHoras: {
-            inicio: reserva.inicio.slice(0, 5) ,
-            fin: reserva.fin.slice(0, 5) 
+            inicio: reserva.inicio?.slice(0, 5),
+            fin: reserva.fin?.slice(0, 5)
           }
         }));
         console.log('Datos de reservas cargadas:', this.reservas);
@@ -161,6 +161,24 @@ export class ReservarDeporteComponent implements OnInit {
       console.log('Esa pista no está disponible...');
       return;
     }
+
+    //Hacemos la reserva
+    const reserva: Reserva = {
+      idCliente: 4,
+      idPista: recinto.id,
+      idHorario: horario.id,
+    }
+
+    this._apiReservas.hacerReserva(reserva).pipe(
+      tap((result => {
+
+        console.log(result)
+      }))
+    ).subscribe();
+
+
+
+
     console.log(`Se ha clicado la pista: ${recinto.nombre} id:${recinto.id} , con horario ${horario.id}`);
   }
 
