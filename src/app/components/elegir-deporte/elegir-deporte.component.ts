@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { tap } from 'rxjs';
   selector: 'app-elegir-deporte',
   standalone: true,
   imports: [RouterOutlet, MatPaginator, MatCardModule, RouterLink, CommonModule, MatIconModule],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' },DatePipe],
   templateUrl: './elegir-deporte.component.html',
   styleUrls: ['./elegir-deporte.component.scss']
 })
@@ -51,12 +52,15 @@ export class ElegirDeporteComponent implements OnInit {
     this._deportesServices.getDeportes().pipe(
       tap((deportesObtenidos => {
         this.deportes = deportesObtenidos;
+        console.log(this.deportes)
       }))
     ).subscribe();
   }
 
   public accesoReserva(deporte: any) {
-    this.router.navigate([this.route.snapshot.url.join('/'), 'reservar-deporte', deporte.id]);
+    this.router.navigate(['/reservar-deporte', deporte.nombre], {
+      queryParams: { id: deporte.id }
+    });
   }
 
   public handlePageEvent(event: any) {

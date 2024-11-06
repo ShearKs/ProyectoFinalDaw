@@ -97,7 +97,7 @@ export const routes: Routes = [
     },
     {
         canActivate: [AuthGuard],
-        path: 'elegir-deporte/reservar-deporte/:id',
+        path: 'reservar-deporte/:nombre',
         component: ReservarDeporteComponent
     }
 

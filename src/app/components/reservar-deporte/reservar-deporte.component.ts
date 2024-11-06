@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { Location } from '@angular/common';
@@ -34,6 +34,8 @@ import { Horario } from './horario.interface';
 export class ReservarDeporteComponent implements OnInit {
   //Id del deporte reservado...
   public deporteId!: number;
+  //Nombre del deporte de la reserva..
+  public deporteNombre!: string;
 
   //Horario que transcurre esa reserva..
   public times: string[] = [
@@ -42,7 +44,6 @@ export class ReservarDeporteComponent implements OnInit {
   ];
 
   public horarios: any = [];
-
 
   public horariosOcupados: { [key: string]: boolean } = {};
 
@@ -60,23 +61,39 @@ export class ReservarDeporteComponent implements OnInit {
   public reservasCargadas: boolean = false;
 
   constructor(
-    private ruta: ActivatedRoute,
+    private readonly _ruta: ActivatedRoute,
+    private readonly _router: Router,
     private location: Location,
     private readonly _apiReservas: ReservasService) { }
 
   ngOnInit(): void {
-    const deporteId = this.ruta.snapshot.paramMap.get('id');
-    this.deporteId = deporteId ? +deporteId : 0;
+    // const deporteId = +this._ruta.snapshot.paramMap.get('id')!;
+    // this.deporteId = deporteId ? +deporteId : 0;
+    // //Obtenemos el nombre del deporte que se ha enviado mediante el state 
+    // // Obtener los queryParams
+    // this._ruta.queryParams.subscribe(params => {
+    //   this.deporteNombre = params['nombre'] || 'Nombre desconocido';
+    // });
+
+    // Obtener el parámetro de ruta 'nombre' y el 'id' desde queryParams
+    this._ruta.paramMap.subscribe(params => {
+      this.deporteNombre = params.get('nombre') || 'Nombre desconocido';
+    });
+
+    this._ruta.queryParams.subscribe(params => {
+      this.deporteId = params['id'] || 0;
+    });
 
     console.log('id deporte: ', this.deporteId)
+    console.log('Nombre del deporte: ', this.deporteNombre);
 
     const fechaHoyString = localStorage.getItem('fechaHoy');
 
     if (fechaHoyString) {
       this.fechaHoy = new Date(fechaHoyString);
     } else {
-      this.fechaHoy = new Date(); // Si no hay fecha en localStorage, se usa la fecha actual
-      localStorage.setItem('fechaHoy', this.fechaHoy.toISOString()); // Almacena la fecha actual en localStorage
+      this.fechaHoy = new Date();
+      localStorage.setItem('fechaHoy', this.fechaHoy.toISOString());
     }
 
 
@@ -111,8 +128,6 @@ export class ReservarDeporteComponent implements OnInit {
     });
   }
 
-
-
   public cargarPistas(): void {
     this._apiReservas.getPistas(this.deporteId).pipe(
       tap((pistas: Pista[]) => {
@@ -122,8 +137,6 @@ export class ReservarDeporteComponent implements OnInit {
         }))
       })).subscribe();
   }
-
-
 
   public cargarHorario(): void {
     this._apiReservas.getHorario(this.deporteId).pipe(
@@ -183,9 +196,6 @@ export class ReservarDeporteComponent implements OnInit {
         console.log(result)
       }))
     ).subscribe();
-
-
-
 
     console.log(`Se ha clicado la pista: ${recinto.nombre} id:${recinto.id} , con horario ${horario.id}`);
   }
