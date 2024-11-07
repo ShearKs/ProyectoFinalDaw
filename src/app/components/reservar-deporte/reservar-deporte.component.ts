@@ -11,9 +11,14 @@ import { Location } from '@angular/common';
 import { ReservaEstadoDirective } from './reserva-estado.directive';
 import { ReservasService } from './reservas.service';
 import { tap } from 'rxjs';
-import { Pista } from './pista.interface';
-import { Reserva } from './reserva.interface';
-import { Horario } from './horario.interface';
+import { Reserva } from './interfaces/reserva.interface';
+import { Horario } from './interfaces/horario.interface';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { Pista } from './interfaces/pista.interface';
 
 @Component({
   selector: 'app-reservar-deporte',
@@ -26,8 +31,14 @@ import { Horario } from './horario.interface';
     MatExpansionModule,
     MatDividerModule,
     MatGridListModule,
-    CommonModule
+    CommonModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatNativeDateModule,
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './reservar-deporte.component.html',
   styleUrls: ['./reservar-deporte.component.scss']
 })

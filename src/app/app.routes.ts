@@ -13,6 +13,7 @@ import { ContactosComponent } from './shared/components-shared/contactos/contact
 import { AuthGuard } from './auth/auth.guard';
 import { CanActivateGuard } from './auth/can-activate.guard';
 import { MenuComponent } from './shared/components-shared/menu/menu.component';
+import { EventosComponent } from './components/eventos/eventos.component';
 
 
 export const routes: Routes = [
@@ -76,14 +77,15 @@ export const routes: Routes = [
         }
 
     },
-    // {
-    //     canActivate: [AuthGuard],
-    //     component: MenuComponent
-    // },
     {
         canActivate: [AuthGuard],
         path: 'contactos',
         component: ContactosComponent
+    },
+    {
+        canActivate: [AuthGuard],
+        path: 'eventos',
+        component: EventosComponent
     },
     {
         canActivate: [AuthGuard],

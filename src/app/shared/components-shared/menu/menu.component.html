@@ -20,6 +20,12 @@
         Usuarios</button>
     </li>
 
+    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/eventos') }">
+      <button mat-button [routerLink]="['/eventos']">
+        <mat-icon matSuffix>emoji_events</mat-icon>
+        Eventos</button>
+    </li>
+
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/cursos') }">
       <button mat-button [routerLink]="['/cursos']">
         <mat-icon matSuffix>school</mat-icon>

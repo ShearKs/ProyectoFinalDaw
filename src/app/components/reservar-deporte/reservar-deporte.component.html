@@ -5,7 +5,16 @@
 
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
-      <span class="deporte-text">Reservas para {{this.deporteNombre}} para el {{this.fechaHoy | date   }}        </span>
+      <span class="deporte-text">Reservas de {{this.deporteNombre}} para el {{this.fechaHoy | date   }}        </span>
+      <mat-form-field>
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      
+      
     </mat-expansion-panel-header>
 
     <div class="cosas">

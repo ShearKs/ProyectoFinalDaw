@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environmet';
 import { Observable } from 'rxjs';
-import { Reserva } from './reserva.interface';
+import { Reserva } from './interfaces/reserva.interface';
 
 @Injectable({
   providedIn: 'root'

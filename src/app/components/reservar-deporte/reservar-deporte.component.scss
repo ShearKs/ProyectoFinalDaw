@@ -13,15 +13,28 @@
     border: 1px solid rgb(59, 59, 59);
 
     mat-expansion-panel-header {
-      display: flex; 
-      justify-content: flex-start; 
-
-      .deporte-text {
-        font-weight: bold;
-        font-size: 1.2rem;
-      }
+      display: flex;
+      justify-content: space-between; /* Distribuye los elementos */
+      align-items: center; /* Alinea verticalmente */
+      flex-wrap: wrap; /* Permite que los elementos se acomoden en líneas si es necesario */
     }
-
+    
+    .deporte-text-container {
+      flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
+      text-align: center; /* Centra el texto */
+    }
+    
+    .deporte-text {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .elegir-fecha {
+      max-width: 250px; /* Ajusta el tamaño máximo del datepicker */
+      margin: 10%;
+      width: 100%; /* Asegura que el datepicker no sobresalga */
+      display: inline-block; /* Mantiene el campo dentro de su contenedor */
+    }
     .cosas {
       mat-card {
         background-color: #f5f5f5; 

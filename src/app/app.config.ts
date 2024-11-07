@@ -4,6 +4,7 @@ import { routes } from './app.routes';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { SpinnerInterceptor } from './core/interceptor/spinner.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 export const appConfig: ApplicationConfig = {
@@ -15,7 +16,7 @@ export const appConfig: ApplicationConfig = {
       useClass: SpinnerInterceptor,
       multi: true
     },
-    provideAnimations(),
+    provideAnimations(), provideAnimationsAsync(),
     // Proporciona LOCALE_ID para usar español
     // { provide: LOCALE_ID, useValue: 'es' }  // Configura el idioma de la aplicación a español
   ]
