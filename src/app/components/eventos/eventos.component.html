@@ -1,24 +1,35 @@
-<!-- eventos.component.html -->
-
 <div class="event-container">
-    <h2 class="event-title">Lista de Eventos Deportivos</h2>
-    <div class="event-list">
-      <div *ngFor="let evento of eventos" class="event-card">
-        <!-- Contenedor de 2 columnas: Información y botones -->
-        <div class="event-info">
-          <h3>{{ evento.nombre }}</h3>
-          <p><strong>Fecha de la competición:</strong> {{ evento.fecha_evento }}</p>
-          <p>Distancia: {{evento.distancia}}</p>
-          <p class="event-description"><strong>Descripción:</strong> {{ evento.descripcion }}</p>
-        </div>
-  
-        <div class="inscribe-button-container">
-          <button mat-stroked-button class="inscribe-button" (click)="inscribirse(evento)">
-            <mat-icon>info</mat-icon>
-            Más información</button>
-             
-        </div>
+  <h2 class="event-title">Lista de Eventos Deportivos</h2>
+  <div class="event-list">
+    <div *ngFor="let evento of eventos" class="event-card">
+      <div class="event-info">
+        <h3>{{ evento.nombre }}</h3>
+        <p><strong>Fecha de la competición:</strong> {{ evento.fecha_evento }}</p>
+        <p>Distancia: {{ evento.distancia }}</p>
+        <p class="event-description"><strong>Descripción:</strong> {{ evento.descripcion }}</p>
+      </div>
+
+      <div class="inscribe-button-container">
+        <button mat-stroked-button class="inscribe-button" (click)="inscribirse(evento)">
+          <mat-icon>info</mat-icon>
+          Más información
+        </button>
+
+        <button mat-stroked-button class="delete-button" *ngIf="usuario?.tipo_usuario === 'trabajador'">
+          <mat-icon>gpp_maybe</mat-icon>
+          Eliminar evento
+        </button>
+
+        <button mat-stroked-button class="edit-button" *ngIf="usuario?.tipo_usuario === 'trabajador' ">
+          <mat-icon>edit</mat-icon>
+          Editar evento
+        </button>
       </div>
     </div>
   </div>
-  
+
+  <!-- Añadir contenedor adicional para centrar el botón, si necesario -->
+  <div class="add-event-container" *ngIf="usuario?.tipo_usuario === 'trabajador' ">
+    <button mat-flat-button class="add-evento" (click)="addEvento()">Añadir Evento</button>
+  </div>
+</div>

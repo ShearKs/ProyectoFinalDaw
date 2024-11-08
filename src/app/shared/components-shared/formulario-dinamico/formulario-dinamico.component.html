@@ -1,0 +1,47 @@
+<div class="formulario-dinamico">
+
+  <h2 class="titulo-formulario">{{ this.tituloformulario }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="formulario-dinamico">
+    <div *ngFor="let campo of campos" class="form-group">
+      <mat-form-field appearance="fill" *ngIf="campo.tipo !== 'select'">
+        <mat-label>{{ campo.label }}</mat-label>
+
+        <!-- Campo de texto -->
+        <input *ngIf="campo.tipo === 'text'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
+          [placeholder]="campo.label" class="input-field">
+
+        <!-- Campo de número -->
+        <input *ngIf="campo.tipo === 'number'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
+          type="number" [placeholder]="campo.label" class="input-field">
+
+        <!-- Campo de fecha -->
+        <input *ngIf="campo.tipo === 'date'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
+          type="date" [placeholder]="campo.label" class="input-field">
+      </mat-form-field>
+
+      <!-- Campo select -->
+      <mat-form-field appearance="fill" *ngIf="campo.tipo === 'select'">
+        <mat-label>{{ campo.label }}</mat-label>
+        <mat-select formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}" class="input-field">
+          <mat-option *ngFor="let opcion of campo.opciones" [value]="opcion">{{ opcion }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Mensaje de error -->
+      <div *ngIf="form.get(campo.nombre)?.hasError('required') && form.get(campo.nombre)?.touched"
+        class="error-message">
+        <small>Este campo es obligatorio</small>
+      </div>
+    </div>
+
+    <!-- Botón de submit -->
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"
+        class="submit-btn">Guardar</button>
+    </div>
+  </form>
+
+
+
+</div>

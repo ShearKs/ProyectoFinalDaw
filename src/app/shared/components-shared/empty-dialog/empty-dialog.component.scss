@@ -1,9 +1,17 @@
 .dialogoSimple {
-  margin: 0;
+  margin:5px;
+  padding: 0.5rem;
+  resize: both; /* Permite redimensionar tanto horizontal como verticalmente */
+  overflow: auto; /* Asegura que el contenido se pueda desplazar si se redimensiona */
+
+  min-width: 350px; /* Establece un ancho mínimo */
+  min-height: 250px; /* Establece una altura mínima */
+
+  max-width: 1000px;
+  max-height: 750px;
 
   .componente {
-    padding: 0.75rem;
-    margin: 0;
+    padding: 1rem;
   }
 
   .acciones {

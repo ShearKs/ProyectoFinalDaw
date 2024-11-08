@@ -8,82 +8,122 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    overflow-y: auto; // Para que haya scroll si el contenido es muy largo
-}
-
-.event-title {
+    overflow-y: auto;
+    padding-bottom: 30px;
+    margin-bottom: 40px; 
+  }
+  
+  .event-title {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     color: #333;
     margin-bottom: 20px;
-}
-
-.event-list {
+  }
+  
+  .event-list {
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-.event-card {
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  
+  .event-card {
     background-color: #ffffff;
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: grid;
     grid-template-columns: 4fr 1fr;
-    /* Dos columnas: una ancha y otra estrecha */
     gap: 20px;
     align-items: flex-start;
-}
-
-.event-info {
+  }
+  
+  .event-info {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-h3 {
+  }
+  
+  h3 {
     margin: 0;
     font-size: 20px;
     font-weight: bold;
     color: #333;
-}
-
-.event-description {
+  }
+  
+  .event-description {
     font-size: 16px;
     color: #555;
     text-align: left;
-}
-
-.inscribe-button-container {
+  }
+  
+  .inscribe-button-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
+    gap: 10px;
+  
+    .inscribe-button,
+    .delete-button,
+    .edit-button {
+      width: 100%;
+      padding: 8px 16px;
+      font-size: 14px;
+      color: white;
+      border-radius: 4px;
+    }
 
-    .inscribe-button {
-        background-color: #007bff;
-        color: white;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        margin-bottom: 10px;
-
+    .inscribe-button{
+        background-color: #0099ff;
+    
         &:hover {
-            background-color: #0056b3;
+          background-color: #0062ff;
         }
+      }
+  
+    .delete-button {
+      background-color: #a72828;
+  
+      &:hover {
+        background-color: #882121;
+      }
     }
-}
-
-
-
-@media (max-width: 768px) {
+  
+    .edit-button {
+      background-color: #28a745;
+  
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  }
+  
+  .add-event-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .add-evento {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: #218838;
+    }
+  }
+  
+  @media (max-width: 768px) {
     .event-card {
-        grid-template-columns: 1fr;
-        /* En pantallas pequeñas, las columnas se apilan */
+      grid-template-columns: 1fr;
     }
-}
+  }
+  
