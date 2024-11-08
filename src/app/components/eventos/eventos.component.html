@@ -1,7 +1,7 @@
 <!-- eventos.component.html -->
 
 <div class="event-container">
-    <h2 class="event-title">Lista de Eventos</h2>
+    <h2 class="event-title">Lista de Eventos Deportivos</h2>
     <div class="event-list">
       <div *ngFor="let evento of eventos" class="event-card">
         <!-- Contenedor de 2 columnas: Información y botones -->
@@ -13,9 +13,10 @@
         </div>
   
         <div class="inscribe-button-container">
-          <button class="inscribe-button" (click)="inscribirse(evento)">Más información</button>
-          <button>Editar</button>
-          <button>Eliminar</button>          
+          <button mat-stroked-button class="inscribe-button" (click)="inscribirse(evento)">
+            <mat-icon>info</mat-icon>
+            Más información</button>
+             
         </div>
       </div>
     </div>

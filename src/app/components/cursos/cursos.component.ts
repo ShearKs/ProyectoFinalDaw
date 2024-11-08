@@ -27,19 +27,6 @@ export class CursosComponent implements OnInit {
   public usuario !: usuario;
   public cursos: Curso[] = [];
 
-
-
-  //Por si se quieren hacer pruebas sin bdd
-  // public cursos: Curso[] = [
-  //   { id: 1, nombre: 'Curso de Natación para principiantes', icono: 'pool', plazas: 35, deporte: "Natación" },
-  //   { id: 2, nombre: 'Curso de Fútbol para prevenjamines', icono: 'sports_soccer', plazas: 50, deporte: "Fútbol" },
-  //   { id: 3, nombre: 'Iniciación al baloncesto', icono: 'sports_basketball', plazas: 40, deporte: "Baloncesto" },
-  //   { id: 4, nombre: 'Curso inntermedio de padel', icono: 'sports_tennis', plazas: 15, deporte: "Pádel" },
-  //   { id: 5, nombre: 'Técnica de carrera', icono: 'sprint', plazas: 25, deporte: "Running" },
-  // ];
-
-
-
   constructor(
     private readonly _apiCursos: CursoServiceService,
     private readonly _apiDepo: DeportesService,
