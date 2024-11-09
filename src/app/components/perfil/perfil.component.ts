@@ -12,13 +12,16 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { sameObject } from '../../functions';
 import { Usuario } from '../../auth/interfaces/usuario.interface';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { DialogoService } from '../../core/servicies/dialogo.service';
+import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatTabsModule ,MatCardModule, CommonModule, TitleCasePipe, MatDatepickerModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [MatTabsModule, MatCardModule, CommonModule, TitleCasePipe, MatDatepickerModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,6 +36,9 @@ export class PerfilComponent implements OnInit {
     private readonly _perfilServicio: PerfilServiciosService,
     private readonly __fb: FormBuilder,
     private readonly __apiPerfil: PerfilServiciosService,
+    private readonly _dialog: MatDialog,
+    private readonly _dialogMensaje: DialogoService,
+
   ) { }
   ngOnInit(): void {
 
@@ -79,31 +85,51 @@ export class PerfilComponent implements OnInit {
       fecha_nac: this.formulario.get('fecha_nac')?.value,
       tipo_usuario: this.usuarioLogged.tipo_usuario,
     };
-  
+
     if (!sameObject(this.usuarioLogged, usuarioEdit)) {
-      this.__apiPerfil.editarUsuario(usuarioEdit).pipe(
-        tap(resultEdit => {
-          if (resultEdit.status === "exito") {
-            // Actualiza localStorage y la referencia de usuarioLogged
-            localStorage.setItem('user', JSON.stringify(usuarioEdit));
-            this.usuarioLogged = { ...usuarioEdit };
-  
-            // Actualiza el formulario con los datos nuevos
-            this.formulario.patchValue({
-              nombre: usuarioEdit.nombre,
-              apellidos: usuarioEdit.apellidos,
-              telefono: usuarioEdit.telefono,
-              correo: usuarioEdit.email,
-              fecha_nac: usuarioEdit.fecha_nac,
-            });
-          }
-        })
-      ).subscribe();
+
+
+      const dialog = this._dialog.open(ConfirmDialogComponent, {
+        data: {
+          titulo: 'Modificación de Perfil',
+          contenido: `¿Estás seguro que quieres modificar tu usuaario? `,
+          textoConfirmacion: 'Editar',
+        }
+      });
+
+      dialog.afterClosed().subscribe(result => {
+
+        if (result) {
+          this.__apiPerfil.editarUsuario(usuarioEdit).pipe(
+            tap(response => {
+              if (response.status === "exito") {
+                // Actualiza localStorage y la referencia de usuarioLogged
+                localStorage.setItem('user', JSON.stringify(usuarioEdit));
+                this.usuarioLogged = { ...usuarioEdit };
+
+                // Actualiza el formulario con los datos nuevos
+                this.formulario.patchValue({
+                  nombre: usuarioEdit.nombre,
+                  apellidos: usuarioEdit.apellidos,
+                  telefono: usuarioEdit.telefono,
+                  correo: usuarioEdit.email,
+                  fecha_nac: usuarioEdit.fecha_nac,
+                });
+
+                this._dialogMensaje.abrirDialogoConfirmacion('Se ha actualizado el tu usuario con la información que proporcionaste!', true)
+              }
+            })
+          ).subscribe();
+
+        }
+
+      });
+
     } else {
       alert('No has cambiado nada...');
     }
   }
-  
+
 
 
 }

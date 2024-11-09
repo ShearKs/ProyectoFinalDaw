@@ -105,11 +105,7 @@ export class EventosComponent implements OnInit {
       data: {
         component: InscripcionEventoComponent,
         datos: {
-          titulo: 'Añadir Evento',
-          editable: false,
-          campos: this.camposFormulario,
-          //Flag para saber si el evento es nuevo..,
-          esNuevoEvento: true
+          
         },
         eventEmitter: insEventoEmitter,
       }
