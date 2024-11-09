@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from "./auth/login/login.component";
 import { MenuComponent } from './shared/components-shared/menu/menu.component';
 import { AutenticationService } from './auth/servicies/autentication.service';
 import { SpinerCargaComponent } from './shared/components-shared/spiner-carga/spiner-carga.component';
-import { RegistroComponent } from "./auth/registro/registro.component";
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MenuComponent, SpinerCargaComponent, CommonModule, LoginComponent, RegistroComponent],
+  imports: [RouterOutlet, MenuComponent, SpinerCargaComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

@@ -8,29 +8,31 @@
 
         <!-- Campo de texto -->
         <input *ngIf="campo.tipo === 'text'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
-          [placeholder]="campo.label" class="input-field">
+          [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
 
         <!-- Campo de número -->
         <input *ngIf="campo.tipo === 'number'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
-          type="number" [placeholder]="campo.label" class="input-field">
+          type="number" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
 
         <!-- Campo de fecha -->
         <input *ngIf="campo.tipo === 'date'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
-          type="date" [placeholder]="campo.label" class="input-field">
+          type="date" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
+
+        <!-- Campo de contraseña -->
+        <input *ngIf="campo.tipo === 'password'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
+          type="password" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
       </mat-form-field>
 
       <!-- Campo select -->
       <mat-form-field appearance="outline" class="form-field" *ngIf="campo.tipo === 'select'">
         <mat-label>{{ campo.label }}</mat-label>
-        <mat-select formControlName="{{ campo.nombre }}">
-          <mat-option *ngFor="let campo of campo.opciones" [value]="campo.valor">
-            {{ campo.label }}
+        <mat-select formControlName="{{ campo.nombre }}" [disabled]="!esEditable">
+          <mat-option *ngFor="let valorCampo of campo.opciones" [value]="valorCampo.valor">
+            {{ valorCampo.label }}
           </mat-option>
         </mat-select>
       </mat-form-field>
       
-      
-
       <!-- Mensaje de error -->
       <div *ngIf="form.get(campo.nombre)?.hasError('required') && form.get(campo.nombre)?.touched"
         class="error-message">
@@ -40,7 +42,7 @@
 
     <!-- Botón de submit -->
     <div class="button-container">
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid"
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !esEditable"
         class="submit-btn">Guardar</button>
     </div>
   </form>

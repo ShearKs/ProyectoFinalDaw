@@ -16,6 +16,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SingularStringDirective } from '../../directives/singular-string.directive';
 import { FormularioGenericoComponent } from '../formulario-generico/formulario-generico.component';
+import { FormularioDinamicoComponent } from '../formulario-dinamico/formulario-dinamico.component';
+import { CampoFormulario } from '../formulario-dinamico/interfaces/campos_formulario.interface';
 
 
 export interface entidad {
@@ -29,7 +31,7 @@ export interface entidad {
 @Component({
   selector: 'app-contactos',
   standalone: true,
-  imports: [SingularStringDirective, ReactiveFormsModule, CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatIconModule, MatDialogModule],
+  imports: [ ReactiveFormsModule, CommonModule, MatTableModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatIconModule, MatDialogModule],
   templateUrl: './contactos.component.html',
   styleUrl: './contactos.component.scss'
 })
@@ -54,6 +56,22 @@ export class ContactosComponent implements OnInit, AfterViewInit {
   //Campos que eliminamos del formulario 
   public camposDlt: any = {};
 
+  private camposFormulario: CampoFormulario[] = [
+    { nombre: 'nombre_usuario', tipo: 'text', label: 'Nombre de usuario', requerido: true },
+    { nombre: 'nombre', tipo: 'text', label: 'Nombre', requerido: true },
+    { nombre: 'apellidos', tipo: 'text', label: 'Apellidos', requerido: true },
+    { nombre: 'telefono', tipo: 'text', label: 'Teléfono', requerido: true },
+    { nombre: 'email', tipo: 'text', label: 'Email', requerido: true },
+    { nombre: 'fecha_nac', tipo: 'date', label: 'Fecha de Nacimiento', requerido: true },
+    { nombre: 'contrasena', tipo: 'password', label: 'Contraseña', requerido: true },
+    { nombre: 'tipo_usuario', tipo: 'select', label: 'Tipo de Usuario', 
+        opciones: [
+          { valor:'cliente',label:'Cliente'},
+          { valor:'trabajador' ,label:'Trabajador'}
+        
+        ], requerido: false }
+  ];
+
 
   //Cogemos referencia del paginador
   @ViewChild(MatPaginator) paginator !: MatPaginator;
@@ -75,7 +93,6 @@ export class ContactosComponent implements OnInit, AfterViewInit {
     this.singEntity = singularEntity(this.entidad)
     this.entidadFormat = upperString(this.entidad)
     this.cargarDatos();
-
   }
 
   ngAfterViewInit(): void {
@@ -128,12 +145,14 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
     const dialogRef = this.dialog.open(EmptyDialogComponent, {
       data: {
-        component: FormularioGenericoComponent,
+        component: FormularioDinamicoComponent,
         datos: {
-          titulo: "Añade un " + this.singEntity,
-          entidad: entidadCabeceras,
+          titulo: 'Añadir Usuario',
+          //Si los campos son editables...
           editable: true,
-          camposAEliminar: this.camposDlt
+          campos: this.camposFormulario,
+          //Flag para saber si el evento es nuevo..,
+          esNuevoEvento: true
         },
         eventEmitter: nuevoRegistroEmitter
       }
@@ -146,7 +165,7 @@ export class ContactosComponent implements OnInit, AfterViewInit {
         .pipe(
           tap((result => {
             if (result.status === 'exito') {
-              this._abrirDialogoConfirmacion('Se ha añadido un registro con éxito', true);
+              this._abrirDialogoConfirmacion('Se ha añadido un usuario con éxito', true);
               this.cargarDatos();
             }
           }))
@@ -189,21 +208,39 @@ export class ContactosComponent implements OnInit, AfterViewInit {
   }
 
   //Detalle contacto sirve tanto para ver como para editar, es la misma vista....
-  public detalleEntidad(entity: entidad, esEditable: boolean): void {
+  public detalleEntidad(entity: any, esEditable: boolean): void {
 
     const entidadEditada = new EventEmitter<entidad>();
+
+    const entityCopy = { ...entity };
+
+    if (entityCopy.contrasena !== undefined) {
+        delete entityCopy.contrasena;
+    }
+    
+    // Filtrar el array de campos, excluyendo el campo "contrasena"
+    const camposSinContrasena = this.camposFormulario.filter(campo => campo.nombre !== "contrasena");
+
+    // Asignar valores iniciales a los campos del formulario desde `entityCopy`
+    camposSinContrasena.forEach(campo => {
+        if (campo.nombre && entityCopy[campo.nombre] !== undefined) {
+            console.log(campo.nombre)
+            campo.valorInicial = entityCopy[campo.nombre];
+        }
+    });
+    
+
     //Clonado del objeto...
     const oldEntity = JSON.parse(JSON.stringify(entity))
 
     const dialog = this.dialog.open(EmptyDialogComponent, {
       data: {
-        component: FormularioGenericoComponent,
+        component: FormularioDinamicoComponent,
         datos: {
           titulo: "Información de " + this.singEntity,
-          cabecera: this.columnas,
-          entidad: entity,
           editable: esEditable,
-          camposAEliminar: this.camposDlt
+          campos: camposSinContrasena,
+          
         },
         eventEmitter: entidadEditada
       }
@@ -211,7 +248,6 @@ export class ContactosComponent implements OnInit, AfterViewInit {
 
     //Para editar el contacto....
     entidadEditada.subscribe((entidadUpdate: entidad) => {
-
 
       //Optenemos el id del contacto actualizado...
       const index = this.datasource.data.findIndex(e => e.id === entidadUpdate.id)

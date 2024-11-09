@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { EventosService } from './eventos.service';
-import { firstValueFrom, Observable, tap } from 'rxjs';
+import {  tap } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { UsuarioDataService } from '../../core/servicies/usuario-data.service';
@@ -125,7 +125,7 @@ export class EventosComponent implements OnInit {
         component: FormularioDinamicoComponent,
         datos: {
           titulo: 'Añadir Evento',
-          editable: false,
+          editable: true,
           campos: this.camposFormulario,
           //Flag para saber si el evento es nuevo..,
           esNuevoEvento: true
@@ -157,7 +157,7 @@ export class EventosComponent implements OnInit {
     console.log('Evento clicado: ', evento)
 
     this.camposFormulario.forEach(campo => {
-      console.log(`Accediendo a evento[${campo.nombre}]:`, evento[campo.nombre]);
+
       if (campo.nombre && evento && evento[campo.nombre] !== undefined) {
         campo.valorInicial = evento[campo.nombre];
       }

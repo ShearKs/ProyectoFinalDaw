@@ -19,7 +19,8 @@ export class FormularioDinamicoComponent implements OnInit {
 
   public campos: CampoFormulario[] = [];
   public tituloformulario: string = "FORMULARIO SIN TITULO";
-  public esNuevoEvento: boolean = false; // Variable para saber si es nuevo evento o no
+  public esEditable :boolean = false;
+  public esNuevoEvento: boolean = false;
 
   @Input() datos: any;
   @Output() eventEmitter = new EventEmitter<any>();
@@ -35,7 +36,11 @@ export class FormularioDinamicoComponent implements OnInit {
     // Establecer el título y los campos del formulario
     this.tituloformulario = this.data.datos.titulo;
     this.campos = this.data.datos.campos;
+    this.esEditable = this.data.datos.editable;
     this.esNuevoEvento = this.data.datos.esNuevoEvento;  // Determinamos si es un nuevo evento
+
+    console.log("Campos")
+    console.log(this.campos)
 
     // Llamar al método para crear el formulario
     this.crearFormulario();
@@ -43,7 +48,7 @@ export class FormularioDinamicoComponent implements OnInit {
 
   // Método para crear el formulario dinámico
   public crearFormulario(): void {
-    const formulario: { [key: string]: FormControl } = {};
+
 
     // Si es un nuevo evento, reiniciamos el formulario con valores vacíos
     if (this.esNuevoEvento) {
