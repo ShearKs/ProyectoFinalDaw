@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environmet';
 import { HttpClient } from '@angular/common/http';
+import { Evento } from './interfaces/evento.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,13 @@ export class EventosService {
     return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'getEventos', data: null });
 
   }
+
+  public addEvento(evento: Evento): Observable<any> {
+    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'addEvento', data: { evento } })
+  }
+
+
+
+
 
 }

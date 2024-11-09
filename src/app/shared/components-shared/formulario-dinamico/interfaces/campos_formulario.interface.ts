@@ -4,7 +4,8 @@ export interface CampoFormulario {
     tipo: 'text' | 'number' | 'date' | 'select';
     label: string;
     requerido?: boolean;
-    opciones?: string[]; //opciones para los selects...
+    opciones?: { valor: string | number; label: string }[];
     valorInicial?: any;
+
 
 }

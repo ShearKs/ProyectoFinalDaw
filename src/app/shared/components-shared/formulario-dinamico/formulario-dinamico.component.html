@@ -23,11 +23,12 @@
       <!-- Campo select -->
       <mat-form-field appearance="fill" *ngIf="campo.tipo === 'select'">
         <mat-label>{{ campo.label }}</mat-label>
-        <mat-select formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}" class="input-field">
-          <mat-option *ngFor="let opcion of campo.opciones" [value]="opcion">{{ opcion }}</mat-option>
+        <mat-select formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}">
+          <mat-option *ngFor="let opcion of campo.opciones" [value]="opcion.valor">
+            {{ opcion.label }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
-
       <!-- Mensaje de error -->
       <div *ngIf="form.get(campo.nombre)?.hasError('required') && form.get(campo.nombre)?.touched"
         class="error-message">
