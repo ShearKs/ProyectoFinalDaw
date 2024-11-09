@@ -237,7 +237,7 @@ export class ContactosComponent implements OnInit, AfterViewInit {
       data: {
         component: FormularioDinamicoComponent,
         datos: {
-          titulo: "Información de " + this.singEntity,
+          titulo:  !esEditable ? "Información de " + this.singEntity : "Editar "+this.singEntity   ,
           editable: esEditable,
           campos: camposSinContrasena,
           
@@ -249,14 +249,22 @@ export class ContactosComponent implements OnInit, AfterViewInit {
     //Para editar el contacto....
     entidadEditada.subscribe((entidadUpdate: entidad) => {
 
+      entidadUpdate.id = oldEntity.id
+
       //Optenemos el id del contacto actualizado...
       const index = this.datasource.data.findIndex(e => e.id === entidadUpdate.id)
 
+      console.log(entidadUpdate)
+
       if (index > -1) {
+
+        console.log('holaaa')
 
 
         //Miramos si hemos modificado algo...
         if (!sameObject(oldEntity, entidadUpdate)) {
+
+          console.log('Editando')
 
           //Nos encargamos mandarle la información al php para editar el usuario
           this._gestorDatos.editEntidad(entity.id, this.entidad, entidadUpdate).subscribe({

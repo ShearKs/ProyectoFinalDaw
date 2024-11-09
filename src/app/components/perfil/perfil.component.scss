@@ -58,8 +58,6 @@
         }
       }
 
-
-
       .edit-mode {
         border-left: 3px solid #4caf50; // Verde
         padding-left: 8px;
@@ -92,6 +90,7 @@
         background-color: #4caf50; // Verde primario
         color: white;
         font-weight: bold;
+        width: 100%;
         padding: 10px 20px;
         border-radius: 8px; // Bordes redondeados
         transition: background-color 0.3s, transform 0.3s;
@@ -103,6 +102,8 @@
           transform: translateY(-2px); // Mover hacia arriba al hacer hover
         }
       }
+
+    
     }
   }
 }
