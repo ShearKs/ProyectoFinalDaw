@@ -15,7 +15,7 @@ export class ReservasService {
   constructor(private readonly __http: HttpClient) { }
 
   //Función para obtener las reservas
-  public getReservas(idDeporte: number,fecha :Date): Observable<any[]> {
+  public getReservas(idDeporte: number,fecha :string | null): Observable<any[]> {
     return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'getReservas', idDeporte ,fecha})
   }
 

@@ -1,10 +1,10 @@
 .reservasComponent {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   margin: 5%;
-  
+
   .atras-button {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
   }
 
   mat-expansion-panel {
@@ -14,70 +14,83 @@
 
     mat-expansion-panel-header {
       display: flex;
-      justify-content: space-between; /* Distribuye los elementos */
-      align-items: center; /* Alinea verticalmente */
-      flex-wrap: wrap; /* Permite que los elementos se acomoden en líneas si es necesario */
+      justify-content: space-between;  /* Alineación para que los elementos estén en los extremos */
+      align-items: center; /* Asegura que los elementos se alineen verticalmente */
     }
-    
-    .deporte-text-container {
-      flex-grow: 1; /* Permite que el texto ocupe el espacio restante */
-      text-align: center; /* Centra el texto */
-    }
-    
+
     .deporte-text {
       font-weight: bold;
       font-size: 1.2rem;
+      text-align: center;
+      flex-grow: 1; /* Asegura que el texto ocupe el espacio restante */
     }
-    
-    .elegir-fecha {
-      max-width: 250px; /* Ajusta el tamaño máximo del datepicker */
-      margin: 10%;
-      width: 100%; /* Asegura que el datepicker no sobresalga */
-      display: inline-block; /* Mantiene el campo dentro de su contenedor */
+
+    .fecha-field {
+      margin: 0 10px; /* Reduce márgenes */
+      max-width: 200px; /* Ajustado para que no sobresalga el campo de fecha */
+      width: 100%; /* Asegura que el campo de fecha se ajuste al espacio disponible */
     }
-    .cosas {
-      mat-card {
-        background-color: #f5f5f5; 
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
-        mat-card-content {
-          padding: 16px;
-          font-size: 1rem;
+    mat-form-field {
+      width: 100%;
+      max-width: 200px; /* Limita el tamaño del campo */
+      display: inline-block;
+    }
 
-          .header {
-            // font-weight: bold;
-            text-align: center;
-            line-height: 100px;
-          }
+    mat-datepicker-toggle {
+      padding: 0 8px; /* Ajuste del padding del botón para no interferir con el campo */
+    }
+  }
 
-          .reservado,
-          .libre {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            width: 100%;
-            cursor: pointer;
-            border: 1px solid #ddd;
-          }
+  .cosas {
+    mat-card {
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
-          .reservado {
-            background-color: rgb(231, 15, 15);
-          }
+      mat-card-header {
+        padding: 10px;
+        margin: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
 
-          .libre {
-            background-color: rgb(92, 224, 69);
-          }
+      mat-card-content {
+        padding: 16px;
+        font-size: 1rem;
 
-          mat-divider {
-            margin: 0;
-            border: 3px solid rgb(53, 53, 53);
-          }
+        .header {
+          text-align: center;
+          line-height: 100px;
+        }
 
-          mat-grid-tile {
-            border: 1px solid rgb(98, 98, 98);
-          }
+        .reservado,
+        .libre {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          width: 100%;
+          cursor: pointer;
+          border: 1px solid #ddd;
+        }
+
+        .reservado {
+          background-color: rgb(231, 15, 15);
+        }
+
+        .libre {
+          background-color: rgb(92, 224, 69);
+        }
+
+        mat-divider {
+          margin: 0;
+          border: 3px solid rgb(53, 53, 53);
+        }
+
+        mat-grid-tile {
+          border: 1px solid rgb(98, 98, 98);
         }
       }
     }

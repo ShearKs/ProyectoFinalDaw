@@ -5,20 +5,21 @@
 
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
-      <span class="deporte-text">Reservas de {{this.deporteNombre}} para el {{this.fechaHoy | date   }}        </span>
-      <mat-form-field>
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      
-      
+      <span class="deporte-text">Reservas de {{this.deporteNombre}} para el {{this.fechaReserva| date }}</span>
     </mat-expansion-panel-header>
 
     <div class="cosas">
       <mat-card>
+        <mat-card-header>
+          <p>Selecciona la Fecha para ver las reservas: </p>
+          <mat-form-field class="fecha-field">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" (dateChange) ="cambioFecha($event)"  [value] = "this.fechaReserva" [min] = "fechaMinima" [max] = "fechaMaxima">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </mat-card-header>
+
         <mat-card-content>
           <mat-grid-list cols="{{ horarios.length + 1 }}" rowHeight="100px">
             <mat-grid-tile></mat-grid-tile> <!-- Espacio para el encabezado de la fila -->

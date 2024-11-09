@@ -7,4 +7,5 @@ export interface usuario {
     edad: number,
     correo: string,
     tipo_usuario?: string;
+    id_usuario ?: number;
 }

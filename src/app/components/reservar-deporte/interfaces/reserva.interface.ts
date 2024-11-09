@@ -4,7 +4,7 @@ export interface Reserva {
     idPista: number;
     idHorario: number;
     idDeporte?: number;
-    fecha?: Date;
-    inicio?: string; 
-    fin?: string;     
+    fecha?: Date | string | null;
+    inicio?: string;
+    fin?: string;
 }
