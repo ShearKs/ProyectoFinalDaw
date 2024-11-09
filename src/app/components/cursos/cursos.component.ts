@@ -13,6 +13,8 @@ import { EmptyDialogComponent } from '../../shared/components-shared/empty-dialo
 
 import { DeportesService } from '../../core/servicies/deportes.service';
 import { FormularioCursoComponent } from './formulario-curso/formulario-curso.component';
+import { DialogoService } from '../../core/servicies/dialogo.service';
+import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-cursos',
@@ -31,6 +33,10 @@ export class CursosComponent implements OnInit {
     private readonly _apiCursos: CursoServiceService,
     private readonly _apiDepo: DeportesService,
     private readonly _dialog: MatDialog,
+    private readonly _dialogMensaje: DialogoService,
+
+
+
   ) { }
 
   ngOnInit(): void {
@@ -85,9 +91,16 @@ export class CursosComponent implements OnInit {
           if (result.status === 'exito') {
 
             console.log('Has introducido un nuevo curso');
+            this._dialogMensaje.abrirDialogoConfirmacion('Se ha añadido el curso correctamente', true);
+
             //Volvemos a aztualizar la vista con el nuevo curso...
             this.obtenerCursos();
+          } else {
+            this._dialogMensaje.abrirDialogoConfirmacion('Se ha producido un error al eliminar el curso.., ERROR: ' + result.mensaje, false);
           }
+
+
+
         }))
       ).subscribe();
     })
@@ -137,16 +150,41 @@ export class CursosComponent implements OnInit {
     });
   }
 
-  public eliminarCurso(idCurso: number) {
+  public eliminarCurso(curso: Curso) {
 
-    this._apiCursos.eliminarCurso(idCurso).pipe(
-      tap((resul => {
-        console.log(resul)
 
-        //Una vez eliminados los cursos actualizamos la vista
-        this.obtenerCursos();
-      }))
-    ).subscribe();
+    // Abrimos el modal y le pasamos el contenido que va a tener
+    const dialog = this._dialog.open(ConfirmDialogComponent, {
+      data: {
+        titulo: 'Confirmación de eliminación de curso',
+        contenido: `¿Estás seguro que quieres eliminar el curso: ${curso.nombre}?`,
+        textoConfirmacion: 'Eliminar',
+      }
+    });
+
+    dialog.afterClosed().subscribe(result => {
+
+      //Si le hemos dado a sí...
+      if (result) {
+
+        const idCurso: number = curso.id;
+
+        this._apiCursos.eliminarCurso(idCurso).pipe(
+          tap((response => {
+
+            if (response.status === 'exito') {
+              this._dialogMensaje.abrirDialogoConfirmacion('Se ha procedido a eliminar el curso', true);
+              //Una vez eliminados los cursos actualizamos la vista
+              this.obtenerCursos();
+            } else {
+              this._dialogMensaje.abrirDialogoConfirmacion('Ha habido un error al eliminar el curso', false);
+            }
+
+          }))
+        ).subscribe();
+
+      }
+    })
   }
 
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CampoFormulario } from './interfaces/campos_formulario.interface';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,65 +17,82 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class FormularioDinamicoComponent implements OnInit {
 
-  //Campos sobre lo que vamos a construir el formulario dinámico
   public campos: CampoFormulario[] = [];
-  //titulo del formulario
   public tituloformulario: string = "FORMULARIO SIN TITULO";
+  public esNuevoEvento: boolean = false; // Variable para saber si es nuevo evento o no
+
   @Input() datos: any;
   @Output() eventEmitter = new EventEmitter<any>();
 
-  public form !: FormGroup;
+  public form!: FormGroup;
 
   constructor(
-
     private _fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {}
 
-  ) {
-    this.form = this._fb.group({});
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    // Establecer el título y los campos del formulario
     this.tituloformulario = this.data.datos.titulo;
     this.campos = this.data.datos.campos;
+    this.esNuevoEvento = this.data.datos.esNuevoEvento;  // Determinamos si es un nuevo evento
 
-
-    // Llamar al método para crear el formulario cuando el componente se inicialice
+    // Llamar al método para crear el formulario
     this.crearFormulario();
-
-    console.log('---- Datos recibidos ----')
-    console.log(this.campos)
   }
 
-  public crearFormulario() {
-    // Asegurarse de que los campos se reciban correctamente
-    console.log('Campos recibidos:', this.campos);
+  // Método para crear el formulario dinámico
+  public crearFormulario(): void {
+    const formulario: { [key: string]: FormControl } = {};
 
+    // Si es un nuevo evento, reiniciamos el formulario con valores vacíos
+    if (this.esNuevoEvento) {
+      this.resetFormulario();
+    } else {
+      // Si no es un nuevo evento (modo edición), rellenamos el formulario con los datos pasados
+      this.crearFormularioConDatos();
+    }
+  }
+
+  // Método para crear el formulario con los datos (modo edición)
+  public crearFormularioConDatos(): void {
+    const formulario: { [key: string]: FormControl } = {};
+
+    // Crear FormControl para cada campo con los valores pasados en los datos
     this.campos.forEach(campo => {
-      let control = this._fb.control(campo.valorInicial || '');
-
-      // Si el campo es obligatorio, agregar la validación
-      if (campo.requerido) {
-        control.setValidators(Validators.required);
-      }
-
-      // Validaciones específicas según el tipo de campo
-      if (campo.tipo === 'number') {
-        control.setValidators([Validators.required, Validators.pattern(/^\d+$/)]);
-      }
-
-      if (campo.tipo === 'date') {
-        control.setValidators([Validators.required]);
-      }
-
-      // Agregar el control al formulario
-      this.form.addControl(campo.nombre, control);
+      formulario[campo.nombre] = new FormControl(
+        this.data.datos[campo.nombre] || campo.valorInicial,  // Si hay datos pasados, los usamos, si no, usamos los valores iniciales
+        campo.requerido ? Validators.required : []
+      );
     });
+
+    this.form = this._fb.group(formulario);
   }
 
-  public onSubmit() {
+  // Método para reiniciar el formulario con valores vacíos (para nuevo evento)
+  public resetFormulario(): void {
+    const formulario: { [key: string]: FormControl } = {};
+
+    // Crear FormControl para cada campo, asegurándonos de que esté vacío
+    this.campos.forEach(campo => {
+      formulario[campo.nombre] = new FormControl('', campo.requerido ? Validators.required : []);
+    });
+
+    this.form = this._fb.group(formulario);
+  }
+
+  // Método para manejar el envío del formulario
+  public onSubmit(): void {
     if (this.form.valid) {
+
+      console.log('AAAAAAAAAAAAAAAAAAAAAA')
+      console.log(this.form.value)
+      console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBB')
+
+      // Emitir los datos del formulario cuando sea válido
       this.eventEmitter.emit(this.form.value);
+    } else {
+      console.log('Formulario no válido');
     }
   }
 }

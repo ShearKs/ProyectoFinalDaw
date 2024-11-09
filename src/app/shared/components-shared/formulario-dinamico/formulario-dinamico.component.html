@@ -1,5 +1,4 @@
 <div class="formulario-dinamico">
-
   <h2 class="titulo-formulario">{{ this.tituloformulario }}</h2>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="formulario-dinamico">
@@ -21,14 +20,17 @@
       </mat-form-field>
 
       <!-- Campo select -->
-      <mat-form-field appearance="fill" *ngIf="campo.tipo === 'select'">
+      <mat-form-field appearance="outline" class="form-field" *ngIf="campo.tipo === 'select'">
         <mat-label>{{ campo.label }}</mat-label>
-        <mat-select formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}">
-          <mat-option *ngFor="let opcion of campo.opciones" [value]="opcion.valor">
-            {{ opcion.label }}
+        <mat-select formControlName="{{ campo.nombre }}">
+          <mat-option *ngFor="let campo of campo.opciones" [value]="campo.valor">
+            {{ campo.label }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+      
+      
+
       <!-- Mensaje de error -->
       <div *ngIf="form.get(campo.nombre)?.hasError('required') && form.get(campo.nombre)?.touched"
         class="error-message">
@@ -42,7 +44,4 @@
         class="submit-btn">Guardar</button>
     </div>
   </form>
-
-
-
 </div>

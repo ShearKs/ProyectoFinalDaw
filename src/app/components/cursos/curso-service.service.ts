@@ -32,7 +32,7 @@ export class CursoServiceService {
     return this._http.post(`${this.cursosEndPoint}.php`, { modo: 'editarCurso', cursoEditado });
   }
 
-  public eliminarCurso(idCurso: number) {
+  public eliminarCurso(idCurso: number):Observable<any> {
     return this._http.post(`${this.cursosEndPoint}.php`, { modo: 'eliminarCurso', idCurso });
   }
 

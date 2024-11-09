@@ -20,11 +20,18 @@ export class EventosService {
 
   }
 
+  //Funciones que usuario el administrador
   public addEvento(evento: Evento): Observable<any> {
     return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'addEvento', data: { evento } })
   }
 
+  public deleteEvento(idEvento: number): Observable<any> {
+    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'deleteEvento', data: { idEvento } });
+  }
 
+  public editEvento(evento: Evento): Observable<any> {
+    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'editEvento', data: { evento } });
+  }
 
 
 

@@ -1,3 +1,26 @@
-
-
-<p>home works!</p>
+<div *ngIf="usuario">
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <div class="header-content">
+          <img src="assets/icono-bienvenida.png" alt="Bienvenida" class="welcome-icon">
+          <mat-card-title>¡Bienvenido, {{ usuario.nombre }}!</mat-card-title>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Hola {{ usuario.nombre }}, nos alegra verte de nuevo en nuestra plataforma de gestión deportiva.</p>
+        <p>En esta aplicación podrás:</p>
+        <ul class="feature-list">
+          <li><strong>Reservar</strong> pistas deportivas de manera rápida y sencilla.</li>
+          <li><strong>Explorar</strong> una amplia gama de deportes y eventos disponibles.</li>
+          <li><strong>Gestionar</strong> tu perfil y preferencias para una experiencia personalizada.</li>
+          <li><strong>Acceder</strong> a cursos, entrenamientos y competiciones exclusivas.</li>
+        </ul>
+        <p>Esperamos que disfrutes de todas las funcionalidades. Si tienes alguna pregunta, no dudes en contactarnos.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary">Ver Reservas</button>
+        <button mat-button color="accent">Explorar Eventos</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  

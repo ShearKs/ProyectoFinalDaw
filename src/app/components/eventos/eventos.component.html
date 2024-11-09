@@ -12,18 +12,19 @@
       <div class="inscribe-button-container">
         <button mat-stroked-button class="inscribe-button" (click)="inscribirse(evento)">
           <mat-icon>info</mat-icon>
-          Más información
+          Información
         </button>
 
-        <button mat-stroked-button class="delete-button" *ngIf="usuario?.tipo_usuario === 'trabajador'">
+        <button mat-stroked-button class="edit-button" *ngIf="usuario?.tipo_usuario === 'trabajador'" (click)="editEvento(evento)">
+          <mat-icon>edit</mat-icon>
+          Editar evento
+        </button>
+
+        <button mat-stroked-button class="delete-button" *ngIf="usuario?.tipo_usuario === 'trabajador'" (click)="deleteEvento(evento)">
           <mat-icon>gpp_maybe</mat-icon>
           Eliminar evento
         </button>
 
-        <button mat-stroked-button class="edit-button" *ngIf="usuario?.tipo_usuario === 'trabajador' ">
-          <mat-icon>edit</mat-icon>
-          Editar evento
-        </button>
       </div>
     </div>
   </div>
