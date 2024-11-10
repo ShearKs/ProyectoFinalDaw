@@ -53,7 +53,7 @@ export class PerfilComponent implements OnInit {
     });
 
     // Recogemos al usuario que está en localStorage
-    this.usuarioLogged = JSON.parse(localStorage.getItem('user') || '{}'); // Asegúrate de parsear correctamente
+    this.usuarioLogged = JSON.parse(localStorage.getItem('user') || '{}');
 
     // Cargar datos del usuario en el formulario
     this.formulario.patchValue({

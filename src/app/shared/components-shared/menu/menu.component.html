@@ -7,18 +7,21 @@
       </button>
     </li>
 
-
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/perfil') }">
       <button mat-button [routerLink]="['/perfil']">
         <mat-icon matSuffix>account_circle</mat-icon>
         Perfil</button>
     </li>
 
-    <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/usuarios') }">
-      <button mat-button [routerLink]="['/usuarios']">
-        <mat-icon matSuffix>group</mat-icon>
-        Usuarios</button>
-    </li>
+    <ng-container *ngIf="this.usuario.tipo_usuario === 'trabajador' ">
+
+      <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/usuarios') }">
+        <button mat-button [routerLink]="['/usuarios']">
+          <mat-icon matSuffix>group</mat-icon>
+          Usuarios</button>
+      </li>
+
+    </ng-container>
 
     <li class="navbar-item" [ngClass]="{ active: isActiveRoute('/eventos') }">
       <button mat-button [routerLink]="['/eventos']">

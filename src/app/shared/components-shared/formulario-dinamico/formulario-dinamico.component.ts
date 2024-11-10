@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit, Inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CampoFormulario } from './interfaces/campos_formulario.interface';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,8 @@ import { MatInputModule } from '@angular/material/input';
   standalone: true,
   imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule, MatSelectModule, MatInputModule],
   templateUrl: './formulario-dinamico.component.html',
-  styleUrls: ['./formulario-dinamico.component.scss']
+  styleUrls: ['./formulario-dinamico.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormularioDinamicoComponent implements OnInit {
 
@@ -90,9 +91,6 @@ export class FormularioDinamicoComponent implements OnInit {
   public onSubmit(): void {
     if (this.form.valid) {
 
-      console.log('AAAAAAAAAAAAAAAAAAAAAA')
-      console.log(this.form.value)
-      console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBB')
 
       // Emitir los datos del formulario cuando sea válido
       this.eventEmitter.emit(this.form.value);

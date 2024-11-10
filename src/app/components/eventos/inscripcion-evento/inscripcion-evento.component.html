@@ -1,1 +1,54 @@
-<p>inscripcion-evento works!</p>
+<mat-card class="evento-card">
+  <mat-card-header>
+    <mat-card-title>{{ evento.nombre || ''}}</mat-card-title>
+    <mat-card-subtitle>{{ evento.distancia }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- <img mat-card-image src="{{ evento.icono_curso || 'assets/default-evento-icon.jpg' }}" alt="Evento icono" /> -->
+
+  <mat-card-content>
+    <p class="evento-descripcion">
+      {{ evento.descripcion }}
+    </p>
+
+    <mat-divider></mat-divider>
+
+    <div class="evento-info">
+
+      <div class="info">
+        <div class="info-item">
+          <mat-icon>calendar_today</mat-icon>
+          <span>Fecha del evento: {{ evento.fecha_evento | date: 'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="info-item">
+          <mat-icon matSuffix>access_time</mat-icon>
+          <span>Hora de salida: {{ evento.hora_salida }}</span>
+        </div>
+
+        <div class="info-item">
+          <mat-icon>people</mat-icon>
+          <span>Plazas disponibles: {{ evento.plazas_disponibles }} personas</span>
+        </div>
+
+        <div class="info-item">
+          <button class="btn-acciones" mat-raised-button color="primary" (click)="incribirse()"
+            [disabled]="this.usuario.tipo_usuario === 'trabajador' ">Inscribirse</button>
+        </div>
+      </div>
+
+      <div class="mapa">
+
+        <div class="info-item">
+          <mat-icon>place</mat-icon>
+          <span>Ubicación: {{ evento.lugar}}</span>
+        </div>
+        <div id="map" class="map-container"></div>
+      </div>
+    </div>
+
+  </mat-card-content>
+
+  <mat-card-actions >
+
+  </mat-card-actions>
+</mat-card>

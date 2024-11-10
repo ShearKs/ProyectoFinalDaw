@@ -44,4 +44,6 @@ export class AutenticationService {
     localStorage.removeItem('user');
     this.loginStatusSubject.next(false); // Emitir que el usuario ha cerrado sesión
   }
+
+  
 }

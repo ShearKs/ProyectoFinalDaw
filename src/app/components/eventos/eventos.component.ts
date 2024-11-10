@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { EventosService } from './eventos.service';
-import {  tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { UsuarioDataService } from '../../core/servicies/usuario-data.service';
@@ -36,7 +36,7 @@ export class EventosComponent implements OnInit {
   public deportes: { [key: string]: string } = {};
 
   private camposFormulario: CampoFormulario[] = [
-    
+
     { nombre: 'nombre', tipo: 'text', label: 'Nombre del Evento', requerido: true },
     { nombre: 'plazas_disponibles', tipo: 'number', label: 'Plazas Disponibles', requerido: true },
     { nombre: 'fecha_evento', tipo: 'date', label: 'Fecha del Evento', requerido: true },
@@ -88,7 +88,7 @@ export class EventosComponent implements OnInit {
   }
 
   public cargarEventos(): void {
-    this._eventosCall.getEventos().pipe(
+    this._eventosCall.getEventos(this.usuario?.id!).pipe(
       tap((eventosObtenidos) => {
         console.log('Eventos que llegan...', eventosObtenidos);
         this.eventos = eventosObtenidos;
@@ -105,7 +105,7 @@ export class EventosComponent implements OnInit {
       data: {
         component: InscripcionEventoComponent,
         datos: {
-          
+          evento,
         },
         eventEmitter: insEventoEmitter,
       }

@@ -3,11 +3,12 @@ import { MenuComponent } from "../../shared/components-shared/menu/menu.componen
 import { usuario } from '../../shared/components-shared/contactos/contacto.interface';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatCardModule,CommonModule],
+  imports: [MatCardModule,CommonModule,MatIconModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

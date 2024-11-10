@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environmet';
 import { HttpClient } from '@angular/common/http';
 import { Evento } from './interfaces/evento.interface';
+import { Inscripcion } from './interfaces/inscripcion.interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +17,14 @@ export class EventosService {
   constructor(private readonly __http: HttpClient) { }
 
   //Función para obtener las reservas
-  public getEventos(): Observable<any[]> {
-    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'getEventos', data: null });
+  public getEventos(idCliente: number): Observable<any[]> {
+    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'getEventos', data: {idCliente} });
 
+  }
+
+  //Para inscribirnos a los cursos (lo hace el cliente)
+  public inscripcion(inscripcion: Inscripcion) {
+    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'inscripcion', data: {inscripcion} });
   }
 
   //Funciones que usuario el administrador

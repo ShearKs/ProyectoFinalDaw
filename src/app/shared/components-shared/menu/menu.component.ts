@@ -7,11 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { filter } from 'rxjs/operators';
 import { AutenticationService } from '../../../auth/servicies/autentication.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { usuario } from '../contactos/contacto.interface';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [RouterOutlet, MatIconModule, CommonModule, RouterLink, RouterModule, MatButtonModule, MatMenuModule],
+  imports: [RouterOutlet, MatIconModule, CommonModule, RouterLink, RouterModule, MatButtonModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
@@ -25,6 +26,8 @@ export class MenuComponent implements OnInit {
   //Para controlar la autenticación
   public isLoggedIn: boolean = false;
 
+  public usuario !:usuario;
+
   constructor(
     private readonly _router: Router,
     private readonly _authService: AutenticationService,
@@ -36,6 +39,8 @@ export class MenuComponent implements OnInit {
 
     this.isLoggedIn = this._authService.isLoggedIn();
 
+    this.usuario = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log('usuario: ',this.usuario)
 
     //Escucha los cambios en las rutas de navegación
     // 'NavigationEnd' indica que la navegación ha termiando y se puede actualizar la ruta
