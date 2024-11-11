@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { CampoFormulario } from './interfaces/campos_formulario.interface';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,11 +7,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-formulario-dinamico',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule, MatSelectModule, MatInputModule],
+  imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule,MatDatepickerModule, MatSelectModule, MatInputModule,NgxMatTimepickerModule,FormsModule,ReactiveFormsModule],
   templateUrl: './formulario-dinamico.component.html',
   styleUrls: ['./formulario-dinamico.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -17,6 +17,7 @@ import { DialogoService } from '../../core/servicies/dialogo.service';
 import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 import { sameObject } from '../../functions';
 import { InscripcionEventoComponent } from './inscripcion-evento/inscripcion-evento.component';
+import { LugaresService } from '../../core/servicies/lugares.service';
 
 @Component({
   selector: 'app-eventos',
@@ -42,12 +43,15 @@ export class EventosComponent implements OnInit {
     { nombre: 'fecha_evento', tipo: 'date', label: 'Fecha del Evento', requerido: true },
     { nombre: 'distancia', tipo: 'text', label: 'Distancia(km)', requerido: true },
     { nombre: 'descripcion', tipo: 'text', label: 'Descripción', requerido: true },
-    { nombre: 'idDeporte', tipo: 'select', label: 'Deporte', opciones: [], requerido: false }  // Campo de selección
+    { nombre: 'hora_salida', tipo: 'time', label: 'Hora de Salida', requerido: true },
+    { nombre: 'idDeporte', tipo: 'select', label: 'Deporte', opciones: [], requerido: false },
+    { nombre: 'idLugar', tipo: 'select', label: 'Lugar', opciones: [], requerido: false },
   ];
 
   constructor(
     private readonly _eventosCall: EventosService,
     private readonly _deportesCall: DeportesService,
+    private readonly _lugaresCall: LugaresService,
     private readonly _usuarioService: UsuarioDataService,
     private readonly _dialog: MatDialog,
     private readonly _dialogMensaje: DialogoService,
@@ -81,8 +85,37 @@ export class EventosComponent implements OnInit {
             campo.valorInicial = '1';
           }
         });
+
       })
     ).subscribe();
+
+
+    //Obtenemos los lugares 
+    this._lugaresCall.getLugares().pipe(
+
+      tap((lugaresObject => {
+
+        const lugaresMap: any = {};
+
+        lugaresObject.forEach((lugar, index) => {
+          lugaresMap[index + 1] = lugar.nombre;  
+        });
+
+        this.camposFormulario.forEach(campo => {
+          if (campo.nombre === 'idLugar') {
+            campo.opciones = Object.keys(lugaresMap).map(key => ({
+              valor: +key,
+              label: lugaresMap[key]
+            }));
+            //Valor predeterminado del lugar
+            campo.valorInicial = '1';  
+          }
+        });
+        console.log(lugaresMap)
+
+      }))
+    ).subscribe();
+
 
     this.cargarEventos();
   }
