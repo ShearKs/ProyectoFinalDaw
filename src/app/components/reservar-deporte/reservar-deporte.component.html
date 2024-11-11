@@ -14,7 +14,9 @@
           <p>Selecciona la Fecha para ver las reservas: </p>
           <mat-form-field class="fecha-field">
             <mat-label>Choose a date</mat-label>
+            
             <input matInput [matDatepicker]="picker" (dateChange) ="cambioFecha($event)"  [value] = "this.fechaReserva" [min] = "fechaMinima" [max] = "fechaMaxima">
+
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>

@@ -73,7 +73,7 @@ export class EventosComponent implements OnInit {
           if (campo.nombre === 'idDeporte') {
             // Convertir el objeto deportesMap a un formato adecuado para opciones
             campo.opciones = Object.keys(deportesMap).map(key => ({
-              valor: key, // La clave (número) como valor
+              valor: +key, // La clave (número) como valor
               label: deportesMap[key] // El nombre del deporte como label
             }));
 

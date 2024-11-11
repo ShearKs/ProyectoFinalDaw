@@ -87,6 +87,10 @@ export class FormularioDinamicoComponent implements OnInit {
     this.form = this._fb.group(formulario);
   }
 
+  public typeOf(valor: any) :string{
+    return typeof valor;
+  }
+
   // Método para manejar el envío del formulario
   public onSubmit(): void {
     if (this.form.valid) {

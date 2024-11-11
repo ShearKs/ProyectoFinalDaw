@@ -27,7 +27,7 @@
       <mat-form-field appearance="outline" class="form-field" *ngIf="campo.tipo === 'select'">
         <mat-label>{{ campo.label }}</mat-label>
         <mat-select formControlName="{{ campo.nombre }}" [disabled]="!esEditable">
-          <mat-option *ngFor="let valorCampo of campo.opciones" [value]="valorCampo.valor">
+          <mat-option *ngFor="let valorCampo of campo.opciones" [value]="typeOf(valorCampo.valor) === 'number' ? +valorCampo.valor : valorCampo.valor">
             {{ valorCampo.label }}
           </mat-option>
         </mat-select>
