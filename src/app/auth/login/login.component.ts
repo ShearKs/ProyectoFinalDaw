@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
           // Navegar a la página de inicio
           this._router.navigate(['/']);
         } else {
-          this._abrirDialogoConfirmacion('Error al iniciar sesión', false);
+          this._abrirDialogoConfirmacion(respuesta.message!, false);
         }
       }),
       catchError(error => {

@@ -1,14 +1,14 @@
-<div class="dialogoBasico">
-  <div [ngClass]="{ correcto: data.correcto, error: !data.correcto }">
-    <h2 mat-dialog-title>
-      {{ this.data.correcto ? "Éxito" : "Ha ocurrido un error" }}
+<div class="dialogoBasico" [ngClass]="{ correcto: data.correcto, error: !data.correcto }">
+  <div class="contenido">
+    <h2 mat-dialog-title class="titulo">
+      <mat-icon class="icono" matSuffix>{{ data.correcto ? 'check_circle' : 'error' }}</mat-icon>
+      {{ data.correcto ? "Éxito" : "Ha ocurrido un error" }}
     </h2>
     <mat-dialog-content>
-      <p>{{ this.data.mensaje }}</p>
+      <p class="mensaje">{{ data.mensaje }}</p>
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button mat-button (click)="cerrarDialogo()">OK</button>
+      <button mat-button [ngClass]="{ 'boton-ok-correcto': data.correcto, 'boton-ok-error': !data.correcto }" (click)="cerrarDialogo()">OK</button>
     </mat-dialog-actions>
   </div>
 </div>
-

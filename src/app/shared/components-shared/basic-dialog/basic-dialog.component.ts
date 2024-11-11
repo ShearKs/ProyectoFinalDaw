@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogContainer, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-basic-dialog',
   standalone: true,
-  imports: [MatDialogModule,MatButtonModule,MatDialogContainer ,CommonModule],
+  imports: [MatDialogModule,MatButtonModule,MatIconModule ,CommonModule],
   templateUrl: './basic-dialog.component.html',
   styleUrl: './basic-dialog.component.scss'
 })

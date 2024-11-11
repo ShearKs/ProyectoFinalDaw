@@ -181,6 +181,11 @@ export class ReservarDeporteComponent implements OnInit {
     });
   }
 
+  private formatearFecha(){
+    const fechaFormateada: string | null = this.datePipe.transform(this.fechaReserva, 'yyyy-MM-dd');
+   return fechaFormateada;
+  }
+
   public cargarPistas(): void {
     this._apiReservas.getPistas(this.deporteId).pipe(
       tap((pistas: Pista[]) => {
@@ -240,7 +245,7 @@ export class ReservarDeporteComponent implements OnInit {
       const dialog = this._dialog.open(ConfirmDialogComponent, {
         data: {
           titulo: 'Confirmación de reserva',
-          contenido: `¿Estás seguro que quieres realizar la reserva para el ${this.fechaReserva}? `,
+          contenido: `¿Estás seguro que quieres realizar la reserva para el ${this.formatearFecha()}? `,
           textoConfirmacion: 'Confirmar',
         }
       });
@@ -270,7 +275,6 @@ export class ReservarDeporteComponent implements OnInit {
       });
     }
 
-
   }
 
   //Evento para el cambio de fecha.. y hacer la petición
@@ -284,8 +288,6 @@ export class ReservarDeporteComponent implements OnInit {
     }
 
   }
-
-
 
   public handleClickAtras(event: Event): void {
     event.stopPropagation();

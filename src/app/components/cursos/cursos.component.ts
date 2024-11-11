@@ -215,19 +215,32 @@ export class CursosComponent implements OnInit {
       idCliente: this.usuario.id
     }
 
-    this._apiCursos.anadirInscripcion(inscripcion).pipe(
-      tap((result) => {
-        console.log(result)
 
-        const curso = this.cursos.find(c => c.id === idCurso);
-
-        if (curso)
-          curso.esta_inscrito = 1;
-
+    const dialog = this._dialog.open(ConfirmDialogComponent, {
+      data: {
+        titulo: 'Confirmación de inscripción',
+        contenido: '¿Estás seguro que quieres inscribirte en el curso?',
+        textoConfirmacion: 'Inscribirte',
       }
-      )
-    ).subscribe();
+    });
+
+    dialog.afterClosed().subscribe(result => {
+
+      if (result) {
+
+        this._apiCursos.anadirInscripcion(inscripcion).pipe(
+          tap((response) => {
+            if (response) {
+              const curso = this.cursos.find(c => c.id === idCurso);
+              this._dialogMensaje.abrirDialogoConfirmacion('¡Te has logrado apuntarte al curso satisfactoriamente!',true);
+              if (curso)
+                curso.esta_inscrito = 1;
+            }
+          }
+          )
+        ).subscribe();
+      }
+    })
+
   }
-
-
 }

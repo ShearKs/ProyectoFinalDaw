@@ -1,25 +1,88 @@
-
 .dialogoBasico {
-  border-radius: 1.5rem !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 
-  .correcto {
-    border: 6px solid rgb(13, 156, 13);
+  // Fondo y colores según el estado
+  &.correcto {
+    background-color: #e0ffe4; // Fondo verde claro
+    color: #2e7d32; // Texto verde oscuro
   }
 
-  .error {
-    border: 4px solid red;
+  &.error {
+    background-color: #ffe0e0; // Fondo rojo claro
+    color: #c62828; // Texto rojo oscuro
   }
 
-  .correcto,
-  .error {
-    border-radius: 1.5rem;
+  .contenido {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
 
-  mat-dialog-actions {
-    display: flex;
-    justify-content: flex-end; // Alinea los botones a la derecha
+    h2.titulo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      text-align: center;
+
+      .icono {
+        font-size: 1.55rem;
+        margin-right: 0.5rem;
+        color: inherit;
+      }
+    }
+
+    .mensaje {
+      text-align: center;
+      font-size: 1.3rem;
+      color: inherit;
+      margin: 0.5rem 0;
+    }
+
+    mat-dialog-actions {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      .boton-ok-correcto {
+        padding: 0.5rem 2rem;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #2e7d32; // Verde para correcto
+        border: none;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken(#2e7d32, 10%);
+        }
+      }
+
+      .boton-ok-error {
+        padding: 0.5rem 2rem;
+        font-size: 1rem;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #c62828; // Rojo para error
+        border: none;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: darken(#c62828, 10%);
+        }
+      }
+    }
   }
 }
