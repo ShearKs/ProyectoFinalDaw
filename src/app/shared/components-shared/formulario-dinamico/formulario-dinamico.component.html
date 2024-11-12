@@ -1,58 +1,64 @@
-<div class="formulario-dinamico">
-  <h2 class="titulo-formulario">{{ this.tituloformulario }}</h2>
+<div class="form-dim-container">
+  <div class="formulario-dinamico">
+    <h2 class="titulo-formulario">{{ this.tituloformulario }}</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="formulario-dinamico">
-    <div *ngFor="let campo of campos" class="form-group">
-      <mat-form-field appearance="fill" *ngIf="campo.tipo !== 'select'">
-        <mat-label>{{ campo.label }}</mat-label>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="formulario-dinamico">
+      <div *ngFor="let campo of campos" class="form-group">
+        <mat-form-field appearance="outline" *ngIf="campo.tipo !== 'select'">
+          <mat-label>{{ campo.label }}</mat-label>
 
-        <!-- Campo de texto -->
-        <input *ngIf="campo.tipo === 'text'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
-          [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
+          <!-- Campo de texto -->
+          <input *ngIf="campo.tipo === 'text'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
+            [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
 
-        <!-- Campo de número -->
-        <input *ngIf="campo.tipo === 'number'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
-          type="number" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
+          <!-- Campo de texto (descripcion será un textarea) -->
+          <textarea *ngIf="campo.tipo === 'textarea'" matInput formControlName="{{ campo.nombre }}"
+            id="{{ campo.nombre }}" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable"></textarea>
 
-        <!-- Campo de hora -->
-        <mat-form-field appearance="fill" *ngIf="campo.tipo === 'time'">
-          <mat-label>Hora</mat-label>
-          <input matInput [ngxMatTimepicker]="picker" formControlName="{{ campo.nombre }}" placeholder="Seleccione hora">
+          <!-- Campo de número -->
+          <input *ngIf="campo.tipo === 'number'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
+            type="number" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
+
+          <!-- Campo de hora -->
+          <mat-form-field appearance="fill" *ngIf="campo.tipo === 'time'">
+            <mat-label>Hora</mat-label>
+            <input matInput [ngxMatTimepicker]="picker" formControlName="{{ campo.nombre }}">
+          </mat-form-field>
+
+          <ngx-mat-timepicker #picker></ngx-mat-timepicker>
+
+          <!-- Campo de fecha -->
+          <input *ngIf="campo.tipo === 'date'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
+            type="date" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
+
+          <!-- Campo de contraseña -->
+          <input *ngIf="campo.tipo === 'password'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
+            type="password" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
         </mat-form-field>
-        
-        <ngx-mat-timepicker #picker></ngx-mat-timepicker>
 
-        <!-- Campo de fecha -->
-        <input *ngIf="campo.tipo === 'date'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
-          type="date" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
+        <!-- Campo select -->
+        <mat-form-field appearance="outline" class="form-field" *ngIf="campo.tipo === 'select'">
+          <mat-label>{{ campo.label }}</mat-label>
+          <mat-select formControlName="{{ campo.nombre }}" [disabled]="esEditable">
+            <mat-option *ngFor="let valorCampo of campo.opciones"
+              [value]="typeOf(valorCampo.valor) === 'number' ? +valorCampo.valor : valorCampo.valor">
+              {{ valorCampo.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-        <!-- Campo de contraseña -->
-        <input *ngIf="campo.tipo === 'password'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
-          type="password" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
-      </mat-form-field>
-
-      <!-- Campo select -->
-      <mat-form-field appearance="outline" class="form-field" *ngIf="campo.tipo === 'select'">
-        <mat-label>{{ campo.label }}</mat-label>
-        <mat-select formControlName="{{ campo.nombre }}" [disabled]="!esEditable">
-          <mat-option *ngFor="let valorCampo of campo.opciones"
-            [value]="typeOf(valorCampo.valor) === 'number' ? +valorCampo.valor : valorCampo.valor">
-            {{ valorCampo.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <!-- Mensaje de error -->
-      <div *ngIf="form.get(campo.nombre)?.hasError('required') && form.get(campo.nombre)?.touched"
-        class="error-message">
-        <small>Este campo es obligatorio</small>
+        <!-- Mensaje de error -->
+        <div *ngIf="form.get(campo.nombre)?.hasError('required') && form.get(campo.nombre)?.touched"
+          class="error-message">
+          <small>Este campo es obligatorio</small>
+        </div>
       </div>
-    </div>
 
-    <!-- Botón de submit -->
-    <div class="button-container">
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !esEditable"
-        class="submit-btn">Guardar</button>
-    </div>
-  </form>
+      <!-- Botón de submit -->
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !esEditable"
+          class="submit-btn">Guardar</button>
+      </div>
+    </form>
+  </div>
 </div>

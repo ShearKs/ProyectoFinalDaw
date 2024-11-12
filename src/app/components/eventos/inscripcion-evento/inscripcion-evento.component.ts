@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { Evento } from '../interfaces/evento.interface';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
@@ -12,6 +12,7 @@ import { EventosService } from '../eventos.service';
 import { tap } from 'rxjs';
 import { DialogoService } from '../../../core/servicies/dialogo.service';
 import { Inscripcion } from '../interfaces/inscripcion.interface';
+import { ConfirmDialogComponent } from '../../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-inscripcion-evento',
@@ -32,7 +33,9 @@ export class InscripcionEventoComponent implements OnInit, AfterViewInit {
     //Datos que nos viene desde el diálogo..
     @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly _apiEvento: EventosService,
+    private readonly _dialog: MatDialog,
     private readonly _dialogMensaje: DialogoService,
+
 
   ) { }
   ngAfterViewInit(): void {
@@ -45,7 +48,7 @@ export class InscripcionEventoComponent implements OnInit, AfterViewInit {
 
     this.evento = this.data.datos.evento;
     // console.log('Evento que hemos recibido...')
-    // console.log(this.evento)
+    console.log(this.evento)
   }
 
   //Que el usuario se apunte al evento..
@@ -55,15 +58,30 @@ export class InscripcionEventoComponent implements OnInit, AfterViewInit {
       idCliente: this.usuario.id!, idEvento: this.evento.id,
     }
 
-    this._apiEvento.inscripcion(inscripcion).pipe(
+    const dialog = this._dialog.open(ConfirmDialogComponent, {
+      data: {
+        titulo: 'Confirmación de inscripción al evento',
+        contenido: `¿Estás seguro que quieres inscribirte al evento?`,
+        textoConfirmacion: 'Inscribirse',
+      }
+    });
 
-      tap((response => {
-        if (response.status === 'exito') {
-          this._dialogMensaje.abrirDialogoConfirmacion(`Se ha realizado la inscripción ${this.usuario}!`, true);
-        }
-      }))
+    dialog.afterClosed().subscribe(result => {
 
-    ).subscribe();
+      if (result) {
+        this._apiEvento.inscripcion(inscripcion).pipe(
+          tap((response => {
+            if (response.status === 'exito') {
+              this._dialogMensaje.abrirDialogoConfirmacion(`Se ha realizado la inscripción ${this.usuario.nombre}!`, true);
+              
+            }
+          }))
+
+        ).subscribe();
+      }
+    });
+
+
   }
 
   private iniciarMapa() {

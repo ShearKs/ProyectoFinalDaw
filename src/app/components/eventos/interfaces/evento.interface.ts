@@ -6,6 +6,7 @@ export interface Evento {
     fecha_evento: Date;
     distancia: string;
     descripcion: string;
+    esta_inscrito?: number;
 
     //Necesario para los valores por defecto de los select..
     idDeporte: number;

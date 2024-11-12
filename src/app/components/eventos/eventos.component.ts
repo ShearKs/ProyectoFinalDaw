@@ -42,7 +42,7 @@ export class EventosComponent implements OnInit {
     { nombre: 'plazas_disponibles', tipo: 'number', label: 'Plazas Disponibles', requerido: true },
     { nombre: 'fecha_evento', tipo: 'date', label: 'Fecha del Evento', requerido: true },
     { nombre: 'distancia', tipo: 'text', label: 'Distancia(km)', requerido: true },
-    { nombre: 'descripcion', tipo: 'text', label: 'Descripción', requerido: true },
+    { nombre: 'descripcion', tipo: 'textarea', label: 'Descripción', requerido: true },
     { nombre: 'hora_salida', tipo: 'time', label: 'Hora de Salida', requerido: true },
     { nombre: 'idDeporte', tipo: 'select', label: 'Deporte', opciones: [], requerido: false },
     { nombre: 'idLugar', tipo: 'select', label: 'Lugar', opciones: [], requerido: false },
@@ -111,7 +111,7 @@ export class EventosComponent implements OnInit {
             campo.valorInicial = '1';  
           }
         });
-        console.log(lugaresMap)
+        // console.log(lugaresMap)
 
       }))
     ).subscribe();
@@ -164,8 +164,8 @@ export class EventosComponent implements OnInit {
     });
 
     nuevoEventoEmitter.subscribe((evento: Evento) => {
-      console.log('Evento que nos llega del formulario: ');
-      console.log(evento);
+      // console.log('Evento que nos llega del formulario: ');
+      // console.log(evento);
 
       this._eventosCall.addEvento(evento).pipe(
         tap((result) => {
@@ -206,15 +206,11 @@ export class EventosComponent implements OnInit {
 
     // Realizar acciones que nos llega del formulario...
     editEventoEmitter.subscribe((editEvento: Evento) => {
-      console.log('Nuevo evento: ')
-      console.log(editEvento)
-
-      console.log('Viejo evento: ')
-      console.log(evento)
+    
 
       //Terminar , fallo al cambiar el getEntity...
       if (sameObject(evento, editEvento)) {
-        console.log('holaaaa')
+   
         alert('No has cambiado nada..')
         return;
       }

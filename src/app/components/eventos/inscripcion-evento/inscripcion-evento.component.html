@@ -31,8 +31,12 @@
         </div>
 
         <div class="info-item">
+        
           <button class="btn-acciones" mat-raised-button color="primary" (click)="incribirse()"
-            [disabled]="this.usuario.tipo_usuario === 'trabajador' ">Inscribirse</button>
+        
+            [disabled]="this.usuario.tipo_usuario === 'trabajador' || this.evento.esta_inscrito === 1">
+            <mat-icon matSuffix>{{ !this.evento.esta_inscrito ? 'add_circle' : 'event_busy'    }}</mat-icon>
+            Inscribirse</button>
         </div>
       </div>
 
@@ -48,7 +52,7 @@
 
   </mat-card-content>
 
-  <mat-card-actions >
+  <mat-card-actions>
 
   </mat-card-actions>
 </mat-card>
