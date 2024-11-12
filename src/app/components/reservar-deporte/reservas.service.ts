@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environmet';
 import { Observable } from 'rxjs';
 import { Reserva } from './interfaces/reserva.interface';
+import { usuario } from '../../shared/components-shared/contactos/contacto.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class ReservasService {
   constructor(private readonly __http: HttpClient) { }
 
   //Función para obtener las reservas
-  public getReservas(idDeporte: number,fecha :string | null): Observable<any[]> {
-    return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'getReservas', idDeporte ,fecha})
+  public getReservas(idDeporte: number, fecha: string | null): Observable<any[]> {
+    return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'getReservas', idDeporte, fecha })
   }
 
   //Para recoger las pistas de ese deporte determinado
@@ -30,9 +31,9 @@ export class ReservasService {
     return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'getHorario', idDeporte });
   }
 
-  public hacerReserva(reserva: Reserva): Observable<any> {
+  public hacerReserva(reserva: Reserva, usuario: usuario): Observable<any> {
 
-    return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'hacerReserva', reserva });
+    return this.__http.post<any>(`${this.apiUrl}/controlador_${this.reservasEndpoint}.php`, { modo: 'hacerReserva', data: { reserva, usuario } });
   }
 
 

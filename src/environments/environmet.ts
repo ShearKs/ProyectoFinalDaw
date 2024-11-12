@@ -10,9 +10,10 @@ export const environment = {
         perfil: 'perfil',
         cursos: 'cursos',
         eventos: 'controlador_eventos.php',
-        obtenerLugares:'obtener_lugares',
+        obtenerLugares: 'obtener_lugares',
         obtenerDeporte: 'obtener_deportes',
         reservas: 'reservas',
         autenticacion: 'autenticacion',
+        panel_control: 'controlador_panel_control'
     }
 };

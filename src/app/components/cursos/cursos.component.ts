@@ -228,11 +228,11 @@ export class CursosComponent implements OnInit {
 
       if (result) {
 
-        this._apiCursos.anadirInscripcion(inscripcion).pipe(
+        this._apiCursos.anadirInscripcion(inscripcion, this.usuario).pipe(
           tap((response) => {
             if (response) {
               const curso = this.cursos.find(c => c.id === idCurso);
-              this._dialogMensaje.abrirDialogoConfirmacion('¡Te has logrado apuntarte al curso satisfactoriamente!',true);
+              this._dialogMensaje.abrirDialogoConfirmacion('¡Te has logrado apuntarte al curso satisfactoriamente!', true);
               if (curso)
                 curso.esta_inscrito = 1;
             }

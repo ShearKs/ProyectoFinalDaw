@@ -61,12 +61,13 @@
       </mat-tab>
 
       <!-- Segundo Tab: Otro Tab -->
-      <!-- <mat-tab label="Otros">
+      <mat-tab label="Otros">
         <div class="otros-tab-content">
-          <p>Solicitar Cambio de Contraseña</p>
-          <button>Cambia la contraseña</button>
+
+          <app-panel-cliente [idUsuario]="clienteId"></app-panel-cliente>
+
         </div>
-      </mat-tab> -->
+      </mat-tab>
 
 
     </mat-tab-group>

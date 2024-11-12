@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environmet';
 import { Observable } from 'rxjs';
 import { Curso } from './interfaces/curso.interface';
 import { Inscripcion } from './interfaces/inscripciones.interface';
+import { usuario } from '../../shared/components-shared/contactos/contacto.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,9 @@ export class CursoServiceService {
   }
 
 
-  public anadirInscripcion(nuevaInscripcion: Inscripcion): Observable<any> {
+  public anadirInscripcion(nuevaInscripcion: Inscripcion,usuario: usuario): Observable<any> {
 
-    return this._http.post<any>(`${this.cursosEndPoint}.php`, { modo: 'addInscripcion', inscripcion: nuevaInscripcion });
+    return this._http.post<any>(`${this.cursosEndPoint}.php`, { modo: 'addInscripcion', data: { nuevaInscripcion, usuario }});
   }
 
 

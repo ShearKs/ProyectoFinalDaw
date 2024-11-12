@@ -181,9 +181,9 @@ export class ReservarDeporteComponent implements OnInit {
     });
   }
 
-  private formatearFecha(){
+  private formatearFecha() {
     const fechaFormateada: string | null = this.datePipe.transform(this.fechaReserva, 'yyyy-MM-dd');
-   return fechaFormateada;
+    return fechaFormateada;
   }
 
   public cargarPistas(): void {
@@ -256,16 +256,26 @@ export class ReservarDeporteComponent implements OnInit {
           const fechaFormateada: string | null = this.datePipe.transform(this.fechaReserva, 'yyyy-MM-dd');
 
           //Hacemos la reserva
-          const reserva: Reserva = { idCliente: this.usuario.id_usuario, idPista: recinto.id, idHorario: horario.id, fecha: fechaFormateada, }
+          const reserva: Reserva = {
+          
+            nombreCliente: this.usuario.nombre,
+            deporte: this.deporteNombre,
 
-          this._apiReservas.hacerReserva(reserva).pipe(
+            //Campos para hacer la reserva en bdd
+            idCliente: this.usuario.id_usuario,
+            idPista: recinto.id,
+            idHorario: horario.id,
+            fecha: fechaFormateada,
+          }
+
+          this._apiReservas.hacerReserva(reserva, this.usuario).pipe(
             tap((response => {
 
               console.log(response)
 
               if (response.status === 'exito')
                 this._dialogMensaje.abrirDialogoConfirmacion(`Se ha realizado su reserva correctamente ${this.usuario.nombre}`, true);
-                this.cargarReservas();
+              this.cargarReservas();
 
             }))
           ).subscribe();

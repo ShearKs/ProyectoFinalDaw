@@ -16,12 +16,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { DialogoService } from '../../core/servicies/dialogo.service';
 import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PanelClienteComponent } from "../../shared/components-shared/panel-cliente/panel-cliente.component";
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatTabsModule, MatCardModule, CommonModule, TitleCasePipe, MatDatepickerModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+  imports: [MatTabsModule, PanelClienteComponent, MatCardModule, CommonModule, TitleCasePipe, MatDatepickerModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, PanelClienteComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,6 +31,10 @@ export class PerfilComponent implements OnInit {
 
   public formulario !: FormGroup;
   public usuarioLogged: any = {}
+  //para el panel de control
+  public clienteId : number = 0;
+
+
   public modoEdit: boolean = false;
 
   constructor(
@@ -65,6 +70,9 @@ export class PerfilComponent implements OnInit {
       fecha_nac: this.usuarioLogged.fecha_nac,
     });
     console.log(this.usuarioLogged);
+
+    // console.log('Cliente id', this.usuarioLogged.id)
+    this.clienteId = this.usuarioLogged.id_usuario;
   }
 
 

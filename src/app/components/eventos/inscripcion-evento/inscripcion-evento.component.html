@@ -36,7 +36,7 @@
         
             [disabled]="this.usuario.tipo_usuario === 'trabajador' || this.evento.esta_inscrito === 1">
             <mat-icon matSuffix>{{ !this.evento.esta_inscrito ? 'add_circle' : 'event_busy'    }}</mat-icon>
-            Inscribirse</button>
+            {{this.evento.esta_inscrito === 0 ? 'Inscribirse' : 'Inscrito' }}</button>
         </div>
       </div>
 
