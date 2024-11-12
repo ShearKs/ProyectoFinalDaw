@@ -69,11 +69,12 @@ export class InscripcionEventoComponent implements OnInit, AfterViewInit {
     dialog.afterClosed().subscribe(result => {
 
       if (result) {
-        this._apiEvento.inscripcion(inscripcion).pipe(
+        this._apiEvento.inscripcion(inscripcion, this.usuario).pipe(
           tap((response => {
             if (response.status === 'exito') {
+              this.evento.esta_inscrito = 1;
               this._dialogMensaje.abrirDialogoConfirmacion(`Se ha realizado la inscripción ${this.usuario.nombre}!`, true);
-              
+
             }
           }))
 

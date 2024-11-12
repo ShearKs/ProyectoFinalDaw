@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environmet';
 import { HttpClient } from '@angular/common/http';
 import { Evento } from './interfaces/evento.interface';
 import { Inscripcion } from './interfaces/inscripcion.interface';
+import { usuario } from '../../shared/components-shared/contactos/contacto.interface';
 
 
 @Injectable({
@@ -18,13 +19,13 @@ export class EventosService {
 
   //Función para obtener las reservas
   public getEventos(idCliente: number): Observable<any[]> {
-    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'getEventos', data: {idCliente} });
+    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'getEventos', data: { idCliente } });
 
   }
 
   //Para inscribirnos a los cursos (lo hace el cliente)
-  public inscripcion(inscripcion: Inscripcion) {
-    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'inscripcion', data: {inscripcion} });
+  public inscripcion(inscripcion: Inscripcion, usuario: usuario) {
+    return this.__http.post<any>(`${this.apiUrl}/${this.eventosEndPoint}`, { modo: 'inscripcion', data: { inscripcion, usuario } });
   }
 
   //Funciones que usuario el administrador
