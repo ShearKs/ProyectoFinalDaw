@@ -18,7 +18,13 @@ export class ControlClientService {
     return this._http.post<any>(`${this.apiUrl}/${this.panelControlEndPoint}.php`, { modo: 'getReservasUsuario', idCliente: idUsuario });
   }
 
+  public getCursosUsuario(idUsuario: number): Observable<any[]> {
+    return this._http.post<any>(`${this.apiUrl}/${this.panelControlEndPoint}.php`, { modo: 'getCursosUsuario', idCliente: idUsuario });
+  }
 
+  public getInscripcionesEventos(idUsuario: number): Observable<any[]> {
+    return this._http.post<any>(`${this.apiUrl}/${this.panelControlEndPoint}.php`, { modo: 'getInscripEventos', idCliente: idUsuario });
+  }
 
 
 }

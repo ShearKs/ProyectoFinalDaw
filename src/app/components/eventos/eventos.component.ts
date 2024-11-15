@@ -111,7 +111,7 @@ export class EventosComponent implements OnInit {
             campo.valorInicial = '1';  
           }
         });
-        // console.log(lugaresMap)
+     
 
       }))
     ).subscribe();
@@ -121,7 +121,7 @@ export class EventosComponent implements OnInit {
   }
 
   public cargarEventos(): void {
-    this._eventosCall.getEventos(this.usuario?.id!).pipe(
+    this._eventosCall.getEventos(this.usuario?.id_usuario!).pipe(
       tap((eventosObtenidos) => {
         console.log('Eventos que llegan...', eventosObtenidos);
         this.eventos = eventosObtenidos;

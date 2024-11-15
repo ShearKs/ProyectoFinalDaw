@@ -1,20 +1,60 @@
-.table-container {
-    margin: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
+/* Estilos para la tabla */
 .mat-table {
     width: 100%;
+    background-color: #f9f9f9; /* Fondo para la tabla */
 }
 
-.mat-header-cell,
+/* Estilos para las celdas del encabezado */
+.mat-header-cell {
+    background-color: #4CAF50; /* Fondo verde para la cabecera */
+    color: white;               /* Texto blanco en el encabezado */
+    font-weight: bold;          /* Negrita para el texto del encabezado */
+    text-align: left;           /* Alineación del texto a la izquierda */
+    padding: 10px 16px;         /* Espaciado del texto */
+    font-size: 16px;            /* Tamaño de fuente más grande */
+    border-bottom: 3px solid #388E3C; /* Borde inferior para resaltar */
+}
+
+/* Estilo cuando el ratón pasa sobre la cabecera (efecto hover) */
+.mat-header-cell:hover {
+    background-color: #388E3C; /* Fondo más oscuro al pasar el ratón */
+    cursor: pointer;           /* Cambiar el cursor a mano al pasar sobre la cabecera */
+}
+
+/* Estilos para las celdas del cuerpo */
 .mat-cell {
     padding: 8px 16px;
 }
 
+/* Color de fondo alterno para las filas impares */
+.mat-row:nth-child(odd) {
+    background-color: #f2f2f2; /* Color de fondo para las filas impares */
+}
+
+/* Color de fondo para las filas pares */
+.mat-row:nth-child(even) {
+    background-color: #ffffff; /* Color de fondo para las filas pares */
+}
+
+/* Estilo para el contenedor de la tabla */
+.table-container {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 mat-paginator {
     margin-top: 10px;
+}
+
+/* Estilos para los estados */
+.estado-activo {
+    color: green;
+    font-weight: bold;
+}
+
+.estado-vencido {
+    color: red;
+    font-weight: bold;
 }

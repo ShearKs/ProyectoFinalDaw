@@ -23,6 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 import { usuario } from '../../shared/components-shared/contactos/contacto.interface';
 import { DialogoService } from '../../core/servicies/dialogo.service';
+import { fechaToday } from '../../functions';
 
 @Component({
   selector: 'app-reservar-deporte',
@@ -70,7 +71,7 @@ export class ReservarDeporteComponent implements OnInit {
   //Propiedad para almacenar el estado de las reservas.
   public reservasEstado: { [key: string]: boolean } = {}
 
-  public fechaReserva: Date = new Date();
+  public fechaReserva!: Date;
 
   public reservas: any = [
 
@@ -99,9 +100,6 @@ export class ReservarDeporteComponent implements OnInit {
     const userData = localStorage.getItem('user');
     this.usuario = userData ? JSON.parse(userData) : null;
 
-    console.log(this.usuario)
-
-
     if (this.usuario.tipo_usuario === 'cliente') {
       //La fecha mínima será la de hoy
       this.fechaMinima = new Date();
@@ -112,15 +110,6 @@ export class ReservarDeporteComponent implements OnInit {
     }
 
 
-
-    // const deporteId = +this._ruta.snapshot.paramMap.get('id')!;
-    // this.deporteId = deporteId ? +deporteId : 0;
-    // //Obtenemos el nombre del deporte que se ha enviado mediante el state 
-    // // Obtener los queryParams
-    // this._ruta.queryParams.subscribe(params => {
-    //   this.deporteNombre = params['nombre'] || 'Nombre desconocido';
-    // });
-
     // Obtener el parámetro de ruta 'nombre' y el 'id' desde queryParams
     this._ruta.paramMap.subscribe(params => {
       this.deporteNombre = params.get('nombre') || 'Nombre desconocido';
@@ -130,19 +119,10 @@ export class ReservarDeporteComponent implements OnInit {
       this.deporteId = params['id'] || 0;
     });
 
-    console.log('id deporte: ', this.deporteId)
-    console.log('Nombre del deporte: ', this.deporteNombre);
 
-    const fechaHoyString = localStorage.getItem('fechaHoy');
 
-    if (fechaHoyString) {
-      this.fechaReserva = new Date(fechaHoyString);
-    } else {
-      this.fechaReserva = new Date();
-      localStorage.setItem('fechaHoy', this.fechaReserva.toISOString());
-    }
-
-    console.log('Fecha de hoy: ', this.fechaReserva)
+  
+    this.fechaReserva = new Date(fechaToday());
 
 
     this.cargarHorario();
@@ -257,7 +237,7 @@ export class ReservarDeporteComponent implements OnInit {
 
           //Hacemos la reserva
           const reserva: Reserva = {
-          
+
             nombreCliente: this.usuario.nombre,
             deporte: this.deporteNombre,
 

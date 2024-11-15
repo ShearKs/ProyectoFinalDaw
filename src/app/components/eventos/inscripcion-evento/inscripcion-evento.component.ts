@@ -55,7 +55,7 @@ export class InscripcionEventoComponent implements OnInit, AfterViewInit {
   public incribirse(): void {
 
     const inscripcion: Inscripcion = {
-      idCliente: this.usuario.id!, idEvento: this.evento.id ,nombreEvento: this.evento.nombre
+      idCliente: this.usuario.id_usuario!, idEvento: this.evento.id, nombreEvento: this.evento.nombre
     }
 
     const dialog = this._dialog.open(ConfirmDialogComponent, {

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MenuComponent } from './shared/components-shared/menu/menu.component';
 import { AutenticationService } from './auth/servicies/autentication.service';
 import { SpinerCargaComponent } from './shared/components-shared/spiner-carga/spiner-carga.component';
+import { fechaToday } from './functions';
 
 
 @Component({
@@ -19,11 +20,13 @@ export class AppComponent implements OnInit {
   constructor(
     private _router: Router,
     private readonly _authService: AutenticationService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.checkLoginStatus();
-    
+
+    fechaToday();
+
     // Suscribirse al estado de autenticación
     this._authService.loginStatus$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
@@ -37,7 +40,7 @@ export class AppComponent implements OnInit {
 
   public onCerrarSesion(): void {
     this._authService.cerrarSesion();
-    this.isLoggedIn = false; 
+    this.isLoggedIn = false;
     this._router.navigate(['/login']);
   }
 

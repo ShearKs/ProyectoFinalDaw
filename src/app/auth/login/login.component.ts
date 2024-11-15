@@ -13,6 +13,7 @@ import { of } from 'rxjs';
 import { BotonGenericoComponent } from '../../shared/components-shared/boton-generico/boton-generico.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BasicDialogComponent } from '../../shared/components-shared/basic-dialog/basic-dialog.component';
+import { fechaToday } from '../../functions';
 
 @Component({
   selector: 'app-login',
@@ -51,8 +52,9 @@ export class LoginComponent implements OnInit {
       this._dialog.open(BasicDialogComponent, { data: { mensaje, correcto } });
       localStorage.removeItem('registroExitoso');
     }
-    const fechaHoy = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-    localStorage.setItem('fechaHoy', fechaHoy);
+
+    //ya lo hacemos en app.component para que la fecha se introduzca correctamente ya que se tiene que setear también cuando el usuario ya está iniciado sesión.
+    fechaToday();
   }
 
   public login(usuario: string, contrasena: string) {

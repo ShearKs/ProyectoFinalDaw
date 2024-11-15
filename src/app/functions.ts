@@ -29,8 +29,6 @@ export const sameObject = (objeto1: any, objeto2: any): boolean => {
     return true;
 };
 
-
-
 export function singularEntity(entities: string): string {
     if (typeof entities !== "string") {
         return "entidad introducida no es válida";
@@ -42,8 +40,18 @@ export function singularEntity(entities: string): string {
 }
 
 //Función que devuelva una formateado un string la primera letra en mayúscula y las demás en minusula
-export function upperString(cadena : string){
+export function upperString(cadena: string) {
 
     return cadena.charAt(0).toUpperCase() + cadena.slice(1).toLowerCase();
+}
+
+
+export function fechaToday(): string {
+
+    const fechaHoy = new Date().toISOString().split('T')[0];
+    localStorage.setItem('fechaHoy', fechaHoy);
+
+    return fechaHoy;
+
 }
 

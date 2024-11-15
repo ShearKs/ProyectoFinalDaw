@@ -61,7 +61,7 @@
       </mat-tab>
 
       <!-- Segundo Tab: Otro Tab -->
-      <mat-tab label="Otros">
+      <mat-tab label="Inscripciones" *ngIf="this.usuarioLogged.tipo_usuario=== 'cliente'   ">
         <div class="otros-tab-content">
 
           <app-panel-cliente [idUsuario]="clienteId"></app-panel-cliente>

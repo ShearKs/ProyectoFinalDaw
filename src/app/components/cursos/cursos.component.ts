@@ -191,7 +191,7 @@ export class CursosComponent implements OnInit {
   //Peticiones a la api....
   private obtenerCursos() {
 
-    this._apiCursos.getCursos(this.usuario.id).pipe(
+    this._apiCursos.getCursos(this.usuario.id_usuario!).pipe(
       tap((cursos => {
 
         console.log('Cursos obtenidos: ', cursos)
@@ -212,7 +212,7 @@ export class CursosComponent implements OnInit {
 
     const inscripcion: Inscripcion = {
       idCurso: idCurso,
-      idCliente: this.usuario.id
+      idCliente: this.usuario.id_usuario!,
     }
 
 
