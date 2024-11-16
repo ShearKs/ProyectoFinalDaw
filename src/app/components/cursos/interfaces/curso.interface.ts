@@ -6,5 +6,6 @@ export interface Curso {
     deporte: string;
     informacion?: string;
     esta_inscrito?: number;
+    disponible? : boolean;
     idDeporte?: number;
 }

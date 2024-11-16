@@ -80,6 +80,16 @@
       display: inline-block;
     }
 
+    .no-disponible-label {
+      background-color: #d32f2f;
+      color: white;
+      margin: 2.5 rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 0.875rem;
+    }
+
     .btn-acciones {
 
       .btn-delete,
@@ -143,7 +153,7 @@
     gap: 0.4rem;
     border: none;
     background-color: #1976d2;
-    
+
     padding: 0.5rem 1.5rem;
     font-size: 1rem;
     /* Tamaño del texto */
@@ -159,17 +169,22 @@
 
 
     &:hover {
-      background-color: #145a9f; /* Color de fondo al pasar el cursor */
-      transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el cursor */
+      background-color: #145a9f;
+      /* Color de fondo al pasar el cursor */
+      transform: scale(1.05);
+      /* Aumenta ligeramente el tamaño al pasar el cursor */
     }
-  
+
     &:active {
-      transform: scale(0.95); /* Reduce ligeramente el tamaño al hacer clic */
+      transform: scale(0.95);
+      /* Reduce ligeramente el tamaño al hacer clic */
     }
-  
+
     &:disabled {
-      background-color: #cccccc; /* Color de fondo deshabilitado */
-      cursor: not-allowed; /* Cambia el cursor para indicar que está deshabilitado */
+      background-color: #cccccc;
+      /* Color de fondo deshabilitado */
+      cursor: not-allowed;
+      /* Cambia el cursor para indicar que está deshabilitado */
     }
 
 

@@ -18,7 +18,7 @@
 
             {{ curso.nombre }}
             <span *ngIf="curso.esta_inscrito === 1 && usuario.tipo_usuario === 'cliente' "
-                  class="inscrito-label">Inscrito</span>
+              class="inscrito-label">Inscrito</span>
             <ng-container *ngIf="usuario.tipo_usuario === 'trabajador' ">
               <div class="btn-acciones">
                 <button class="btn-edit" (click)="editarCurso(curso)">
@@ -30,7 +30,11 @@
               </div>
             </ng-container>
           </mat-card-title>
-          <mat-card-subtitle>Plazas disponibles: {{ curso.plazas }}</mat-card-subtitle>
+          <mat-card-subtitle>
+            <span *ngIf="curso.disponible">Plazas disponibles:{{ curso.plazas }}</span>
+            <span *ngIf="!curso.disponible" class="no-disponible-label">No hay plazas..</span>
+
+          </mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
@@ -38,7 +42,7 @@
           {{ curso.informacion | slice: 0:150 }}<span *ngIf="curso.informacion?.length">[...]</span>
         </mat-card-content>
 
-        <mat-card-actions *ngIf="usuario.tipo_usuario === 'cliente'">
+        <mat-card-actions *ngIf="usuario.tipo_usuario === 'cliente' && curso.disponible   ">
           <ng-container *ngIf="curso.esta_inscrito === 0; else inscrito">
             <button mat-button class="btn-apuntarse" (click)="inscribirseCurso(curso.id)">
               <mat-icon matSuffix>person_add</mat-icon> Apuntarse

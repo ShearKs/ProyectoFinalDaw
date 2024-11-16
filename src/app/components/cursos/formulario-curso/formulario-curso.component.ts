@@ -37,7 +37,7 @@ export class FormularioCursoComponent implements OnInit {
       id: [data?.datos?.curso?.id || ''],
       nombre: [data?.datos?.curso?.nombre || '', Validators.required],
       icono_curso: [data?.datos?.curso?.icono_curso || '', Validators.required],
-      plazas: [data?.datos?.curso?.plazas || 1, [Validators.required, Validators.min(1)]],
+      plazas_totales: [data?.datos?.curso?.plazas || 1, [Validators.required, Validators.min(1)]],
       descripcion: [data?.datos?.curso?.informacion || '', Validators.required],
       idDeporte: [data?.datos?.curso?.idDeporte || '', Validators.required],
     });
