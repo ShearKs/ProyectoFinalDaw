@@ -3,7 +3,9 @@
     <mat-card-title>Deportes Disponibles</mat-card-title>
     <mat-card-content>
       <div class="grid-container">
-        <div *ngFor="let deporte of getPaginatedDeportes()" (click)="accesoReserva(deporte)" class="grid-tile">
+        <div *ngFor="let deporte of getPaginatedDeportes()"
+            (click)="accesoReserva(deporte)" 
+            class="grid-tile">
           <div class="contenido">
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="{{ deporte.icono_google }}"></mat-icon>
             <span>{{ deporte.nombre }}</span>

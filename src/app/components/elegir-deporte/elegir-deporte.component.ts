@@ -6,19 +6,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { DeportesService } from '../../core/servicies/deportes.service';
 import { tap } from 'rxjs';
+import { Deporte } from './deportes.interface';
 
 @Component({
   selector: 'app-elegir-deporte',
   standalone: true,
   imports: [RouterOutlet, MatPaginator, MatCardModule, RouterLink, CommonModule, MatIconModule],
-  providers: [{ provide: LOCALE_ID, useValue: 'es' },DatePipe],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }, DatePipe],
   templateUrl: './elegir-deporte.component.html',
   styleUrls: ['./elegir-deporte.component.scss']
 })
 export class ElegirDeporteComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  public deportes: any[] = [
+  public deportes: Deporte[] = [
     // { id: 3, nombre: 'Tenis', cantidadInstalacion: 8, isAvailable: true, icon: "sports_tennis" },
     // { id: 4, nombre: 'Fútbol', cantidadInstalacion: 4, isAvailable: false, icon: "sports_soccer" },
     // { id: 1, nombre: 'Baloncesto', cantidadInstalacion: 3, isAvailable: true, icon: "sports_basketball" },
@@ -51,8 +52,9 @@ export class ElegirDeporteComponent implements OnInit {
 
     this._deportesServices.getDeportes().pipe(
       tap((deportesObtenidos => {
-        this.deportes = deportesObtenidos;
-        console.log(this.deportes)
+
+        //De este modo solo obtenemos los deportes que tienen pistas
+        this.deportes = deportesObtenidos.filter(deporte => deporte.cantidad_pistas > 0);
       }))
     ).subscribe();
   }
