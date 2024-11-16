@@ -5,7 +5,7 @@ import { BasicDialogComponent } from '../../shared/components-shared/basic-dialo
 @Injectable({
   providedIn: 'root'
 })
-export class DialogoService {
+export class DialogoMensajeService {
 
   constructor(private readonly _dialog: MatDialog) { }
 

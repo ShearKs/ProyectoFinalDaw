@@ -13,7 +13,7 @@ import { CommonModule, TitleCasePipe } from '@angular/common';
 import { sameObject } from '../../functions';
 import { Usuario } from '../../auth/interfaces/usuario.interface';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DialogoService } from '../../core/servicies/dialogo.service';
+import { DialogoMensajeService } from '../../core/servicies/dialogo.service';
 import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PanelClienteComponent } from "../../shared/components-shared/panel-cliente/panel-cliente.component";
@@ -42,7 +42,7 @@ export class PerfilComponent implements OnInit {
     private readonly __fb: FormBuilder,
     private readonly __apiPerfil: PerfilServiciosService,
     private readonly _dialog: MatDialog,
-    private readonly _dialogMensaje: DialogoService,
+    private readonly _dialogMensaje: DialogoMensajeService,
 
   ) { }
   ngOnInit(): void {

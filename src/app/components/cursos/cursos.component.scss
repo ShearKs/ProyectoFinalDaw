@@ -1,5 +1,5 @@
 ::ng-deep body {
-  background-color: azure;
+  background-color: rgb(243, 255, 255);
 }
 
 .cursos-container {
@@ -50,51 +50,131 @@
         background-color: #145a9f;
       }
     }
+
+
   }
 
+  .curso-card {
+    width: 400px;
+    /* Ancho fijo */
+    max-width: 100%;
+    /* Permitir que la tarjeta sea tan ancha como el contenedor */
+    border: 1px solid #ccc;
+    /* Borde */
+    border-radius: 8px;
+    /* Esquinas redondeadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombreado */
+    transition: transform 0.3s, box-shadow 0.3s;
+    /* Transición para animación */
+
+    .inscrito-label {
+
+      background-color: #388e3c;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+      font-weight: bold;
+      font-size: 0.875rem;
+      display: inline-block;
+    }
+
+    .btn-acciones {
+
+      .btn-delete,
+      .btn-edit {
+        margin: 5px;
+        border: 2px solid black;
+        border-radius: 15px;
+
+      }
+
+      .btn-delete {
+        background-color: rgb(170, 10, 10);
+        color: rgb(250, 241, 241);
+        cursor: pointer;
+      }
+
+      .btn-edit {
+        background-color: #388e3c;
+        color: white;
+        cursor: pointer;
+      }
 
 
-}
 
-.curso-card {
-  width: 400px;
-  /* Ancho fijo */
-  max-width: 100%;
-  /* Permitir que la tarjeta sea tan ancha como el contenedor */
-  border: 1px solid #ccc;
-  /* Borde */
-  border-radius: 8px;
-  /* Esquinas redondeadas */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* Sombreado */
-  transition: transform 0.3s, box-shadow 0.3s;
-  /* Transición para animación */
+    }
 
-  &:hover {
-    transform: translateY(-5px);
-    /* Levanta la tarjeta al pasar el cursor */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    /* Aumenta el sombreado al pasar el cursor */
+
+
+    //Hover de la tarjeta
+    &:hover {
+      transform: translateY(-5px);
+      /* Levanta la tarjeta al pasar el cursor */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      /* Aumenta el sombreado al pasar el cursor */
+    }
   }
-}
 
-.curso-avatar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #9fa3be;
-}
+  .curso-avatar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #9fa3be;
+  }
 
-mat-card-actions {
-  display: flex;
-  justify-content: flex-end;
-  /* Alinea el botón a la derecha */
-  margin-top: auto;
-  /* Asegura que el botón esté al final del contenido */
-}
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    /* Alinea el botón a la derecha */
+    margin-top: auto;
+    /* Asegura que el botón esté al final del contenido */
+  }
 
-.btn-apuntarse {
-  margin: 0 auto;
-  /* Centra el botón dentro del contenedor */
+  .btn-apuntarse {
+    margin: 0 auto;
+    /* Centra el botón dentro del contenedor */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    border: none;
+    background-color: #1976d2;
+    
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    /* Tamaño del texto */
+    font-weight: bold;
+    /* Texto en negrita */
+    color: white;
+    /* Color del texto */
+
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+
+
+    &:hover {
+      background-color: #145a9f; /* Color de fondo al pasar el cursor */
+      transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el cursor */
+    }
+  
+    &:active {
+      transform: scale(0.95); /* Reduce ligeramente el tamaño al hacer clic */
+    }
+  
+    &:disabled {
+      background-color: #cccccc; /* Color de fondo deshabilitado */
+      cursor: not-allowed; /* Cambia el cursor para indicar que está deshabilitado */
+    }
+
+
+
+
+  }
+
 }

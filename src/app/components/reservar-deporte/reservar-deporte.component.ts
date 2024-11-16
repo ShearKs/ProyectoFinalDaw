@@ -22,7 +22,7 @@ import { Pista } from './interfaces/pista.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 import { usuario } from '../../shared/components-shared/contactos/contacto.interface';
-import { DialogoService } from '../../core/servicies/dialogo.service';
+import { DialogoMensajeService } from '../../core/servicies/dialogo.service';
 import { fechaToday, GRI_DATE_FORMATS } from '../../functions';
 
 
@@ -95,7 +95,7 @@ export class ReservarDeporteComponent implements OnInit {
     private readonly location: Location,
     private readonly _apiReservas: ReservasService,
     private readonly _dialog: MatDialog,
-    private readonly _dialogMensaje: DialogoService,
+    private readonly _dialogMensaje: DialogoMensajeService,
   ) { }
 
   ngOnInit(): void {

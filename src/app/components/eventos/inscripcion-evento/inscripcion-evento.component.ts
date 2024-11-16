@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { usuario } from '../../../shared/components-shared/contactos/contacto.interface';
 import { EventosService } from '../eventos.service';
 import { tap } from 'rxjs';
-import { DialogoService } from '../../../core/servicies/dialogo.service';
+import { DialogoMensajeService } from '../../../core/servicies/dialogo.service';
 import { Inscripcion } from '../interfaces/inscripcion.interface';
 import { ConfirmDialogComponent } from '../../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 
@@ -34,7 +34,7 @@ export class InscripcionEventoComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly _apiEvento: EventosService,
     private readonly _dialog: MatDialog,
-    private readonly _dialogMensaje: DialogoService,
+    private readonly _dialogMensaje: DialogoMensajeService,
 
 
   ) { }

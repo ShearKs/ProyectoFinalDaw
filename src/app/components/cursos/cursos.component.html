@@ -18,7 +18,7 @@
 
             {{ curso.nombre }}
             <span *ngIf="curso.esta_inscrito === 1 && usuario.tipo_usuario === 'cliente' "
-              class="inscrito-label">Inscrito</span>
+                  class="inscrito-label">Inscrito</span>
             <ng-container *ngIf="usuario.tipo_usuario === 'trabajador' ">
               <div class="btn-acciones">
                 <button class="btn-edit" (click)="editarCurso(curso)">

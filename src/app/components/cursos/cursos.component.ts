@@ -13,8 +13,10 @@ import { EmptyDialogComponent } from '../../shared/components-shared/empty-dialo
 
 import { DeportesService } from '../../core/servicies/deportes.service';
 import { FormularioCursoComponent } from './formulario-curso/formulario-curso.component';
-import { DialogoService } from '../../core/servicies/dialogo.service';
+import { DialogoMensajeService } from '../../core/servicies/dialogo.service';
 import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
+import { DialogoConfirmacionService } from '../../core/servicies/dialogo-confirmacion.service';
+
 
 @Component({
   selector: 'app-cursos',
@@ -33,10 +35,8 @@ export class CursosComponent implements OnInit {
     private readonly _apiCursos: CursoServiceService,
     private readonly _apiDepo: DeportesService,
     private readonly _dialog: MatDialog,
-    private readonly _dialogMensaje: DialogoService,
-
-
-
+    private readonly _dialogMensaje: DialogoMensajeService,
+    private readonly _dialogConfirmacion: DialogoConfirmacionService
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +45,8 @@ export class CursosComponent implements OnInit {
     const userData = localStorage.getItem('user');
     this.usuario = userData ? JSON.parse(userData) : null;
     this.obtenerCursos();
+    console.log('Cursos', this.cursos)
+
 
     console.log('Usuario')
     console.log(this.usuario)
@@ -65,8 +67,6 @@ export class CursosComponent implements OnInit {
       }))
     ).subscribe();
 
-    console.log('Deportes obtenidos: ', deportes)
-
 
     //Para formulario general
     const nuevoRegistroEmitter = new EventEmitter<any>();
@@ -81,8 +81,8 @@ export class CursosComponent implements OnInit {
     });
 
     nuevoRegistroEmitter.subscribe((nuevoCurso: Curso) => {
-      console.log('Curso recien creado!')
-      console.log(nuevoCurso)
+      // console.log('Curso recien creado!')
+      // console.log(nuevoCurso)
 
       this._apiCursos.addCurso(nuevoCurso).pipe(
         tap((result => {
@@ -134,16 +134,17 @@ export class CursosComponent implements OnInit {
     });
 
     cursoEditadoEmitter.subscribe((cursoActualizado: Curso) => {
-      console.log('Curso actualizado: ', cursoActualizado);
+
 
       this._apiCursos.editarCurso(cursoActualizado).pipe(
         tap((result => {
-          console.log(result);
+
 
           if (result.status === 'exito') {
-            console.log('Curso editado correctamente');
-            // Volver a actualizar la vista con el curso editado...
+            this._dialogMensaje.abrirDialogoConfirmacion("Se ha editado el curso correctamente!", true)
             this.obtenerCursos();
+          } else {
+            this._dialogMensaje.abrirDialogoConfirmacion("Ha habido algún problema al editar el curos...", false)
           }
         }))
       ).subscribe();
@@ -233,6 +234,7 @@ export class CursosComponent implements OnInit {
             if (response) {
               const curso = this.cursos.find(c => c.id === idCurso);
               this._dialogMensaje.abrirDialogoConfirmacion('¡Te has logrado apuntarte al curso satisfactoriamente!', true);
+              this.obtenerCursos();
               if (curso)
                 curso.esta_inscrito = 1;
             }

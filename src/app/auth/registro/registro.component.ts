@@ -15,7 +15,7 @@ import { BasicDialogComponent } from '../../shared/components-shared/basic-dialo
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { DialogoService } from '../../core/servicies/dialogo.service';
+import { DialogoMensajeService } from '../../core/servicies/dialogo.service';
 
 
 @Component({
@@ -36,7 +36,7 @@ export class RegistroComponent implements OnInit {
     private readonly _authApi: AutenticationService,
     private readonly _router: Router,
     private fb: FormBuilder,
-    private readonly _dialog: DialogoService,
+    private readonly _dialog: DialogoMensajeService,
   ) { }
 
 

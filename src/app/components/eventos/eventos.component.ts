@@ -13,7 +13,7 @@ import { FormularioDinamicoComponent } from '../../shared/components-shared/form
 import { CampoFormulario } from '../../shared/components-shared/formulario-dinamico/interfaces/campos_formulario.interface';
 import { DeportesService } from '../../core/servicies/deportes.service';
 import { Evento } from './interfaces/evento.interface';
-import { DialogoService } from '../../core/servicies/dialogo.service';
+import { DialogoMensajeService } from '../../core/servicies/dialogo.service';
 import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 import { sameObject } from '../../functions';
 import { InscripcionEventoComponent } from './inscripcion-evento/inscripcion-evento.component';
@@ -54,7 +54,7 @@ export class EventosComponent implements OnInit {
     private readonly _lugaresCall: LugaresService,
     private readonly _usuarioService: UsuarioDataService,
     private readonly _dialog: MatDialog,
-    private readonly _dialogMensaje: DialogoService,
+    private readonly _dialogMensaje: DialogoMensajeService,
   ) { }
 
   ngOnInit(): void {
