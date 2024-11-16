@@ -1,3 +1,5 @@
+import { MAT_NATIVE_DATE_FORMATS, MatDateFormats } from "@angular/material/core";
+
 export const sameObject = (objeto1: any, objeto2: any): boolean => {
     // Si son estrictamente iguales, devolvemos true.
     if (objeto1 === objeto2) {
@@ -44,6 +46,18 @@ export function upperString(cadena: string) {
 
     return cadena.charAt(0).toUpperCase() + cadena.slice(1).toLowerCase();
 }
+
+export const GRI_DATE_FORMATS: MatDateFormats = {
+    ...MAT_NATIVE_DATE_FORMATS,
+    display: {
+        ...MAT_NATIVE_DATE_FORMATS.display,
+        dateInput: {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+        } as Intl.DateTimeFormatOptions,
+    }
+};
 
 
 export function fechaToday(): string {

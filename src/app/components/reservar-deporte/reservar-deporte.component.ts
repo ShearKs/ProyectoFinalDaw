@@ -15,7 +15,7 @@ import { Reserva } from './interfaces/reserva.interface';
 import { Horario } from './interfaces/horario.interface';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { Pista } from './interfaces/pista.interface';
@@ -23,7 +23,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/components-shared/confirm-dialog/confirm-dialog.component';
 import { usuario } from '../../shared/components-shared/contactos/contacto.interface';
 import { DialogoService } from '../../core/servicies/dialogo.service';
-import { fechaToday } from '../../functions';
+import { fechaToday, GRI_DATE_FORMATS } from '../../functions';
+
 
 @Component({
   selector: 'app-reservar-deporte',
@@ -41,7 +42,9 @@ import { fechaToday } from '../../functions';
     MatInputModule,
     MatNativeDateModule,
   ],
-  providers: [provideNativeDateAdapter(), DatePipe],
+  providers: [
+    provideNativeDateAdapter(), DatePipe,
+    {provide: MAT_DATE_FORMATS , useValue : GRI_DATE_FORMATS}],
   templateUrl: './reservar-deporte.component.html',
   styleUrls: ['./reservar-deporte.component.scss']
 })
@@ -110,6 +113,11 @@ export class ReservarDeporteComponent implements OnInit {
     }
 
 
+    const fechaActual = new Date();
+    this.fechaReserva = fechaActual;
+    console.log('Fecha inicializada: ', this.fechaReserva);
+
+
     // Obtener el parámetro de ruta 'nombre' y el 'id' desde queryParams
     this._ruta.paramMap.subscribe(params => {
       this.deporteNombre = params.get('nombre') || 'Nombre desconocido';
@@ -118,11 +126,6 @@ export class ReservarDeporteComponent implements OnInit {
     this._ruta.queryParams.subscribe(params => {
       this.deporteId = params['id'] || 0;
     });
-
-
-
-  
-    this.fechaReserva = new Date(fechaToday());
 
 
     this.cargarHorario();
@@ -234,6 +237,9 @@ export class ReservarDeporteComponent implements OnInit {
         if (result && this.fechaReserva) {
 
           const fechaFormateada: string | null = this.datePipe.transform(this.fechaReserva, 'yyyy-MM-dd');
+          console.log(fechaFormateada); // Ejemplo: "2024-11-13 14:30"
+
+
 
           //Hacemos la reserva
           const reserva: Reserva = {

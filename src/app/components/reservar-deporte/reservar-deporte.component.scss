@@ -4,7 +4,17 @@
   margin: 5%;
 
   .atras-button {
+
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+
     margin-bottom: 10px;
+    border: 0.01rem solid rgb(100, 100, 100);
+    border-radius: 20px;
+    padding:5px;
+    width: 8%;
   }
 
   mat-expansion-panel {

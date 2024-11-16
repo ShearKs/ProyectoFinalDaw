@@ -1,114 +1,100 @@
-.cursos-container {
-  background-color: rgb(251, 248, 248);
-  height: 100%;
-
-  .cursos-wrapper {
-    padding: 2rem;
-    //background-color: #e0e2f8;
-    border-radius: 12px;
-    //box-shadow: 5px 4px 12px rgba(0, 0, 0, 0.15);
-    margin-bottom: 2rem;
-   
-
-    .cursos-cabecera {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-
-      .titulo-cursos {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #333;
-        margin: 0;
-      }
-
-      .btn-anadir-curso {
-        display: flex;
-        align-items: center;
-        gap: 4px; // Espacio entre el icono y el texto
-        font-weight: bold;
-        padding: 0.5rem 1rem; // Asegura que el botón tenga un tamaño consistente
-        font-size: 1rem;
-
-        .icono-anadir {
-          font-size: 1.2rem;
-          vertical-align: middle; // Centra el icono verticalmente con el texto
-        }
-      }
-    }
-  }
+::ng-deep body {
+  background-color: azure;
 }
 
 .cursos-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  /* Permite que las tarjetas se envuelvan si no hay suficiente espacio */
+  gap: 1rem;
+  /* Espaciado entre las tarjetas */
   justify-content: center;
-  // background-color: #e0f7fa;
-  padding: 1rem;
-  border-radius: 8px;
+  /* Centra las tarjetas en el contenedor */
+  padding: 2rem;
 
-  .curso-card {
-    width: 400px;
-    max-width: 100%;
-    border-radius: 8px;
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
 
-    .inscrito-label {
-      background-color: #388e3c;
-      color: white;
-      padding: 4px 8px;
-      border-radius: 12px;
-      margin-left: 8px;
+  .cursos-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+
+    .titulo-cursos {
+      font-size: 1.8rem;
       font-weight: bold;
-      font-size: 0.875rem;
-      display: inline-block;
+      color: #333;
+      margin: 0;
     }
 
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn-acciones {
-
+    .btn-anadir-curso {
       display: flex;
-      margin: 0.25rem;
-      gap: 0.75rem;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      color: white;
+      background-color: #1976d2;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
 
-
-      .btn-edit {
-        background-color: #388e3c;
-        color: white;
+      .icono-anadir {
+        font-size: 1.2rem;
       }
 
-      .btn-delete {
-        background-color: #ff0000;
-        color: white;
+      &:hover {
+        background-color: #145a9f;
       }
-
     }
+  }
+
+
+
+}
+
+.curso-card {
+  width: 400px;
+  /* Ancho fijo */
+  max-width: 100%;
+  /* Permitir que la tarjeta sea tan ancha como el contenedor */
+  border: 1px solid #ccc;
+  /* Borde */
+  border-radius: 8px;
+  /* Esquinas redondeadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Sombreado */
+  transition: transform 0.3s, box-shadow 0.3s;
+  /* Transición para animación */
+
+  &:hover {
+    transform: translateY(-5px);
+    /* Levanta la tarjeta al pasar el cursor */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    /* Aumenta el sombreado al pasar el cursor */
   }
 }
 
-
-
 .curso-avatar {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #b9bbc3;
+  background-color: #9fa3be;
 }
 
 mat-card-actions {
   display: flex;
   justify-content: flex-end;
+  /* Alinea el botón a la derecha */
   margin-top: auto;
+  /* Asegura que el botón esté al final del contenido */
 }
 
 .btn-apuntarse {
   margin: 0 auto;
+  /* Centra el botón dentro del contenedor */
 }

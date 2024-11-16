@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ControlClientService } from './control-client.service';
 import { tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,6 @@ export class PanelClienteComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<any>([]);
   public displayedColumns: string[] = [];
 
-  // Mapa de alias de columnas (pa que salga to bonico...)
   public columnAliases: { [key: string]: string } = {
     'pista_nombre': 'Nombre de Pista',
     'deporte_nombre': 'Deporte',
@@ -37,24 +36,35 @@ export class PanelClienteComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  // Columnas para cada tipo de dato
   private reservasColumns: string[] = ['pista_nombre', 'deporte_nombre', 'inicio', 'fin', 'fecha_reserva', 'estado'];
-  private cursosColumns: string[] = ['curso_nombre', 'cliente_nombre', 'deporte', 'fecha_inscripcion', 'estado'];
+  private cursosColumns: string[] = ['curso_nombre', 'deporte', 'fecha_inscripcion', 'estado'];
   private eventosColumns: string[] = ['evento_nombre', 'deporte', 'distancia', 'estado'];
 
-  constructor(private readonly _panelControlCall: ControlClientService) {}
+  constructor(
+    private readonly _panelControlCall: ControlClientService,
+    private readonly _cdr: ChangeDetectorRef,) { }
+
+
+
+  ngOnInit(): void {
+
+    this.displayedColumns = this.reservasColumns;
+    this.cargarReservasUsuario();
+
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+    })
+
+
+
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this._cdr.detectChanges();
+
   }
 
-  ngOnInit(): void {
-    // Inicialmente cargamos las columnas para las reservas
-    this.displayedColumns = this.reservasColumns;
-    this.cargarReservasUsuario();
-  }
-
-  // Método que nos hace la funcionalidad de según la pestaña que seleccionemos se carga una pestaña u otra.
   public onTabChange(index: number): void {
     if (index === 0) {
       this.cargarReservasUsuario();
@@ -68,11 +78,11 @@ export class PanelClienteComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // PETICIONES HTTP
   private cargarReservasUsuario(): void {
     this._panelControlCall.getReservasUsuario(this.idUsuario).pipe(
       tap((reservas: any[]) => {
         this.dataSource.data = reservas;
+        this.updatePaginator();
       })
     ).subscribe();
   }
@@ -81,6 +91,8 @@ export class PanelClienteComponent implements OnInit, AfterViewInit {
     this._panelControlCall.getCursosUsuario(this.idUsuario).pipe(
       tap((cursos: any[]) => {
         this.dataSource.data = cursos;
+        this.updatePaginator();
+
       })
     ).subscribe();
   }
@@ -89,7 +101,18 @@ export class PanelClienteComponent implements OnInit, AfterViewInit {
     this._panelControlCall.getInscripcionesEventos(this.idUsuario).pipe(
       tap((eventos: any[]) => {
         this.dataSource.data = eventos;
+        this.updatePaginator();
+
       })
     ).subscribe();
+  }
+
+  private updatePaginator(): void {
+    if (this.paginator) {
+
+      this.dataSource.paginator = this.paginator;
+      this.paginator.length = this.dataSource.data.length;
+      this.paginator.firstPage();
+    }
   }
 }

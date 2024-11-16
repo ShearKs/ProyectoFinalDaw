@@ -14,8 +14,6 @@ import { GestorDatosService } from './gestor-datos.service';
 import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { SingularStringDirective } from '../../directives/singular-string.directive';
-import { FormularioGenericoComponent } from '../formulario-generico/formulario-generico.component';
 import { FormularioDinamicoComponent } from '../formulario-dinamico/formulario-dinamico.component';
 import { CampoFormulario } from '../formulario-dinamico/interfaces/campos_formulario.interface';
 
