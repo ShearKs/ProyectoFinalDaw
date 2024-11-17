@@ -33,7 +33,7 @@
           <mat-card-subtitle>
             <span *ngIf="curso.disponible">Plazas disponibles:{{ curso.plazas }}</span>
             <span *ngIf="!curso.disponible" class="no-disponible-label">No hay plazas..</span>
-
+            <span>Fecha del curso : {{curso.fecha_curso}}</span>
           </mat-card-subtitle>
         </mat-card-header>
 

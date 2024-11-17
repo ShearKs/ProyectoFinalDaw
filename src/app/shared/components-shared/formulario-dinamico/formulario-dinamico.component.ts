@@ -9,11 +9,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-formulario-dinamico',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule,MatDatepickerModule, MatSelectModule, MatInputModule,NgxMatTimepickerModule,FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule,MatDatepickerModule, MatSelectModule,MatIconModule, MatInputModule,NgxMatTimepickerModule,FormsModule,ReactiveFormsModule],
   templateUrl: './formulario-dinamico.component.html',
   styleUrls: ['./formulario-dinamico.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

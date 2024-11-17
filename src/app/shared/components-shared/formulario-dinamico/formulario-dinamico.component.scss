@@ -4,19 +4,33 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
+  max-width: 2000px;
+  width: 550px;
+  overflow: hidden;
+  /* Evita que el contenido se salga */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  // background-color: #9d9d9d;
+  box-sizing: border-box;
+  padding-right: 2.5rem;
 
   .formulario-dinamico {
     // display: flex;
     // flex-direction: column;
     // justify-content: center;
 
-    padding: 0.5rem; // max-width: 700px; /* Ajusta el ancho máximo del formulario */
-    margin: 0.5rem;
-    width: 550px;
-    max-width: 850px;
+    width: 100%;
+    /* Ocupa todo el ancho del contenedor */
+    max-width: 1200px;
+    /* Ancho máximo */
+    padding: 1rem;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    // box-sizing: border-box;
+    /* Incluye paddings en el ancho total */
+    overflow: hidden;
+    /* Evita desbordamientos */
   }
 
   .titulo-formulario {
@@ -31,22 +45,21 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    margin-bottom: 1rem;
+    width: 100%;
   }
 
   .mat-form-field {
-    padding: 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin:0;
+    /* Incluye paddings y bordes en el ancho */
   }
 
   .input-field {
 
-    // padding: 12px;
-    // font-size: 16px;
-    // border-radius: 6px;
-    // border: 1px solid #ccc;
-    // background-color: #f9f9f9;
-    width: 100%;
-    // transition: border-color 0.3s;
+    width: 100%; /* Asegura que el input ocupe todo el ancho del contenedor */
+    font-size: 16px; /* Ajusta el tamaño del texto */
   }
 
   .input-field:focus {
@@ -62,7 +75,7 @@
   .error-message {
     color: #e74c3c;
     font-size: 12px;
-    margin-top: 4px;
+    // margin-top: 1px;
   }
 
   .button-container {
@@ -94,4 +107,48 @@
     cursor: not-allowed;
   }
 
+}
+
+
+@media screen and (max-width: 768px) {
+  .form-dim-container {
+    padding: 0.5rem;
+    /* Reduce el padding en dispositivos pequeños */
+  }
+
+  .formulario-dinamico {
+    max-width: 100%;
+    /* Usa todo el ancho disponible */
+    padding: 1rem;
+    /* Ajusta el espacio interno */
+  }
+
+  .submit-btn {
+    font-size: 14px;
+    /* Botón más pequeño */
+    padding: 10px 20px;
+  }
+}
+
+
+ngx-mat-timepicker {
+  z-index: 1000; /* Asegura que se superponga correctamente */
+}
+
+ngx-mat-timepicker-overlay {
+  width: auto;
+  max-width: 400px; /* Ajusta el tamaño según lo que necesites */
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+ngx-mat-timepicker-content {
+  padding: 1rem;
+}
+
+ngx-mat-timepicker-button {
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
 }

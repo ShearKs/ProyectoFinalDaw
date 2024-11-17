@@ -68,6 +68,15 @@
     transition: transform 0.3s, box-shadow 0.3s;
     /* Transición para animación */
 
+    mat-card-subtitle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      margin: 0.25rem;
+
+    }
+
     .inscrito-label {
 
       background-color: #388e3c;
@@ -111,12 +120,7 @@
         color: white;
         cursor: pointer;
       }
-
-
-
     }
-
-
 
     //Hover de la tarjeta
     &:hover {

@@ -27,18 +27,21 @@ export class PanelClienteComponent implements OnInit, AfterViewInit {
     'estado_reserva': 'Estado Reserva',
     'curso_nombre': 'Nombre del Curso',
     'cliente_nombre': 'Cliente',
+    'fecha_curso': 'Fecha del Curso',
     'fecha_inscripcion': 'Fecha de Inscripción',
     'estado_inscripcion_curso': 'Estado de Inscripción',
     'evento_nombre': 'Nombre del Evento',
     'distancia': 'Distancia',
+    'fecha_evento':'Fecha del Evento',
+    'hora_salida':'Hora de la salida',
     'estado_inscripcion': 'Estado de Inscripción'
   };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   private reservasColumns: string[] = ['pista_nombre', 'deporte_nombre', 'inicio', 'fin', 'fecha_reserva', 'estado'];
-  private cursosColumns: string[] = ['curso_nombre', 'deporte', 'fecha_inscripcion', 'estado'];
-  private eventosColumns: string[] = ['evento_nombre', 'deporte', 'distancia', 'estado'];
+  private cursosColumns: string[] = ['curso_nombre', 'deporte', 'fecha_inscripcion','fecha_curso', 'estado'];
+  private eventosColumns: string[] = ['evento_nombre', 'deporte', 'distancia','fecha_evento','hora_salida', 'estado'];
 
   constructor(
     private readonly _panelControlCall: ControlClientService,
@@ -50,13 +53,10 @@ export class PanelClienteComponent implements OnInit, AfterViewInit {
 
     this.displayedColumns = this.reservasColumns;
     this.cargarReservasUsuario();
-
-    setTimeout(() => {
-      this.dataSource.paginator = this.paginator;
-    })
+    this.dataSource.paginator = this.paginator;
 
 
-
+    
   }
 
   ngAfterViewInit(): void {
@@ -66,6 +66,7 @@ export class PanelClienteComponent implements OnInit, AfterViewInit {
   }
 
   public onTabChange(index: number): void {
+    console.log(this.dataSource.data)
     if (index === 0) {
       this.cargarReservasUsuario();
       this.displayedColumns = this.reservasColumns;

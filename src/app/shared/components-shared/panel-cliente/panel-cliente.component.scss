@@ -1,6 +1,6 @@
 .panel-component {
 
-    
+
 
     /* Estilos para la tabla */
     .mat-table {
@@ -9,7 +9,7 @@
         background-color: #f9f9f9;
         /* Fondo para la tabla */
 
-     
+
 
         .header {
             color: white;
@@ -20,7 +20,7 @@
             background-color: rgb(61, 60, 60);
         }
 
-        .fila-tabla{
+        .fila-tabla {
 
             text-align: left;
         }
@@ -81,14 +81,32 @@
     }
 
     /* Estilos para los estados */
-    .estado-activo {
-        color: green;
+    .estado-activo,
+    .estado-vencido {
+
+        color: white;
+        border-radius: 20px;
         font-weight: bold;
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        // /* Espaciado dentro de la etiqueta */
+        display: inline-block;
+        /* Asegura que se vea como un bloque en línea */
+        text-align: center;
+        /* Alinea el texto en el centro */
+
+    }
+
+
+
+    .estado-activo {
+        background-color: green;
+
     }
 
     .estado-vencido {
-        color: red;
-        font-weight: bold;
+        background-color: #d32f2f;
+
     }
 
 }

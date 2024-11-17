@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatOptionModule } from '@angular/material/core';
+import { MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,7 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-formulario-curso',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, CommonModule, MatOptionModule, MatSelectModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [ReactiveFormsModule, FormsModule, MatFormFieldModule, MatInputModule, CommonModule, MatOptionModule, MatSelectModule,MatDatepickerModule],
   templateUrl: './formulario-curso.component.html',
   styleUrl: './formulario-curso.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,6 +39,7 @@ export class FormularioCursoComponent implements OnInit {
       id: [data?.datos?.curso?.id || ''],
       nombre: [data?.datos?.curso?.nombre || '', Validators.required],
       icono_curso: [data?.datos?.curso?.icono_curso || '', Validators.required],
+      fecha_curso: [data?.datos?.curso?.fecha_curso  || '', Validators.required],
       plazas_totales: [data?.datos?.curso?.plazas || 1, [Validators.required, Validators.min(1)]],
       descripcion: [data?.datos?.curso?.informacion || '', Validators.required],
       idDeporte: [data?.datos?.curso?.idDeporte || '', Validators.required],

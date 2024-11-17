@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  canDeactivate(): boolean {
+  public canDeactivate(): boolean {
     return confirm('¿Estás seguro de que quieres salir sin guardar los cambios?');
   }
 

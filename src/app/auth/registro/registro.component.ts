@@ -111,6 +111,7 @@ export class RegistroComponent implements OnInit {
     } else {
 
       console.log('Formulario no es valido...')
+      this._dialog.abrirDialogoConfirmacion("Introduce bien la información en el formulario...", false)
     }
   }
 

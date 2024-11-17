@@ -4,6 +4,7 @@ export interface Curso {
     icono_curso: string;
     plazas: number;
     deporte: string;
+    fecha_curso?:string;
     informacion?: string;
     esta_inscrito?: number;
     disponible? : boolean;

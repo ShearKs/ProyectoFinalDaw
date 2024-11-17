@@ -20,13 +20,18 @@
             type="number" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
 
           <!-- Campo de hora -->
-          <mat-form-field appearance="fill" *ngIf="campo.tipo === 'time'">
-            <mat-label>Hora</mat-label>
-            <input matInput [ngxMatTimepicker]="picker" formControlName="{{ campo.nombre }}">
+          <mat-form-field appearance="outline" *ngIf="campo.tipo === 'time'">
+            <mat-icon matPrefix>timer</mat-icon>
+            <input matInput 
+              type="text" 
+              [format] = "24" 
+              [ngxMatTimepicker]="picker" formControlName="{{ campo.nombre }}">
+
+            <ngx-mat-timepicker #picker class="input-field" ></ngx-mat-timepicker>
+
           </mat-form-field>
 
-          <ngx-mat-timepicker #picker></ngx-mat-timepicker>
-
+    
           <!-- Campo de fecha -->
           <input *ngIf="campo.tipo === 'date'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
             type="date" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">

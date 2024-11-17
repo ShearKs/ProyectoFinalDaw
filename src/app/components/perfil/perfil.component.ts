@@ -32,7 +32,7 @@ export class PerfilComponent implements OnInit {
   public formulario !: FormGroup;
   public usuarioLogged: any = {}
   //para el panel de control
-  public clienteId : number = 0;
+  public clienteId: number = 0;
 
 
   public modoEdit: boolean = false;
@@ -91,6 +91,7 @@ export class PerfilComponent implements OnInit {
       email: this.formulario.get('correo')?.value,
       telefono: this.formulario.get('telefono')?.value,
       fecha_nac: this.formulario.get('fecha_nac')?.value,
+      id_usuario: this.usuarioLogged.id_usuario,
       tipo_usuario: this.usuarioLogged.tipo_usuario,
     };
 
