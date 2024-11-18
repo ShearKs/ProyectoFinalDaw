@@ -1,44 +1,49 @@
-.evento-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
-  margin: 1rem;
-  padding: 5px;
+.evento-card {
+  background-color: whitesmoke;
 
-  .info {
+  .evento-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    margin: 1rem;
+    padding: 5px;
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1.25rem;
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px; // Espacio entre el icono y el texto
+        margin-bottom: 8px;
+
+        .btn-acciones {
+
+          margin-top: 0.8rem;
+        }
+
+      }
+    }
+  }
+
+  .mapa {
     display: flex;
     flex-direction: column;
-    margin-top: 1.25rem;
 
     .info-item {
       display: flex;
       align-items: center;
       gap: 8px; // Espacio entre el icono y el texto
-      margin-bottom: 8px; 
-
-      .btn-acciones {
-
-        margin-top: 0.8rem;
-      }
-
+      margin-bottom: 8px; // Espacio entre cada fila de info-item
     }
   }
-}
 
-.mapa {
-  display: flex;
-  flex-direction: column;
-
-  .info-item {
-    display: flex;
-    align-items: center;
-    gap: 8px; // Espacio entre el icono y el texto
-    margin-bottom: 8px; // Espacio entre cada fila de info-item
+  .map-container {
+    height: 225px;
+    margin-top: 10px;
+    border-radius: 8px;
   }
-}
 
-.map-container {
-  height: 225px;
-  margin-top: 10px;
-  border-radius: 8px;
 }

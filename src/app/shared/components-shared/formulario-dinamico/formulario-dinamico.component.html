@@ -4,7 +4,7 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="formulario-dinamico">
       <div *ngFor="let campo of campos" class="form-group">
-        <mat-form-field appearance="outline" *ngIf="campo.tipo !== 'select'">
+        <mat-form-field appearance="outline" *ngIf=" campo.tipo !== 'select'  &&  campo.tipo !== 'time'" >
           <mat-label>{{ campo.label }}</mat-label>
 
           <!-- Campo de texto -->
@@ -19,19 +19,9 @@
           <input *ngIf="campo.tipo === 'number'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
             type="number" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
 
-          <!-- Campo de hora -->
-          <mat-form-field appearance="outline" *ngIf="campo.tipo === 'time'">
-            <mat-icon matPrefix>timer</mat-icon>
-            <input matInput 
-              type="text" 
-              [format] = "24" 
-              [ngxMatTimepicker]="picker" formControlName="{{ campo.nombre }}">
 
-            <ngx-mat-timepicker #picker class="input-field" ></ngx-mat-timepicker>
 
-          </mat-form-field>
 
-    
           <!-- Campo de fecha -->
           <input *ngIf="campo.tipo === 'date'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
             type="date" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
@@ -39,6 +29,20 @@
           <!-- Campo de contraseña -->
           <input *ngIf="campo.tipo === 'password'" matInput formControlName="{{ campo.nombre }}" id="{{ campo.nombre }}"
             type="password" [placeholder]="campo.label" class="input-field" [readonly]="!esEditable">
+        </mat-form-field>
+
+        <!-- Campo de hora -->
+        <mat-form-field appearance="outline" *ngIf="campo.tipo === 'time'">
+          <mat-icon matPrefix>timer</mat-icon>
+          <input 
+          matInput type="text" 
+          [format]="24" 
+          [ngxMatTimepicker]="picker" 
+          [placeholder]="campo.label"
+          formControlName="{{ campo.nombre }}">
+
+          <ngx-mat-timepicker #picker class="input-field"></ngx-mat-timepicker>
+
         </mat-form-field>
 
         <!-- Campo select -->
